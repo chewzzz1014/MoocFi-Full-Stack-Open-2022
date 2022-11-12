@@ -1,7 +1,8 @@
-const Welcome = () => {
+const Welcome = (props) => {
   return (
     <div>
-      <p><b>Welcome to React</b></p>
+      <p><b>Welcome to React, {props.name}</b></p>
+      <p>{props.name} is {props.age} years old.</p>
     </div>
   )
 }
@@ -12,7 +13,7 @@ function App() {
 
   return (
     <div>
-      <Welcome />
+      <Welcome name='chewzzz' age={20} />
       <p>Hello world, it's {now.toString()}</p>
 
       {/* every tag needs to be closed */}
