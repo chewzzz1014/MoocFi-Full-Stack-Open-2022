@@ -1,3 +1,4 @@
+
 function Header(props) {
   return (
     <div>
@@ -61,8 +62,10 @@ function App() {
       <Header course={course} />
       <Content contents={contents} />
       <Total contents={contents} />
+      <h1>Hiiii</h1>
     </div>
   )
 }
 
 export default App;
+
