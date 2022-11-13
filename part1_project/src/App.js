@@ -1,3 +1,4 @@
+import React from 'react';
 
 function Header(props) {
   return (
@@ -18,7 +19,7 @@ function Part(props) {
 }
 
 function Content(props) {
-  const { part1, part2, part3 } = props.contents
+  const [part1, part2, part3] = props.contents
   return (
     <div>
       <Part part={part1.name} exercise={part1.exercises} />
@@ -29,7 +30,7 @@ function Content(props) {
 }
 
 function Total(props) {
-  const { part1, part2, part3 } = props.contents
+  const [part1, part2, part3] = props.contents
 
   return (
     <>
@@ -62,7 +63,6 @@ function App() {
       <Header course={course} />
       <Content contents={contents} />
       <Total contents={contents} />
-      <h1>Hiiii</h1>
     </div>
   )
 }
