@@ -8,6 +8,9 @@ const App = () => {
     return (
         <div>
             <div>{counter}</div>
-            <button onClick={handleClick}>        plus      </button>    </div>
+            <button onClick={handleClick}>
+                plus
+            </button>
+        </div>
     )
 }
