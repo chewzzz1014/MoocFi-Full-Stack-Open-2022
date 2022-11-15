@@ -1,3 +1,4 @@
+import React from 'react'
 import { useState } from 'react';
 
 function Button(props) {
@@ -14,6 +15,7 @@ function Anecdote(props) {
       <h1>Anecdote of the day</h1>
       <p>
         {props.text}
+        <br />
         has {props.vote} votes
       </p>
     </div>
@@ -37,6 +39,7 @@ function MostVotedAnecdote(props) {
       <h1>Anecdote with most votes</h1>
       <p>
         {props.anecdotes[mostVotedIdx]}
+        <br />
         has {mostVoted} votes
       </p>
     </div>
@@ -57,23 +60,24 @@ function App() {
 
   const [selected, setSelected] = useState(0);
 
-  const points = {
-    0: 0,
-    1: 0,
-    2: 0,
-    3: 0,
-    4: 0,
-    5: 0,
-    6: 0,
-  }
+  const points = [
+    0, 0, 0, 0, 0, 0, 0
+  ]
   const [votes, setVotes] = useState(points);
 
   const randomQuote = () => {
+    console.log("old selected", selected)
     setSelected(Math.floor(Math.random() * (anecdotes.length)))
+    console.log("new selected", selected)
   }
 
   const voting = () => {
-    setVotes(votes[selected]++)
+    console.log("old =votes arr", votes)
+
+    let votesCopy = [...votes];
+    votesCopy[selected] = votes[selected] + 1;
+    setVotes(votesCopy)
+    console.log("new votes arr", votes)
   }
 
   return (
