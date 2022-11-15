@@ -66,18 +66,13 @@ function App() {
   const [votes, setVotes] = useState(points);
 
   const randomQuote = () => {
-    console.log("old selected", selected)
     setSelected(Math.floor(Math.random() * (anecdotes.length)))
-    console.log("new selected", selected)
   }
 
   const voting = () => {
-    console.log("old =votes arr", votes)
-
     let votesCopy = [...votes];
     votesCopy[selected] = votes[selected] + 1;
     setVotes(votesCopy)
-    console.log("new votes arr", votes)
   }
 
   return (
