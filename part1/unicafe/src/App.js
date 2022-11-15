@@ -34,20 +34,24 @@ function Stats(props) {
   const avg = (good + -1 * bad) / all;
   const positivePect = good / all * 100;
 
-  if (allRes.length === 0) {
+  if (allRes.length > 0) {
     return (
-      <table>
+      <div>
         <h1>statistics</h1>
-        <StatisticLine text='good' value={good} />
-        <StatisticLine text='neutral' value={neutral} />
-        <StatisticLine text='bad' value={bad} />
-        <StatisticLine text='average' value={avg} />
-        <StatisticLine text='positive' value={positivePect} />
-      </table>
+        <table>
+          <StatisticLine text='good' value={good} />
+          <StatisticLine text='neutral' value={neutral} />
+          <StatisticLine text='bad' value={bad} />
+          <StatisticLine text='all' value={all} />
+          <StatisticLine text='average' value={avg} />
+          <StatisticLine text='positive' value={positivePect} />
+        </table>
+      </div>
     )
   } else {
     return (
       <div>
+        <h1>statistics</h1>
         No feedback given
       </div>
     )
@@ -62,23 +66,23 @@ function App() {
 
   const goodHandler = () => {
     setGood(good + 1);
-    setAllRes(allRes.concat['G'])
+    setAllRes(allRes.concat('G'))
   }
   const neutralHandler = () => {
     setNeutral(neutral + 1);
-    setAllRes(allRes.concat['N'])
+    setAllRes(allRes.concat('N'))
   }
   const badHandler = () => {
     setBad(bad + 1);
-    setAllRes(allRes.concat['B'])
+    setAllRes(allRes.concat('B'))
   }
 
   return (
     <div>
       <h1>give feedback</h1>
-      <Button clickHandler={goodHandler} text={good} />
-      <Button clickHandler={neutralHandler} text={neutral} />
-      <Button clickHandler={badHandler} text={bad} />
+      <Button clickHandler={goodHandler} text={'good'} />
+      <Button clickHandler={neutralHandler} text={'neutral'} />
+      <Button clickHandler={badHandler} text={'bad'} />
       <Stats moods={[good, neutral, bad, allRes]} />
     </div>
   )
