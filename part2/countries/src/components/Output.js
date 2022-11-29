@@ -1,36 +1,46 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+
 
 export default function Output(props) {
 
-    const { countries, handleClick } = props
+    const { country } = props
+    const [weatherData, setWeatherData] = useState({})
 
-    let countriesEle;
+    useEffect(() => {
+        axios
+            .get(`https://api.openweathermap.org/data/2.5/weather?q=${country.name.common}&units=metric&appid=cd326f95c687805a7eaeea55144e1168`)
+            .then(res => setWeatherData(res.data))
 
-    if (countries.length > 10) {
-        countriesEle = <p>To many matches, specify another filter</p>
-    } else if (countries.length == 1) {
-        const c = countries[0]
-        countriesEle = (
-            <div>
-                <h1>{c.name.common || 'not found'}</h1>
-                <p>capital {c.capital}</p>
-                <p>area {c.area}</p>
-                <br />
-                <b>languages</b>
-                <ul>
-                    {Object.values(c.languages).map((l) => {
-                        return <li>{l}</li>
-                    })}
-                </ul>
-                <img src={c.flags.png} />
-            </div>
-        )
-    }
-    else if (countries.length <= 10) {
-        countriesEle = countries.map((ele) => {
-            return <p>{ele.name.common} <button onClick={handleClick} value={ele.name.common}>show</button></p>
-        })
-    }
+    }, [])
+
+
+    // console.log(weatherData.wind['speed'])
+    const temp = weatherData && weatherData.main?.temp
+    const speed = weatherData && weatherData.wind?.speed
+    const icon = (Array.isArray(weatherData.weather)) && weatherData?.weather[0].icon
+    console.log(icon)
+
+    let countriesEle = (
+        <div>
+            <h1>{country.name.common || 'not found'}</h1>
+            <p>capital {country.capital}</p>
+            <p>area {country.area}</p>
+            <br />
+            <b>languages</b>
+            <ul>
+                {Object.values(country.languages).map((l) => {
+                    return <li>{l}</li>
+                })}
+            </ul>
+            <img src={country.flags.png} />
+            <br />
+            <h2>Weather in {country.name.common}</h2>
+            <p>tempature {temp} Celcius</p>
+            <img src={`http://openweathermap.org/img/w/${icon}.png`} />
+            <p>wind {speed} m/s</p>
+        </div>
+    )
 
     return (
         <div>
