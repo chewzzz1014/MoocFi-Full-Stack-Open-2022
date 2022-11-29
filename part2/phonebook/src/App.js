@@ -1,18 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import Persons from './components/Persons'
 import PersonsForm from './components/PersonsForm'
 import Filter from './components/Filter'
 
 function App() {
 
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-  ])
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState({})
   const [results, setResults] = useState(persons)
+
+  useEffect(() => {
+    console.log('effect')
+
+    // before running the app, run `npm run server` to launch the json server with `persons` json
+    axios
+      .get('http://localhost:3001/persons')
+      .then(res => {
+        console.log(res)
+        setPersons(res.data)
+        setResults(persons)
+      })
+  }, [])
 
   function handleChange(e) {
     const { name, value } = e.target
