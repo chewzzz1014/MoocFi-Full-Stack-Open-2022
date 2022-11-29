@@ -54,12 +54,6 @@ function App() {
       <form>
         find countries <input onChange={handleChange} name='countries' value={country} />
       </form>
-
-      {/* <Output
-        countries={countries}
-        handleClick={handleClick}
-        country={country}
-      /> */}
       {getOutput()}
 
     </div>
