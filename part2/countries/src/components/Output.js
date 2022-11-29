@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
-
 export default function Output(props) {
 
     const { country } = props
@@ -9,7 +8,7 @@ export default function Output(props) {
 
     useEffect(() => {
         axios
-            .get(`https://api.openweathermap.org/data/2.5/weather?q=${country.name.common}&units=metric&appid=cd326f95c687805a7eaeea55144e1168`)
+            .get(`https://api.openweathermap.org/data/2.5/weather?q=${country.name.common}&units=metric&appid=${process.env.REACT_APP_API_KEY}`)
             .then(res => setWeatherData(res.data))
 
     }, [])
