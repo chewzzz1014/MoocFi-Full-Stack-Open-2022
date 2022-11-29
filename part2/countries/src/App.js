@@ -19,6 +19,11 @@ function App() {
     setCountry(value)
   }
 
+  function handleClick(e) {
+    const { value } = e.target
+    setCountry(value)
+  }
+
   console.log(allCountries[0])
   const countries = allCountries
     .filter(ele => {
@@ -32,7 +37,7 @@ function App() {
       <form>
         find countries <input onChange={handleChange} name='countries' value={country} />
       </form>
-      <Output countries={countries} />
+      <Output countries={countries} handleClick={handleClick} />
     </div>
   );
 }

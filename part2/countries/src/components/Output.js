@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Output(props) {
 
-    const { countries } = props
+    const { countries, handleClick } = props
 
     let countriesEle;
 
@@ -28,7 +28,7 @@ export default function Output(props) {
     }
     else if (countries.length <= 10) {
         countriesEle = countries.map((ele) => {
-            return <p>{ele.name.common}</p>
+            return <p>{ele.name.common} <button onClick={handleClick} value={ele.name.common}>show</button></p>
         })
     }
 
