@@ -14,15 +14,15 @@ function Filter(props) {
 }
 
 function Persons(props) {
-    const { persons } = props
+    const { persons, handleDelete } = props
 
-    const personsElements = persons && persons.map((ele) => {
-        return <li>{`${ele.name} ${ele.number}`}</li>
+    const personsElements = persons.map((ele) => {
+        return <li>{`${ele.name} ${ele.number}`} <button onClick={() => handleDelete(ele.id)}>{`delete ${ele.id}`}</button></li>
     })
 
     return (
         <ul>
-            {personsElements || 'Not found'}
+            {personsElements}
         </ul>
     )
 }

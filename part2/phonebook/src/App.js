@@ -83,6 +83,24 @@ function App() {
     setNewName('')
   }
 
+  function handleDelete(id) {
+    const foundContacts = persons.find((ele) => ele.id === id)
+
+    console.log(id)
+
+    const isDelete = window.confirm(`Delete ${foundContacts.name} ?`)
+
+    if (isDelete) {
+      personService
+        .deleteContacts(id)
+        .then(res => {
+          const filtered = persons.filter(ele => ele.id !== id)
+          setPersons(filtered)
+          setResults(filtered)
+        })
+    }
+  }
+
   function checkIsExist(name) {
     let isExist = false
     persons.forEach((ele) => {
@@ -111,7 +129,7 @@ function App() {
         newName={newName}
       />
       <h2>Numbers</h2>
-      <Persons persons={results} />
+      <Persons persons={results} handleDelete={handleDelete} />
     </div>
   );
 }

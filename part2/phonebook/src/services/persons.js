@@ -14,4 +14,8 @@ function addContacts(newObj) {
     return axios.post(baseURL, newObj)
 }
 
-export default { getAllContacts, updateContacts, addContacts }
+function deleteContacts(id) {
+    return axios.delete(`${baseURL}/${id}`)
+}
+
+export default { getAllContacts, updateContacts, addContacts, deleteContacts }
