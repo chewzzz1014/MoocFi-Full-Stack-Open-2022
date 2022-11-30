@@ -45,9 +45,9 @@ function App() {
       personService
         .addContacts(noteObject)
         .then(res => {
-          console.log(res)
-          setPersons(persons.concat(noteObject))
-          setResults(persons.concat(noteObject))
+          console.log(res.data)
+          setPersons(persons.concat(res.data))
+          setResults(persons.concat(res.data))
         })
 
       alert(`${newName.name} is already added to phonebook`)
@@ -97,6 +97,9 @@ function App() {
           const filtered = persons.filter(ele => ele.id !== id)
           setPersons(filtered)
           setResults(filtered)
+        })
+        .catch(err => {
+          console.log(err)
         })
     }
   }
