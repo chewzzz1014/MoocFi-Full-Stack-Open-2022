@@ -1,18 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-function filter(e) {
-    const desired = e.target.value.toLowerCase()
-    setResults(persons.filter((ele) => {
-        return ele.name.toLowerCase().includes(desired)
-    }))
-}
+function Filter(props) {
 
+    const { filter } = props
 
-function Filter() {
     return (
         <form>
             <div>
-                filter shown with <input onChange={filter} />
+                filter shown with <input onChange={(e) => filter(e)} />
             </div>
         </form>
     )
@@ -20,15 +15,14 @@ function Filter() {
 
 function Persons(props) {
     const { persons } = props
-    const [results, setResults] = useState([])
 
-    const personsElements = results.map((ele) => {
+    const personsElements = persons && persons.map((ele) => {
         return <li>{`${ele.name} ${ele.number}`}</li>
     })
 
     return (
         <ul>
-            {personsElements}
+            {personsElements || 'Not found'}
         </ul>
     )
 }

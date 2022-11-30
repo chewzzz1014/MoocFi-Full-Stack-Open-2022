@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import PersonsForm from './components/PersonsForm'
 import personService from './services/persons'
 import comp from './components/Persons'
@@ -7,12 +6,11 @@ import comp from './components/Persons'
 const { Filter, Persons } = comp
 
 function App() {
-
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState({})
+  const [results, setResults] = useState([])
 
   useEffect(() => {
-    console.log('effect')
 
     // before running the app, run `npm run server` to launch the json server with `persons` json
     personService
@@ -20,6 +18,7 @@ function App() {
       .then(res => {
         console.log(res)
         setPersons(res.data)
+        setResults(res.data)
       })
   }, [])
 
@@ -48,6 +47,7 @@ function App() {
         .then(res => {
           console.log(res)
           setPersons(persons.concat(noteObject))
+          setResults(persons.concat(noteObject))
         })
 
       alert(`${newName.name} is already added to phonebook`)
@@ -66,16 +66,20 @@ function App() {
         personService
           .updateContacts(targetId, updatedContacts)
           .then(res => {
-            setPersons(persons.map(ele => ele.id !== targetId ? ele : res))
+            const f = persons.map(ele => ele.id !== targetId ? ele : res.data)
+            setPersons(f)
+            setResults(f)
           })
           .catch(err => {
             alert(`${foundContacts.name} was already deleted from server!`)
-            setPersons(persons.filter(ele => ele.id !== targetId))
+
+            const filtered = persons.filter(ele => ele.id !== targetId)
+            setPersons(filtered)
+            setResults(filtered)
           })
 
       }
     }
-
     setNewName('')
   }
 
@@ -88,10 +92,17 @@ function App() {
     return isExist
   }
 
+  function filter(e) {
+    const desired = e.target.value.toLowerCase()
+    setResults(persons.filter((ele) => {
+      return ele.name.toLowerCase().includes(desired)
+    }))
+  }
+
   return (
     <div className="App">
       <h2>Phonebook</h2>
-      <Filter />
+      <Filter filter={filter} />
 
       <h2>Phonebook</h2>
       <PersonsForm
@@ -100,7 +111,7 @@ function App() {
         newName={newName}
       />
       <h2>Numbers</h2>
-      <Persons persons={persons} />
+      <Persons persons={results} />
     </div>
   );
 }
