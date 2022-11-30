@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import Persons from './components/Persons'
 import PersonsForm from './components/PersonsForm'
-import Filter from './components/Filter'
+import personService from './services/persons'
+import comp from './components/Persons'
+
+const { Filter, Persons } = comp
 
 function App() {
 
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState({})
-  const [results, setResults] = useState(persons)
 
   useEffect(() => {
     console.log('effect')
 
     // before running the app, run `npm run server` to launch the json server with `persons` json
-    axios
-      .get('http://localhost:3001/persons')
+    personService
+      .getAllContacts()
       .then(res => {
         console.log(res)
         setPersons(res.data)
-        setResults(persons)
       })
   }, [])
 
@@ -35,27 +35,63 @@ function App() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    const noteObject = {
-      name: newName.name,
-      number: newName.number
+
+    if (!checkIsExist(newName.name.toLowerCase())) {
+
+      const noteObject = {
+        name: newName.name,
+        number: newName.number
+      }
+
+      personService
+        .addContacts(noteObject)
+        .then(res => {
+          console.log(res)
+          setPersons(persons.concat(noteObject))
+        })
+
+      alert(`${newName.name} is already added to phonebook`)
+
+    } else {
+      const needReplace = window.confirm(`${newName.name} is already added to phonebook, replace the old number with a new one?`)
+
+      if (needReplace) {
+        const foundContacts = persons.find(ele => ele.name.toLowerCase() === newName.name)
+        const targetId = foundContacts.id
+        const updatedContacts = {
+          ...foundContacts,
+          number: newName.number
+        }
+
+        personService
+          .updateContacts(targetId, updatedContacts)
+          .then(res => {
+            setPersons(persons.map(ele => ele.id !== targetId ? ele : res))
+          })
+          .catch(err => {
+            alert(`${foundContacts.name} was already deleted from server!`)
+            setPersons(persons.filter(ele => ele.id !== targetId))
+          })
+
+      }
     }
-    setPersons(persons.concat(noteObject))
-    setResults(persons.concat(noteObject))
-    alert(`${newName.name} is already added to phonebook`)
+
     setNewName('')
   }
 
-  function filter(e) {
-    const desired = e.target.value.toLowerCase()
-    setResults(persons.filter((ele) => {
-      return ele.name.toLowerCase().includes(desired)
-    }))
+  function checkIsExist(name) {
+    let isExist = false
+    persons.forEach((ele) => {
+      if (ele.name.toLowerCase() === name)
+        isExist = true
+    })
+    return isExist
   }
 
   return (
     <div className="App">
       <h2>Phonebook</h2>
-      <Filter filter={filter} />
+      <Filter />
 
       <h2>Phonebook</h2>
       <PersonsForm
@@ -64,8 +100,7 @@ function App() {
         newName={newName}
       />
       <h2>Numbers</h2>
-      <Persons results={results} />
-
+      <Persons persons={persons} />
     </div>
   );
 }

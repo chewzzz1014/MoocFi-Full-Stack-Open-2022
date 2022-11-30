@@ -1,7 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-export default function Persons(props) {
-    const { results } = props
+function filter(e) {
+    const desired = e.target.value.toLowerCase()
+    setResults(persons.filter((ele) => {
+        return ele.name.toLowerCase().includes(desired)
+    }))
+}
+
+
+function Filter() {
+    return (
+        <form>
+            <div>
+                filter shown with <input onChange={filter} />
+            </div>
+        </form>
+    )
+}
+
+function Persons(props) {
+    const { persons } = props
+    const [results, setResults] = useState([])
 
     const personsElements = results.map((ele) => {
         return <li>{`${ele.name} ${ele.number}`}</li>
@@ -13,3 +32,5 @@ export default function Persons(props) {
         </ul>
     )
 }
+
+export default { Filter, Persons }
