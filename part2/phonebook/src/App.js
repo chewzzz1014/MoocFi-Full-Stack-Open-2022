@@ -35,84 +35,71 @@ function App() {
     })
   }
 
+  function addDataToServer() {
+    const noteObject = {
+      name: newName.name.trim(),
+      number: newName.number
+    }
+
+    personService
+      .addContacts(noteObject)
+      .then(res => {
+        console.log(res.data)
+        setPersons(persons.concat(res.data))
+        setResults(persons.concat(res.data))
+
+        setNotiMsg({
+          type: 'success',
+          msg: `${res.data.name} added`
+        })
+        setTimeout(() => {
+          setNotiMsg({})
+        }, 5000)
+      })
+  }
 
   function handleSubmit(e) {
     e.preventDefault()
 
     if (!checkIsExist(newName.name.toLowerCase())) {
-
-      const noteObject = {
-        name: newName.name.trim(),
-        number: newName.number
-      }
-
-      personService
-        .addContacts(noteObject)
-        .then(res => {
-          console.log(res.data)
-          setPersons(persons.concat(res.data))
-          setResults(persons.concat(res.data))
-
-          setNotiMsg({
-            type: 'success',
-            msg: `${res.data.name} added`
-          })
-          setTimeout(() => {
-            setNotiMsg({})
-          }, 5000)
-        })
-
+      addDataToServer()
     } else {
       const needReplace = window.confirm(`${newName.name} is already added to phonebook, replace the old number with a new one?`)
 
       if (needReplace) {
 
-        const foundContacts = persons.find(ele => ele.name.toLowerCase() === newName.name)
-
-        try {
-
-          const targetId = foundContacts.id
-          const updatedContacts = {
-            ...foundContacts,
-            number: newName.number
-          }
-
-          personService
-            .updateContacts(targetId, updatedContacts)
-            .then(res => {
-              const f = persons.map(ele => ele.id !== targetId ? ele : res.data)
-              setPersons(f)
-              setResults(f)
-            })
-            .catch(err => {
-              const filtered = persons.filter(ele => ele.id !== targetId)
-              setPersons(filtered)
-              setResults(filtered)
-
-              setNotiMsg({
-                type: 'error',
-                msg: `Information of ${foundContacts.name} has already been removed from server!`
-              })
-              setTimeout(() => {
-                setNotiMsg({})
-              }, 5000)
-            })
-        } catch (err) {
-          setNotiMsg({
-            type: 'error',
-            msg: `Contacts Not Found! It has been removed.`
-          })
-          setTimeout(() => {
-            setNotiMsg({})
-          }, 5000)
-
-          const f = persons.filter(ele => ele.name !== newName.name)
-          setPersons(f)
-          setResults(f)
+        const foundContacts = persons.find(ele => ele.name.toLowerCase() === newName.name.trim().toLowerCase())
+        const targetId = foundContacts.id
+        const updatedContacts = {
+          ...foundContacts,
+          number: newName.number
         }
+
+        personService
+          .updateContacts(targetId, updatedContacts)
+          .then(res => {
+            const f = persons.map(ele => ele.id !== targetId ? ele : res.data)
+            setPersons(f)
+            setResults(f)
+          })
+          .catch(err => {
+            const filtered = persons.filter(ele => ele.id !== targetId)
+            setPersons(filtered)
+            setResults(filtered)
+
+            setNotiMsg({
+              type: 'error',
+              msg: `Information of ${foundContacts.name} has already been removed from server!`
+            })
+            setTimeout(() => {
+              setNotiMsg({})
+            }, 5000)
+          })
       }
     }
-    setNewName('')
+    document.querySelector('#nameField').value = ''
+    document.querySelector('#numberField').value = ''
+    setNewName({})
   }
 
   function handleDelete(id) {

@@ -7,10 +7,10 @@ export default function PersonsForm(props) {
     return (
         <form >
             <div>
-                name: <input onChange={handleChange} name='name' value={newName.name} />
+                name: <input onChange={handleChange} name='name' value={newName.name} id='nameField' />
             </div>
             <div>
-                number: <input onChange={handleChange} name='number' value={newName.number} />
+                number: <input onChange={handleChange} name='number' value={newName.number} id='numberField' />
             </div>
             <div>
                 <button type='submit' onClick={handleSubmit}>add</button>
