@@ -43,13 +43,27 @@ app.get("/api/notes/:id", (req, res) => {
     }
 })
 
-app.post("/api/notes", (req, res) => {
+function generateId() {
     const maxId = notes.length > 0 ? Math.max(...notes.map(n => n.id)) : 0
+    return maxId + 1
+}
 
-    const note = req.body
-    note.id = maxId + 1
-    notes = notes.concat(concat)
+app.post("/api/notes", (req, res) => {
+    const body = req.body
 
+    if (!body.content) {
+        return res.status(400).json({
+            error: 'Content Missing'
+        })
+    }
+
+    const note = {
+        content: body.content,
+        important: body.important || false,
+        date: new Date(),
+        id: generateId()
+    }
+    notes = notes.concat(note)
     res.json(note)
 })
 
