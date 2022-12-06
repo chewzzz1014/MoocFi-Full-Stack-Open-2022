@@ -30,10 +30,15 @@ app.get("/api/notes", (req, res) => {
     res.json(notes)
 })
 
-app.get("/api/notes:id", (req, res) => {
+app.get("/api/notes/:id", (req, res) => {
     const { id } = req.params
-    const note = notes.find(e => e.id === id)
-    res.json(note)
+    const note = notes.find(e => e.id === Number(id))
+
+    if (note) {
+        res.json(note)
+    } else {
+        res.status(404).end()
+    }
 })
 
 const PORT = 3001
