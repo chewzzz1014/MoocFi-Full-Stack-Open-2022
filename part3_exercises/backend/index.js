@@ -22,6 +22,8 @@ let notes = [
     }
 ]
 
+app.use(express.json())
+
 app.get('/', (req, res) => {
     res.send('<h1>Hello World!</h1>')
 })
@@ -39,6 +41,12 @@ app.get("/api/notes/:id", (req, res) => {
     } else {
         res.status(404).end()
     }
+})
+
+app.post("/api/notes", (req, res) => {
+    const note = req.body
+    console.log(note)
+    res.json(note)
 })
 
 app.delete('/api/notes/:id', (req, res) => {
