@@ -22,12 +22,6 @@ let notes = [
     }
 ]
 
-const unknownEndpoint = (request, response) => {
-    response.status(404).send({ error: 'unknown endpoint' })
-}
-
-app.use(unknownEndpoint)
-
 app.use(express.json())
 
 app.get('/', (req, res) => {
@@ -79,6 +73,12 @@ app.delete('/api/notes/:id', (req, res) => {
 
     res.status(204).end()
 })
+
+const unknownEndpoint = (request, response) => {
+    response.status(404).send({ error: 'unknown endpoint' })
+}
+
+app.use(unknownEndpoint)
 
 const PORT = 3001
 app.listen(PORT, () => {
