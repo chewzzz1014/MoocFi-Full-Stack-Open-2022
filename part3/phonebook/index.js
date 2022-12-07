@@ -1,6 +1,11 @@
 const express = require('express')
 const morgan = require('morgan')
+
+// allow for cross origin sharing
+const cors = require('cors')
+
 const app = express()
+app.use(cors())
 
 let persons = [
     {
