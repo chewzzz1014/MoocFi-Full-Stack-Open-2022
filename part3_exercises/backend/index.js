@@ -1,35 +1,57 @@
 const express = require('express')
+const mongoose = require('mongoose')
+const { notes } = require("./data")
 const app = express()
 
-let notes = [
-    {
-        id: 1,
-        content: "HTML is easy",
-        date: "2022-05-30T17:30:31.098Z",
-        important: true
-    },
-    {
-        id: 2,
-        content: "Browser can execute only Javascript",
-        date: "2022-05-30T18:39:34.091Z",
-        important: false
-    },
-    {
-        id: 3,
-        content: "GET and POST are the most important methods of HTTP protocol",
-        date: "2022-05-30T19:20:14.298Z",
-        important: true
-    }
-]
+const password = process.argv[2]
 
+// set up mongo
+const url = `mongodb+srv://chewzzz:${password}@cluster0.myodohn.mongodb.net/?retryWrites=true&w=majority`
+
+mongoose
+    .connect(url)
+    .then(() => {
+        console.log('mongo connected')
+    })
+
+const noteSchema = new mongoose.Schema({
+    content: String,
+    date: Date,
+    important: Boolean
+})
+
+const Note = mongoose.model('Note', noteSchema)
+
+function addDefaultNotes() {
+    try {
+        notes.forEach(async (ele, idx) => {
+            const note = new Note({
+                id: idx + 1,
+                content: ele.content,
+                date: ele.date,
+                important: ele.important
+            })
+            await note.save()
+            console.log('note added!')
+        })
+        return mongoose.connection.close()
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+// middleware
 app.use(express.json())
 
 app.get('/', (req, res) => {
     res.send('<h1>Hello World!</h1>')
 })
 
-app.get("/api/notes", (req, res) => {
-    res.json(notes)
+app.get("/api/notes", async (req, res) => {
+    const allNotes = await Note.find({})
+    if (allNotes)
+        addDefaultNotes()
+    res.json(allNotes)
 })
 
 app.get("/api/notes/:id", (req, res) => {
