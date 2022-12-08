@@ -16,20 +16,43 @@ const noteSchema = new mongoose.Schema({
 
 const Note = mongoose.model('Note', noteSchema)
 
+// mongoose
+//     .connect(url)
+//     .then((result) => {
+//         console.log('mongodb connected')
+
+//         const note = new Note({
+//             content: 'HTML is easy',
+//             date: new Date(),
+//             important: true,
+//         })
+//         return note.save()
+//     })
+//     .then(() => {
+//         console.log('Note saved to database!')
+//         return mongoose.connection.close()
+//     })
+//     .catch((err) => console.log(err))
+
 mongoose
     .connect(url)
-    .then((result) => {
-        console.log('mongodb connected')
+    .then(() => {
+        console.log('mongo connected')
+    })
 
+async function createNote() {
+    try {
         const note = new Note({
-            content: 'HTML is easy',
+            content: 'HTML is important',
             date: new Date(),
             important: true,
         })
-        return note.save()
-    })
-    .then(() => {
-        console.log('Note saved to database!')
+        await note.save()
+        console.log('note saved!')
         return mongoose.connection.close()
-    })
-    .catch((err) => console.log(err))
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+createNote()
