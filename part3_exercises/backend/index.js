@@ -23,13 +23,21 @@ const noteSchema = new mongoose.Schema({
     important: Boolean
 })
 
+// do not return __v (mongo versioning field) to the frontend
+noteSchema.set('toJson', {
+    tranform: (doc, obj) => {
+        obj = obj.toString()
+        delete obj._id
+        delete obj.__v
+    }
+})
+
 const Note = mongoose.model('Note', noteSchema)
 
 function addDefaultNotes() {
     try {
         notes.forEach(async (ele, idx) => {
             const note = new Note({
-                id: idx + 1,
                 content: ele.content,
                 date: ele.date,
                 important: ele.important
@@ -85,7 +93,7 @@ app.post("/api/notes", (req, res) => {
         content: body.content,
         important: body.important || false,
         date: new Date(),
-        id: generateId()
+        //id: generateId()
     }
     notes = notes.concat(note)
     res.json(note)
