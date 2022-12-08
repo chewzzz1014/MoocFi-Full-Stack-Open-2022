@@ -38,15 +38,22 @@ app.get("/api/notes", (req, res) => {
     // res.json(allNotes)
 })
 
-app.get("/api/notes/:id", (req, res) => {
+app.get("/api/notes/:id", async (req, res) => {
     const { id } = req.params
-    const note = notes.find(e => e.id === Number(id))
+    // const note = notes.find(e => e.id === Number(id))
 
-    if (note) {
-        res.json(note)
-    } else {
-        res.status(404).end()
+    // if (note) {
+    //     res.json(note)
+    // } else {
+    //     res.status(404).end()
+    // }
+    try {
+        const foundNote = await Note.findById(id)
+        res.json(foundNote)
+    } catch (err) {
+        res.send(`<h1>404 Note with id ${id} not found!</h1>`)
     }
+
 })
 
 function generateId() {
