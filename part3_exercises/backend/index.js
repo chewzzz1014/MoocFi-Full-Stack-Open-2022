@@ -54,7 +54,7 @@ function generateId() {
     return maxId + 1
 }
 
-app.post("/api/notes", (req, res) => {
+app.post("/api/notes", async (req, res) => {
     const body = req.body
 
     if (!body.content) {
@@ -63,14 +63,16 @@ app.post("/api/notes", (req, res) => {
         })
     }
 
-    const note = {
+    const note = new Note({
         content: body.content,
         important: body.important || false,
         date: new Date(),
         //id: generateId()
-    }
-    notes = notes.concat(note)
-    res.json(note)
+    })
+
+    const createdNote = await note.save()
+    console.log('Note added!')
+    res.json(createdNote)
 })
 
 app.delete('/api/notes/:id', (req, res) => {
