@@ -1,4 +1,8 @@
 const mongoose = require('mongoose')
+const dotenv = require('dotenv')
+
+dotenv.config('../.env')
+
 const password = process.env.PASSWORD
 const url = process.env.MONGODB_URI || `mongodb+srv://chewzzz:${password}@cluster0.myodohn.mongodb.net/?retryWrites=true&w=majority`
 
