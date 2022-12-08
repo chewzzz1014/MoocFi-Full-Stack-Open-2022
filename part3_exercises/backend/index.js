@@ -26,7 +26,7 @@ const noteSchema = new mongoose.Schema({
 // do not return __v (mongo versioning field) to the frontend
 noteSchema.set('toJson', {
     tranform: (doc, obj) => {
-        obj = obj.toString()
+        obj.id = obj._id.toString()
         delete obj._id
         delete obj.__v
     }
@@ -57,11 +57,16 @@ app.get('/', (req, res) => {
     res.send('<h1>Hello World!</h1>')
 })
 
-app.get("/api/notes", async (req, res) => {
-    const allNotes = await Note.find({})
-    if (allNotes.length === 0)
-        addDefaultNotes()
-    res.json(allNotes)
+app.get("/api/notes", (req, res) => {
+    Note.find({}).then(data => {
+        if (data.length === 0)
+            addDefaultNotes()
+        res.json(data)
+    })
+
+    // if (allNotes.length === 0)
+    //     addDefaultNotes()
+    // res.json(allNotes)
 })
 
 app.get("/api/notes/:id", (req, res) => {
