@@ -6,15 +6,17 @@ if (process.argv.length < 3) {
 }
 
 const password = process.argv[2]
+const newName = process.argv[3]
+const newNumber = process.argv[4]
+
 const url = `mongodb+srv://chewzzz:${password}@cluster0.myodohn.mongodb.net/?retryWrites=true&w=majority`
 
-const noteSchema = new mongoose.Schema({
-    content: String,
-    date: Date,
-    important: Boolean
+const personSchema = new mongoose.Schema({
+    name: String,
+    number: String
 })
 
-const Note = mongoose.model('Note', noteSchema)
+const Person = mongoose.model('Person', personSchema)
 
 // mongoose
 //     .connect(url)
@@ -40,15 +42,14 @@ mongoose
         console.log('mongo connected')
     })
 
-async function createNote() {
+async function createPerson(newName, newNumber) {
     try {
-        const note = new Note({
-            content: 'HTML is important',
-            date: new Date(),
-            important: true,
+        const person = new Person({
+            name: newName,
+            number: newNumber
         })
-        await note.save()
-        console.log('note saved!')
+        const addedPerson = await person.save()
+        console.log(`added ${newName} number ${newNumber} to phonebook`)
         return mongoose.connection.close()
     } catch (err) {
         console.log(err)
@@ -57,13 +58,18 @@ async function createNote() {
 
 async function findNote() {
     try {
-        const foundNotes = await Note.find({})
-        console.log(foundNotes)
+        const foundPersons = await Person.find({})
+        console.log('phonebook: ')
+        foundPersons.forEach((ele) => {
+            console.log(`${ele.name} ${ele.number}`)
+        })
         return mongoose.connection.close()
     } catch (err) {
         console.log(err)
     }
 }
 
-// createNote()
-findNote()
+if (newName && newNumber)
+    createPerson(newName, newNumber)
+else
+    findNote()
