@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const { notes } = require("./data")
 const app = express()
 
-const password = process.argv[2]
+const password = process.argv[2] || process.env.PASSWORD
 
 // set up mongo
 const url = `mongodb+srv://chewzzz:${password}@cluster0.myodohn.mongodb.net/?retryWrites=true&w=majority`
@@ -12,6 +12,9 @@ mongoose
     .connect(url)
     .then(() => {
         console.log('mongo connected')
+    })
+    .catch((err) => {
+        console.log(err)
     })
 
 const noteSchema = new mongoose.Schema({
@@ -34,7 +37,6 @@ function addDefaultNotes() {
             await note.save()
             console.log('note added!')
         })
-        return mongoose.connection.close()
     } catch (err) {
         console.log(err)
     }
@@ -49,7 +51,7 @@ app.get('/', (req, res) => {
 
 app.get("/api/notes", async (req, res) => {
     const allNotes = await Note.find({})
-    if (allNotes)
+    if (allNotes.length === 0)
         addDefaultNotes()
     res.json(allNotes)
 })
