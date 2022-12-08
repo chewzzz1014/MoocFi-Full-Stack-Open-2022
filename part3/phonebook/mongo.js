@@ -55,4 +55,15 @@ async function createNote() {
     }
 }
 
-createNote()
+async function findNote() {
+    try {
+        const foundNotes = await Note.find({})
+        console.log(foundNotes)
+        return mongoose.connection.close()
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+// createNote()
+findNote()
