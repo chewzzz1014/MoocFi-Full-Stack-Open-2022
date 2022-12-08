@@ -1,38 +1,7 @@
 const express = require('express')
-const mongoose = require('mongoose')
 const { notes } = require("./data")
+const Note = require('./models/note')
 const app = express()
-
-const password = process.argv[2] || process.env.PASSWORD
-
-// set up mongo
-const url = `mongodb+srv://chewzzz:${password}@cluster0.myodohn.mongodb.net/?retryWrites=true&w=majority`
-
-mongoose
-    .connect(url)
-    .then(() => {
-        console.log('mongo connected')
-    })
-    .catch((err) => {
-        console.log(err)
-    })
-
-const noteSchema = new mongoose.Schema({
-    content: String,
-    date: Date,
-    important: Boolean
-})
-
-// do not return __v (mongo versioning field) to the frontend
-noteSchema.set('toJson', {
-    tranform: (doc, obj) => {
-        obj.id = obj._id.toString()
-        delete obj._id
-        delete obj.__v
-    }
-})
-
-const Note = mongoose.model('Note', noteSchema)
 
 function addDefaultNotes() {
     try {
