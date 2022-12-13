@@ -2,7 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
 const persons = require('./data')
-const Person = require('./models/mongo')
+const Person = require('./models/person')
 
 // allow for cross origin sharing
 const cors = require('cors')
