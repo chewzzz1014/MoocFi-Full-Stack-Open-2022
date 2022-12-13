@@ -33,6 +33,7 @@ function App() {
         [name]: value
       }
     })
+    console.log(newName)
   }
 
   function addDataToServer() {
@@ -44,13 +45,20 @@ function App() {
     personService
       .addContacts(noteObject)
       .then(res => {
-        console.log(res.data)
-        setPersons(persons.concat(res.data))
-        setResults(persons.concat(res.data))
+        console.log("iiiiii ", res.data)
+        console.log(res.data.data)
+        setPersons(persons.concat({
+          name: res.data.data.name,
+          number: res.data.data.number
+        }))
+        setResults(persons.concat({
+          name: res.data.data.name,
+          number: res.data.data.number
+        }))
 
         setNotiMsg({
           type: 'success',
-          msg: `${res.data.name} added`
+          msg: `${res.data.data.name} added`
         })
         setTimeout(() => {
           setNotiMsg({})
@@ -69,21 +77,21 @@ function App() {
       if (needReplace) {
 
         const foundContacts = persons.find(ele => ele.name.toLowerCase() === newName.name.trim().toLowerCase())
-        const targetId = foundContacts.id
+        const targetId = foundContacts._id
         const updatedContacts = {
           ...foundContacts,
-          number: newName.number
+          number: newName.number || 'unknown number'
         }
 
         personService
           .updateContacts(targetId, updatedContacts)
           .then(res => {
-            const f = persons.map(ele => ele.id !== targetId ? ele : res.data)
+            const f = persons.map(ele => ele._id !== targetId ? ele : res.data)
             setPersons(f)
             setResults(f)
           })
           .catch(err => {
-            const filtered = persons.filter(ele => ele.id !== targetId)
+            const filtered = persons.filter(ele => ele._id !== targetId)
             setPersons(filtered)
             setResults(filtered)
 
@@ -103,7 +111,7 @@ function App() {
   }
 
   function handleDelete(id) {
-    const foundContacts = persons.find((ele) => ele.id === id)
+    const foundContacts = persons.find((ele) => ele._id === id)
 
     console.log(id)
 
@@ -113,7 +121,7 @@ function App() {
       personService
         .deleteContacts(id)
         .then(res => {
-          const filtered = persons.filter(ele => ele.id !== id)
+          const filtered = persons.filter(ele => ele._id !== id)
 
           setPersons(filtered)
           setResults(filtered)

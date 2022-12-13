@@ -1,4 +1,5 @@
 const express = require('express')
+const mongoose = require('mongoose')
 const morgan = require('morgan')
 const persons = require('./data')
 const Person = require('./models/mongo')
@@ -8,8 +9,6 @@ const cors = require('cors')
 
 const app = express()
 app.use(cors())
-
-
 
 async function addDataToServer() {
     try {
@@ -59,7 +58,7 @@ app.get("/api/persons/:id", async (req, res) => {
     const { id } = req.params
 
     try {
-        const foundPerson = await Person.findById(id);
+        const foundPerson = await Person.findById(mongoose.Types.ObjectId(id));
         res.json(foundPerson)
     } catch (err) {
         return `404: Contacts with ID ${id} Not Found!`
@@ -97,6 +96,20 @@ app.post("/api/persons", async (req, res) => {
         operation: 'insertion',
         status: 'success',
         data: p
+    })
+})
+
+app.put("/api/persons/:id", async (req, res) => {
+    const { id } = req.params
+    const body = req.body
+
+    const updatedPerson = await Person.findOneAndUpdate({ _id: mongoose.Types.ObjectId(id) }, { number: body.number }, { new: true })
+    console.log(updatedPerson)
+
+    res.json({
+        operation: 'update contacts',
+        status: 'success',
+        data: updatedPerson
     })
 })
 

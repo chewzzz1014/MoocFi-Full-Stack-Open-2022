@@ -17,7 +17,7 @@ function Persons(props) {
     const { persons, handleDelete } = props
 
     const personsElements = persons.map((ele) => {
-        return <li>{`${ele.name} ${ele.number}`} <button onClick={() => handleDelete(ele.id)}>Delete</button></li>
+        return <li>{`${ele.name} ${ele.number}`} <button onClick={() => handleDelete(ele._id)}>Delete</button></li>
     })
 
     return (
