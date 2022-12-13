@@ -77,7 +77,12 @@ app.post("/api/persons", async (req, res, next) => {
 
     const foundPerson = await Person.findOne({ name: body.name })
     if (foundPerson) {
-        const updatedPerson = await Person.findOneAndUpdate({ name: body.name }, { number: body.number }, { new: true })
+        // run mongoose validator before updating
+        const updatedPerson = await Person.findOneAndUpdate(
+            { name: body.name },
+            { number: body.number },
+            { new: true, runValidators: true, context: 'query' }
+        )
         console.log(updatedPerson)
         res.json({
             operation: 'update contacts',
@@ -157,7 +162,11 @@ app.use((err, req, res, next) => {
     console.log(err.message)
 
     if (err.name === 'CastError') {
-        return response.status(400).send({ error: 'malformatted id' })
+        return res.status(400).send({ error: 'malformatted id' })
+    } else if (err.name === 'ValidationError') {
+        return res.status(400).json({
+            error: err.message
+        })
     }
     next(err)
 })

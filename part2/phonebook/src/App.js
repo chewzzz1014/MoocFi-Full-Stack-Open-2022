@@ -85,12 +85,22 @@ function App() {
         personService
           .updateContacts(targetId, updatedContacts)
           .then(res => {
-            const f = persons.map(ele => ele._id !== targetId ? ele : {
-              ...ele,
-              number: res.data.data.number
-            })
-            setPersons(f)
-            setResults(f)
+            if (!res.data.data) {
+              setNotiMsg({
+                type: 'error',
+                msg: `Error!`
+              })
+              setTimeout(() => {
+                setNotiMsg({})
+              }, 5000)
+            } else {
+              const f = persons.map(ele => ele._id !== targetId ? ele : {
+                ...ele,
+                number: res.data.data.number
+              })
+              setPersons(f)
+              setResults(f)
+            }
           })
           .catch(err => {
             const filtered = persons.filter(ele => ele._id !== targetId)
@@ -124,6 +134,7 @@ function App() {
         .then(res => {
           const filtered = persons.filter(ele => ele._id !== id)
 
+          console.log(res.data)
           setPersons(filtered)
           setResults(filtered)
         })
