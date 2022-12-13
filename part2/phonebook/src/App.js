@@ -33,7 +33,6 @@ function App() {
         [name]: value
       }
     })
-    console.log(newName)
   }
 
   function addDataToServer() {
@@ -116,7 +115,6 @@ function App() {
   function handleDelete(id) {
     const foundContacts = persons.find((ele) => ele._id === id)
 
-    console.log(id)
 
     const isDelete = window.confirm(`Delete ${foundContacts.name} ?`)
 
