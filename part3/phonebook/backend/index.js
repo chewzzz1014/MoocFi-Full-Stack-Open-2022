@@ -75,10 +75,14 @@ app.post("/api/persons", async (req, res) => {
         })
     }
 
-    const foundPerson = await Person.find({ name: body.name })
+    const foundPerson = await Person.findOne({ name: body.name })
     if (foundPerson) {
-        res.status(400).json({
-            error: "Name must be unique"
+        const updatedPerson = await Person.findOneAndUpdate({ name: body.name }, { number: body.number }, { new: true })
+        console.log(updatedPerson)
+        res.json({
+            operation: 'update contacts',
+            status: 'success',
+            data: updatedPerson
         })
     }
 
@@ -103,6 +107,16 @@ app.delete("/api/persons/:id", async (req, res) => {
         operation: "deletion",
         status: 'success',
         data: removedPerson
+    })
+})
+
+app.delete("/api/persons/delete/:name", async (req, res) => {
+    const { name } = req.params
+    const result = await Person.deleteMany({ name: name })
+    res.json({
+        operation: 'deletions by name',
+        status: 'success',
+        result: result
     })
 })
 
