@@ -7,6 +7,7 @@ function getAllContacts() {
     return axios.get(baseURL)
 }
 
+//works
 function updateContacts(id, newObj) {
     return axios.put(`${baseURL}/${id}`, newObj)
 }

@@ -86,7 +86,10 @@ function App() {
         personService
           .updateContacts(targetId, updatedContacts)
           .then(res => {
-            const f = persons.map(ele => ele._id !== targetId ? ele : res.data)
+            const f = persons.map(ele => ele._id !== targetId ? ele : {
+              ...ele,
+              number: res.data.data.number
+            })
             setPersons(f)
             setResults(f)
           })
