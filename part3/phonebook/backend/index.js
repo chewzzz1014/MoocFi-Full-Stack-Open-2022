@@ -9,6 +9,7 @@ const cors = require('cors')
 
 const app = express()
 app.use(cors())
+app.use(express.json())
 
 async function addDataToServer() {
     try {
@@ -25,7 +26,6 @@ async function addDataToServer() {
     }
 }
 
-app.use(express.json())
 app.use((morgan(function (tokens, req, res) {
     return [
         tokens.method(req, res),
@@ -61,7 +61,7 @@ app.get("/api/persons/:id", async (req, res) => {
         const foundPerson = await Person.findById(mongoose.Types.ObjectId(id));
         res.json(foundPerson)
     } catch (err) {
-        return `404: Contacts with ID ${id} Not Found!`
+        res.status(404).send(`404: Contacts with ID ${id} Not Found!`)
     }
 })
 
@@ -131,6 +131,16 @@ app.delete("/api/persons/delete/:name", async (req, res) => {
         status: 'success',
         result: result
     })
+})
+
+// error handling middleware
+app.use((err, req, res, next) => {
+    console.log(err.message)
+
+    if (error.name === 'CastError') {
+        return response.status(400).send({ error: 'malformatted id' })
+    }
+    next(err)
 })
 
 const PORT = process.env.PORT || 3001
