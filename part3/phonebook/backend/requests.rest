@@ -5,3 +5,7 @@ Content-Type: application/json
     "name": "chewzzz",
     "number": "1231-23322"
 }
+
+###
+
+DELETE http://localhost:3001/api/persons/6397f90ce10af0c9cd61bc8e
