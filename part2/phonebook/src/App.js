@@ -17,7 +17,7 @@ function App() {
     personService
       .getAllContacts()
       .then(res => {
-        console.log(res)
+        //console.log(res)
         setPersons(res.data)
         setResults(res.data)
       })
@@ -42,8 +42,8 @@ function App() {
     personService
       .addContacts(noteObject)
       .then(res => {
-        console.log("iiiiii ", res.data)
-        console.log(res.data.data)
+        // console.log("iiiiii ", res.data)
+        // console.log(res.data.data)
         setPersons(persons.concat({
           name: res.data.data.name,
           number: res.data.data.number
