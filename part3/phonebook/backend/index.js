@@ -74,23 +74,6 @@ app.post("/api/persons", async (req, res, next) => {
             error: 'Name and Number is required'
         })
     }
-
-    const foundPerson = await Person.findOne({ name: body.name })
-    if (foundPerson) {
-        // run mongoose validator before updating
-        const updatedPerson = await Person.findOneAndUpdate(
-            { name: body.name },
-            { number: body.number },
-            { new: true, runValidators: true, context: 'query' }
-        )
-        console.log(updatedPerson)
-        res.json({
-            operation: 'update contacts',
-            status: 'success',
-            data: updatedPerson
-        })
-    }
-
     const p = new Person({
         name: body.name,
         number: body.number
@@ -114,10 +97,15 @@ app.put("/api/persons/:id", async (req, res, next) => {
     const { id } = req.params
     const body = req.body
 
-    try {
-        const updatedPerson = await Person.findOneAndUpdate({ _id: mongoose.Types.ObjectId(id) }, { number: body.number }, { new: true })
-        console.log(updatedPerson)
 
+    try {
+        // run mongoose validator before updating
+        const updatedPerson = await Person.findByIdAndUpdate(
+            id,
+            { number: body.number },
+            { new: true, runValidators: true, context: 'query' }
+        )
+        console.log(updatedPerson)
         res.json({
             operation: 'update contacts',
             status: 'success',

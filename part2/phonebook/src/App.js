@@ -14,8 +14,6 @@ function App() {
   const [notiMsg, setNotiMsg] = useState({})
 
   useEffect(() => {
-
-    // before running the app, run `npm run server` to launch the json server with `persons` json
     personService
       .getAllContacts()
       .then(res => {
@@ -62,6 +60,15 @@ function App() {
         setTimeout(() => {
           setNotiMsg({})
         }, 5000)
+      }).catch(err => {
+        const errorMsg = err.response.data.error
+        setNotiMsg({
+          type: 'error',
+          msg: errorMsg
+        })
+        setTimeout(() => {
+          setNotiMsg({})
+        }, 5000)
       })
   }
 
@@ -85,7 +92,9 @@ function App() {
         personService
           .updateContacts(targetId, updatedContacts)
           .then(res => {
+            console.log(res)
             if (!res.data.data) {
+              // throw Exception("Data not found!")
               setNotiMsg({
                 type: 'error',
                 msg: `Error!`
@@ -103,13 +112,10 @@ function App() {
             }
           })
           .catch(err => {
-            const filtered = persons.filter(ele => ele._id !== targetId)
-            setPersons(filtered)
-            setResults(filtered)
-
+            const errorMsg = err.response.data.error
             setNotiMsg({
               type: 'error',
-              msg: `Information of ${foundContacts.name} has already been removed from server!`
+              msg: errorMsg
             })
             setTimeout(() => {
               setNotiMsg({})
