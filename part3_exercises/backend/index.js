@@ -3,6 +3,17 @@ const { notes } = require("./data")
 const Note = require('./models/note')
 const app = express()
 
+app.use((morgan(function (tokens, req, res) {
+    return [
+        tokens.method(req, res),
+        tokens.url(req, res),
+        tokens.status(req, res),
+        tokens.res(req, res, 'content-length'), '-',
+        tokens['response-time'](req, res), 'ms',
+        JSON.stringify(req.body)
+    ].join(' ')
+})))
+
 function addDefaultNotes() {
     try {
         notes.forEach(async (ele, idx) => {
@@ -26,19 +37,28 @@ app.get('/', (req, res) => {
     res.send('<h1>Hello World!</h1>')
 })
 
-app.get("/api/notes", (req, res) => {
-    Note.find({}).then(data => {
-        if (data.length === 0)
+app.get("/api/notes", async (req, res, next) => {
+    try {
+        const allNotes = await Note.find({})
+        if (!allNotes || allNotes.length === 0) {
             addDefaultNotes()
-        res.json(data)
-    })
+        }
+        res.json(allPersons)
+    } catch (err) {
+        next(err)
+    }
+    // Note.find({}).then(data => {
+    //     if (data.length === 0)
+    //         addDefaultNotes()
+    //     res.json(data)
+    // })
 
     // if (allNotes.length === 0)
     //     addDefaultNotes()
     // res.json(allNotes)
 })
 
-app.get("/api/notes/:id", async (req, res) => {
+app.get("/api/notes/:id", async (req, res, next) => {
     const { id } = req.params
     // const note = notes.find(e => e.id === Number(id))
 
@@ -51,42 +71,72 @@ app.get("/api/notes/:id", async (req, res) => {
         const foundNote = await Note.findById(id)
         res.json(foundNote)
     } catch (err) {
-        res.send(`<h1>404 Note with id ${id} not found!</h1>`)
+        next(err)
     }
 
 })
 
-function generateId() {
-    const maxId = notes.length > 0 ? Math.max(...notes.map(n => n.id)) : 0
-    return maxId + 1
-}
-
-app.post("/api/notes", async (req, res) => {
+app.post("/api/notes", async (req, res, next) => {
     const body = req.body
 
     if (!body.content) {
-        return res.status(400).json({
-            error: 'Content Missing'
-        })
+        next('Content Missing')
     }
 
     const note = new Note({
         content: body.content,
         important: body.important || false,
         date: new Date(),
-        //id: generateId()
     })
 
-    const createdNote = await note.save()
-    console.log('Note added!')
-    res.json(createdNote)
+    try {
+        const createdNote = await note.save()
+        console.log('Note added!')
+        res.json(createdNote)
+    } catch (err) {
+        next(err)
+    }
 })
 
-app.delete('/api/notes/:id', (req, res) => {
-    const id = Number(req.params.id)
-    notes = notes.filter(note => note.id !== id)
+app.put('/api/notes/:id', async (req, res, next) => {
+    const { id } = req.params
+    const body = req.body
 
-    res.status(204).end()
+
+    try {
+        // run mongoose validator before updating
+        const updatedNote = await Note.findByIdAndUpdate(
+            id,
+            { content: body.content, date: new Date() },
+            { new: true, runValidators: true, context: 'query' }
+        )
+        console.log(updatedNote)
+        res.json({
+            operation: 'update contacts',
+            status: 'success',
+            data: updatedNote
+        })
+    } catch (err) {
+        next(err)
+    }
+})
+
+app.delete('/api/notes/:id', async (req, res, next) => {
+    const id = Number(req.params.id)
+
+    try {
+        const removedNote = await Person.findOneAndDelete({ _id: id })
+        res.json({
+            operation: 'deletion',
+            status: 'success',
+            data: removedNote
+        })
+    } catch (err) {
+        next(err)
+    }
+    // notes = notes.filter(note => note.id !== id)
+
+    // res.status(204).end()
 })
 
 const unknownEndpoint = (request, response) => {
@@ -94,6 +144,10 @@ const unknownEndpoint = (request, response) => {
 }
 
 app.use(unknownEndpoint)
+app.use((err, req, res, next) => {
+    res.status(400).send(`Error: ${err}`)
+    next()
+})
 
 const PORT = 3001
 app.listen(PORT, () => {
