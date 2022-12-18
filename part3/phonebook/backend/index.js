@@ -45,8 +45,8 @@ app.get('/info', (req, res) => {
 app.get('/api/persons', async (req, res, next) => {
     try {
         const allPersons = await Person.find({})
-        if (!allPersons || allPersons.length == 0) {
-            addDataToServer();
+        if (!allPersons || allPersons.length === 0) {
+            addDataToServer()
         }
         res.json(allPersons)
     } catch (err) {
@@ -58,7 +58,7 @@ app.get('/api/persons/:id', async (req, res, next) => {
     const { id } = req.params
 
     try {
-        const foundPerson = await Person.findById(mongoose.Types.ObjectId(id));
+        const foundPerson = await Person.findById(mongoose.Types.ObjectId(id))
         res.json(foundPerson)
     } catch (err) {
         // res.status(404).send(`404: Contacts with ID ${id} Not Found!`)
