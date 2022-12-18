@@ -37,12 +37,12 @@ app.use((morgan(function (tokens, req, res) {
     ].join(' ')
 })))
 
-app.get("/info", (req, res) => {
+app.get('/info', (req, res) => {
     const r = `<p>Phonebook has info for ${persons.length} people</p><p>${new Date()}</p>`
     res.send(r)
 })
 
-app.get("/api/persons", async (req, res, next) => {
+app.get('/api/persons', async (req, res, next) => {
     try {
         const allPersons = await Person.find({})
         if (!allPersons || allPersons.length == 0) {
@@ -54,7 +54,7 @@ app.get("/api/persons", async (req, res, next) => {
     }
 })
 
-app.get("/api/persons/:id", async (req, res, next) => {
+app.get('/api/persons/:id', async (req, res, next) => {
     const { id } = req.params
 
     try {
@@ -66,7 +66,7 @@ app.get("/api/persons/:id", async (req, res, next) => {
     }
 })
 
-app.post("/api/persons", async (req, res, next) => {
+app.post('/api/persons', async (req, res, next) => {
     const body = req.body
 
     if (!body.name || !body.number) {
@@ -93,7 +93,7 @@ app.post("/api/persons", async (req, res, next) => {
     }
 })
 
-app.put("/api/persons/:id", async (req, res, next) => {
+app.put('/api/persons/:id', async (req, res, next) => {
     const { id } = req.params
     const body = req.body
 
@@ -116,13 +116,13 @@ app.put("/api/persons/:id", async (req, res, next) => {
     }
 })
 
-app.delete("/api/persons/:id", async (req, res, next) => {
+app.delete('/api/persons/:id', async (req, res, next) => {
     const { id } = req.params
 
     try {
         const removedPerson = await Person.findOneAndDelete({ _id: id })
         res.json({
-            operation: "deletion",
+            operation: 'deletion',
             status: 'success',
             data: removedPerson
         })
@@ -131,7 +131,7 @@ app.delete("/api/persons/:id", async (req, res, next) => {
     }
 })
 
-app.delete("/api/persons/delete/:name", async (req, res, next) => {
+app.delete('/api/persons/delete/:name', async (req, res, next) => {
     const { name } = req.params
     try {
         const result = await Person.deleteMany({ name: name })
