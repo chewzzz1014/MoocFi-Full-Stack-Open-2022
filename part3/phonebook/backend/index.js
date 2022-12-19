@@ -10,7 +10,6 @@ const cors = require('cors')
 
 const app = express()
 app.use(cors())
-app.use('/api/persons', personRoute)
 app.use(express.json())
 
 app.use((morgan(function (tokens, req, res) {
@@ -23,6 +22,8 @@ app.use((morgan(function (tokens, req, res) {
         JSON.stringify(req.body)
     ].join(' ')
 })))
+
+app.use('/api/persons', personRoute)
 
 app.get('/info', (req, res) => {
     const r = `<p>Phonebook has info for ${persons.length} people</p><p>${new Date()}</p>`
