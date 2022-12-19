@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const config = require('../utils/config')
 
 const personSchema = new mongoose.Schema({
     name: {
@@ -21,13 +20,5 @@ const personSchema = new mongoose.Schema({
 })
 
 const Person = mongoose.model('Person', personSchema)
-
-
-mongoose
-    .connect(config.MONGODB_URI)
-    .then(() => {
-        console.log('mongo connected')
-    })
-
 
 module.exports = Person

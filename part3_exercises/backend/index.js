@@ -1,13 +1,16 @@
 const express = require('express')
+const mongoose = require('mongoose')
 const morgan = require('morgan')
-const { notes } = require("./data")
-const Note = require('./models/note')
 const notesRouter = require('./routes/notes')
 const config = require('./utils/config')
 const middleware = require('./utils/middleware')
-const logger = require('./utils/logger')
 const app = express()
 
+mongoose
+    .connect(config.MONGODB_URI)
+    .then(() => {
+        console.log('mongo connected')
+    })
 
 // middleware
 app.use(express.json())

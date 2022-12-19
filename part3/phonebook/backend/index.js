@@ -1,9 +1,17 @@
 const express = require('express')
 const morgan = require('morgan')
+const mongoose = require('mongoose')
 const persons = require('./data')
 const config = require('./utils/config')
 const middleware = require('./utils/middleware')
 const personRoute = require('./routes/person')
+
+// connect to mongo
+mongoose
+    .connect(config.MONGODB_URI)
+    .then(() => {
+        console.log('mongo connected')
+    })
 
 // allow for cross origin sharing
 const cors = require('cors')
