@@ -45,9 +45,35 @@ const mostBlogs = (blogs) => {
     }
 }
 
+const mostLikes = (blogs) => {
+    let authors = new Map()
+    let result
+
+    blogs.forEach(b => {
+        if (!authors.get(b.author))
+            authors.set(b.author, b.likes)
+        else
+            authors.set(b.author, authors.get(b.author) + b.likes)
+    })
+
+    const maxCount = Math.max(...authors.values())
+
+    for (let key of authors.keys()) {
+        if (authors.get(key) === maxCount) {
+            result = key
+        }
+    }
+
+    return {
+        author: result,
+        likes: maxCount
+    }
+}
+
 module.exports = {
     dummy,
     totalLikes,
     favoriteBlog,
-    mostBlogs
+    mostBlogs,
+    mostLikes
 }
