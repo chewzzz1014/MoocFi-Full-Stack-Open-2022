@@ -2,7 +2,7 @@ const express = require('express')
 const morgan = require('morgan')
 const persons = require('./data')
 const config = require('./utils/config')
-const logger = require('./utils/logger')
+const middleware = require('./utils/middleware')
 const personRoute = require('./routes/person')
 
 // allow for cross origin sharing
@@ -11,7 +11,6 @@ const cors = require('cors')
 const app = express()
 app.use(cors())
 app.use(express.json())
-
 app.use((morgan(function (tokens, req, res) {
     return [
         tokens.method(req, res),
@@ -22,6 +21,7 @@ app.use((morgan(function (tokens, req, res) {
         JSON.stringify(req.body)
     ].join(' ')
 })))
+app.use(middleware.requestLogger)
 
 app.use('/api/persons', personRoute)
 
@@ -30,19 +30,10 @@ app.get('/info', (req, res) => {
     res.send(r)
 })
 
-// error handling middleware
-app.use((err, req, res, next) => {
-    console.log(err.message)
+app.use(middleware.unknownEndpoint)
 
-    if (err.name === 'CastError') {
-        return res.status(400).send({ error: 'malformatted id' })
-    } else if (err.name === 'ValidationError') {
-        return res.status(400).json({
-            error: err.message
-        })
-    }
-    next(err)
-})
+// error handling middleware
+app.use(middleware.errorHandler)
 
 
 app.listen(config.PORT, () => {

@@ -4,9 +4,13 @@ const { notes } = require("./data")
 const Note = require('./models/note')
 const notesRouter = require('./routes/notes')
 const config = require('./utils/config')
+const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const app = express()
 
+
+// middleware
+app.use(express.json())
 app.use((morgan(function (tokens, req, res) {
     return [
         tokens.method(req, res),
@@ -17,10 +21,9 @@ app.use((morgan(function (tokens, req, res) {
         JSON.stringify(req.body)
     ].join(' ')
 })))
+app.use(middleware.requestLogger)
 
-// middleware
-app.use(express.json())
-
+// main route
 app.get('/', (req, res) => {
     res.send('<h1>Hello World!</h1>')
 })
@@ -28,16 +31,9 @@ app.get('/', (req, res) => {
 // notes routes
 app.use('/api/notes', notesRouter)
 
-const unknownEndpoint = (request, response) => {
-    response.status(404).send({ error: 'unknown endpoint' })
-}
-app.use(unknownEndpoint)
-
-// error middleware
-app.use((err, req, res, next) => {
-    res.status(400).send(`Error: ${err}`)
-    next()
-})
+// middleware
+app.use(middleware.unknownEndpoint)
+app.use(middleware.errorHandler)
 
 app.listen(config.PORT, () => {
     console.log(`Server running on port ${config.PORT}`)
