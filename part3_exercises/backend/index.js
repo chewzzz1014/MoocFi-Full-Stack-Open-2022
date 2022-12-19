@@ -1,6 +1,9 @@
 const express = require('express')
+const morgan = require('morgan')
 const { notes } = require("./data")
 const Note = require('./models/note')
+const config = require('./utils/config')
+const logger = require('./utils/logger')
 const app = express()
 
 app.use((morgan(function (tokens, req, res) {
@@ -149,7 +152,6 @@ app.use((err, req, res, next) => {
     next()
 })
 
-const PORT = 3001
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
+app.listen(config.PORT, () => {
+    console.log(`Server running on port ${config.PORT}`)
 })

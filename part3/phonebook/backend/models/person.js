@@ -1,9 +1,5 @@
 const mongoose = require('mongoose')
-const dotenv = require('dotenv')
-
-dotenv.config()
-
-const url = `mongodb+srv://chewzzz:${process.env.PASSWORD}@cluster0.myodohn.mongodb.net/?retryWrites=true&w=majority`
+const config = require('../utils/config')
 
 const personSchema = new mongoose.Schema({
     name: {
@@ -28,7 +24,7 @@ const Person = mongoose.model('Person', personSchema)
 
 
 mongoose
-    .connect(url)
+    .connect(config.MONGODB_URI)
     .then(() => {
         console.log('mongo connected')
     })

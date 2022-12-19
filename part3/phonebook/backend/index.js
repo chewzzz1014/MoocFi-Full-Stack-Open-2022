@@ -3,6 +3,8 @@ const mongoose = require('mongoose')
 const morgan = require('morgan')
 const persons = require('./data')
 const Person = require('./models/person')
+const config = require('./utils/config')
+const logger = require('./utils/logger')
 
 // allow for cross origin sharing
 const cors = require('cors')
@@ -159,7 +161,7 @@ app.use((err, req, res, next) => {
     next(err)
 })
 
-const PORT = process.env.PORT || 3001
-app.listen(PORT, () => {
-    console.log(`Server running at port ${PORT}`)
+
+app.listen(config.PORT, () => {
+    console.log(`Server running at port ${config.PORT}`)
 })
