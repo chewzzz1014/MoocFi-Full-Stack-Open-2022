@@ -1,27 +1,10 @@
-const express = require('express')
-const cors = require('cors')
-const mongoose = require('mongoose')
-const { PORT, MONGODB_URI } = require('./utils/config')
-const blogRoutes = require('./routes/blogs')
-const { errorHandler, requestLogger, unknownEndpoint } = require('./utils/middleware')
-const app = express()
+const app = require('./app')
+const http = require('http')
+const config = require('./utils/config')
+const logger = require('./utils/logger')
 
+const server = http.createServer(app)
 
-mongoose
-    .connect(MONGODB_URI)
-    .then('mongo connected')
-
-// middleware
-app.use(cors())
-app.use(express.json())
-app.use(requestLogger)
-
-app.use('/api/blogs', blogRoutes)
-
-// middleware
-app.use(unknownEndpoint)
-app.use(errorHandler)
-
-app.listen(PORT, () => {
-    console.log(`Server running at port ${PORT}`)
+server.listen(config.PORT, () => {
+    logger.info(`Server running on port ${config.PORT}`)
 })
