@@ -79,7 +79,7 @@ test('a specific blog can be viewed', async () => {
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
-    const processedBlogToView = JSON.parse(JSON.stringify(blogToView))
+    const processedBlogToView = JSON.parse(JSON.stringify(blogToView))[0]
 
     expect(resultBlog.body).toEqual(processedBlogToView)
 })

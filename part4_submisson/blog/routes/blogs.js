@@ -20,7 +20,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
     const foundBlog = await Blog.find({ _id: req.params.id })
-    res.json(foundBlog)
+    res.status(200).json(foundBlog)
 })
 
 router.post('/', async (req, res, next) => {
@@ -41,7 +41,7 @@ router.post('/', async (req, res, next) => {
 
 router.delete('/:id', async (req, res, next) => {
     await Blog.findByIdAndDelete(req.params.id)
-    res.status(204)
+    res.status(204).end()
 })
 
 module.exports = router
