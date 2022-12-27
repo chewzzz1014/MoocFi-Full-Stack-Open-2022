@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
 })
 
 router.get('/:id', async (req, res, next) => {
-    const foundBlog = await Blog.find({ _id: req.params.id })
+    const foundBlog = await Blog.findOne({ _id: req.params.id })
     res.status(200).json(foundBlog)
 })
 
