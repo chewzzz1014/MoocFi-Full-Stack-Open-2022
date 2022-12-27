@@ -2,18 +2,20 @@ const Blog = require('../models/blog')
 const express = require('express')
 const router = express.Router()
 
+// we are using express-async-errors library. No try-catch block needed
+
 router.get('/', async (req, res, next) => {
     // Blog
     //     .find({})
     //     .then(blogs => {
     //         res.json(blogs)
     //     })
-    try {
-        const foundBlogs = await Blog.find({})
-        res.json(foundBlogs)
-    } catch (err) {
-        next(err)
-    }
+    //try {
+    const foundBlogs = await Blog.find({})
+    res.json(foundBlogs)
+    //} catch (err) {
+    //    next(err)
+    // }
 })
 
 router.post('/', async (req, res, next) => {
@@ -24,12 +26,12 @@ router.post('/', async (req, res, next) => {
     //     .then(result => {
     //         res.status(201).json(result)
     //     })
-    try {
-        const result = await blog.save()
-        res.status(201).json(result)
-    } catch (err) {
-        next(err)
-    }
+    //try {
+    const result = await blog.save()
+    res.status(201).json(result)
+    // } catch (err) {
+    //     next(err)
+    // }
 })
 
 module.exports = router
