@@ -1,34 +1,35 @@
-const Note = require('../models/note')
+const Blog = require('../models/blog')
 
-const initialNotes = [
+const initialBlogs = [
     {
-        content: 'HTML is easy',
-        date: new Date(),
-        important: false
+        title: 'Burning',
+        author: 'John Park',
+        url: 'https://google.com',
+        likes: 20
     },
     {
-        content: 'Browser can execute only Javascript',
-        date: new Date(),
-        important: true
-    }
+        title: 'A Nightmare',
+        author: 'chewzzz',
+        url: 'https://google.com',
+        likes: 15
+    },
 ]
 
 const nonExistingId = async () => {
-    const note = new Note({
-        content: 'willremovethissoon',
-        date: new Date()
+    const blog = new Blog({
+        title: 'willremovethissoon'
     })
-    await note.save()
-    await note.remove()
+    await blog.save()
+    await blog.remove()
 
-    return note._id.toString()
+    return blog._id.toString()
 }
 
-const notesInDb = async () => {
-    const notes = await Note.find({})
-    return notes.map(note => note.toJSON())
+const blogsInDb = async () => {
+    const blogs = await Blog.find({})
+    return blogs.map(b => b.toJSON())
 }
 
 module.exports = {
-    initialNotes, nonExistingId, notesInDb
+    initialBlogs, nonExistingId, blogsInDb
 }
