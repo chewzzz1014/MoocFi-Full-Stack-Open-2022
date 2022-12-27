@@ -22,7 +22,7 @@ test('blogs are returned as json', async () => {
 test('all blogs are returned', async () => {
     const response = await api.get('/api/blogs')
 
-    expect(response.body).toHaveLength(initialBlogs.length)
+    expect(response.body).toHaveLength(helper.initialBlogs.length)
 })
 
 test('a specific blog is within the returned blogs', async () => {
@@ -75,7 +75,7 @@ test('a specific blog can be viewed', async () => {
     const blogToView = blogsAtStart[0]
 
     const resultBlog = await api
-        .get(`/api/blogs/${blogToView.id}`)
+        .get(`/api/blogs/${blogToView._id}`)
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
@@ -89,7 +89,7 @@ test('a blog can be deleted', async () => {
     const blogToDelete = blogsAtStart[0]
 
     await api
-        .delete(`/api/blogs/${blogToDelete.id}`)
+        .delete(`/api/blogs/${blogToDelete._id}`)
         .expect(204)
 
     const blogsAtEnd = await helper.blogsInDb()

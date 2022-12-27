@@ -18,6 +18,11 @@ router.get('/', async (req, res, next) => {
     // }
 })
 
+router.get('/:id', async (req, res, next) => {
+    const foundBlog = await Blog.find({ _id: req.params.id })
+    res.json(foundBlog)
+})
+
 router.post('/', async (req, res, next) => {
     const blog = new Blog(req.body)
 
@@ -32,6 +37,11 @@ router.post('/', async (req, res, next) => {
     // } catch (err) {
     //     next(err)
     // }
+})
+
+router.delete('/:id', async (req, res, next) => {
+    await Blog.findByIdAndDelete(req.params.id)
+    res.status(204)
 })
 
 module.exports = router
