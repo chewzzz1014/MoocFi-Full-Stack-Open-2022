@@ -22,6 +22,7 @@ router.post('/', async (req, res) => {
         id: user._id
     }
 
+    // token expires after 1 hour. User need to login again
     const token = jwt.sign(
         userForToken,
         process.env.SECRET,
