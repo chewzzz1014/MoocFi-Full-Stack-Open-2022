@@ -1,9 +1,19 @@
 const Blog = require('../models/blog')
 const User = require('../models/user')
 const express = require('express')
+const jwt = require('jsonwebtoken')
 const router = express.Router()
 
 // we are using express-async-errors library. No try-catch block needed
+
+const getTokenFrom = (req) => {
+    const authorization = req.get('authorization')
+    if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+        return authorization.substring(7)
+    }
+    return null
+}
+
 
 router.get('/', async (req, res, next) => {
     // Blog
@@ -25,22 +35,17 @@ router.get('/:id', async (req, res, next) => {
 })
 
 
-// title: {
-//     type: String,
-//         required: true
-// },
-// author: String,
-//     url: String,
-//         likes: Number,
-//             user: {
-//     type: mongoose.Schema.Types.ObjectId,
-//         ref: 'User'
-// }
-
 router.post('/', async (req, res, next) => {
     const { body } = req
+    const token = getTokenFrom(req)
+    const decodedToken = jwt.verify(token, process.env.SECRET)
+    if (!decodedToken.id) {
+        return res.status(401).json({
+            error: 'token missing or invalid'
+        })
+    }
 
-    const user = await User.findById(body.userId)
+    const user = await User.findById(decodedToken.id)
 
     const blog = new Blog({
         title: body.title,
