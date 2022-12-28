@@ -5,6 +5,7 @@ require('express-async-errors')
 const { PORT, MONGODB_URI } = require('./utils/config')
 const blogRoutes = require('./routes/blogs')
 const userRoutes = require('./routes/users')
+const loginRoutes = require('./routes/login')
 const { errorHandler, requestLogger, unknownEndpoint } = require('./utils/middleware')
 const app = express()
 
@@ -20,6 +21,7 @@ app.use(requestLogger)
 
 app.use('/api/blogs', blogRoutes)
 app.use('/api/users', userRoutes)
+app.use('/api/login', loginRoutes)
 
 // middleware
 app.use(unknownEndpoint)
