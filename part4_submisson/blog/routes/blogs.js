@@ -12,7 +12,7 @@ router.get('/', async (req, res, next) => {
     //         res.json(blogs)
     //     })
     //try {
-    const foundBlogs = await Blog.find({})
+    const foundBlogs = await Blog.find({}).populate('user', { username: 1, name: 1 })
     res.json(foundBlogs)
     //} catch (err) {
     //    next(err)
