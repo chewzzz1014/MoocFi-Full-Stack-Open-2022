@@ -1,4 +1,5 @@
 const Blog = require('../models/blog')
+const User = require('../models/user')
 const express = require('express')
 const router = express.Router()
 
@@ -23,20 +24,37 @@ router.get('/:id', async (req, res, next) => {
     res.status(200).json(foundBlog)
 })
 
-router.post('/', async (req, res, next) => {
-    const blog = new Blog(req.body)
 
-    // blog
-    //     .save()
-    //     .then(result => {
-    //         res.status(201).json(result)
-    //     })
-    //try {
-    const result = await blog.save()
-    res.status(201).json(result)
-    // } catch (err) {
-    //     next(err)
-    // }
+// title: {
+//     type: String,
+//         required: true
+// },
+// author: String,
+//     url: String,
+//         likes: Number,
+//             user: {
+//     type: mongoose.Schema.Types.ObjectId,
+//         ref: 'User'
+// }
+
+router.post('/', async (req, res, next) => {
+    const { body } = req
+
+    const user = await User.findById(body.userId)
+
+    const blog = new Blog({
+        title: body.title,
+        author: body.author,
+        url: body.url,
+        likes: Number(body.likes),
+        user: user._id
+    })
+
+    const savedBlog = await blog.save()
+    user.blogs = user.blogs.concat(savedBlog._id)
+    await user.save()
+
+    res.json(savedBlog)
 })
 
 router.delete('/:id', async (req, res, next) => {
