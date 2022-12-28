@@ -8,10 +8,10 @@ const blogSchame = new mongoose.Schema({
     author: String,
     url: String,
     likes: Number,
-    user: {
+    user: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    }
+    }]
 })
 
 const Blog = mongoose.model('Blog', blogSchame)

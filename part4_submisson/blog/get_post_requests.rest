@@ -3,6 +3,11 @@ Content-Type: application/json
 
 ###
 
+GET http://localhost:3001/api/users
+Content-Type: application/json
+
+###
+
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNoZXd6enoiLCJpZCI6IjYzYWJkOTNlYTQxZjZmNmFhZDhhMDA0ZiIsImlhdCI6MTY3MjIwNjc0OX0.Kz_UpU8FYqXCxvRgjpfKKn00yCAcqZSjF70Ks7HvAGQ
@@ -24,3 +29,18 @@ Content-Type: application/json
     "username": "chewzzz",
     "password": "yoyoylolo"
 }
+
+###
+
+DELETE http://localhost:3001/api/blogs/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNoZXd6enoiLCJpZCI6IjYzYWJkOTNlYTQxZjZmNmFhZDhhMDA0ZiIsImlhdCI6MTY3MjIwNjc0OX0.Kz_UpU8FYqXCxvRgjpfKKn00yCAcqZSjF70Ks7HvAGQ
+
+{
+    "title": "Introduction to JavaScript",
+    "author": "J W Birch",
+    "url": "google.com",
+    "likes": 20
+}
+
+###
