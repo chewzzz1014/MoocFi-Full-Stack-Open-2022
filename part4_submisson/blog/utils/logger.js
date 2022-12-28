@@ -3,7 +3,7 @@ const info = (...args) => {
 }
 
 const error = (...args) => {
-    console.log(arsg.join(' '))
+    console.log(args.join(' '))
 }
 
 module.exports = {
