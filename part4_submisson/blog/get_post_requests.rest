@@ -10,7 +10,7 @@ Content-Type: application/json
 
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNoZXd6enoiLCJpZCI6IjYzYWJlODM3YWRmM2E4ZDNiZjIzYWIwMyIsImlhdCI6MTY3MjM2OTI0MiwiZXhwIjoxNjcyMzcyODQyfQ.wVyo9r4IawdmoymaRwxEct8JbV2VK228urbgCoB9xbw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNoZXd6enoiLCJpZCI6IjYzYWJlODM3YWRmM2E4ZDNiZjIzYWIwMyIsImlhdCI6MTY3MjM3MjkxMiwiZXhwIjoxNjcyMzc2NTEyfQ.S2YRZesOvI3y7GUSLd0ZydvcQXQccxiOfi2d3uJo_DI
 
 {
     "title": "Introduction to JavaScript",
@@ -32,8 +32,8 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3001/api/blogs/63abe837adf3a8d3bf23aafb
+DELETE http://localhost:3001/api/blogs/63ae6318c9e5ce31854a4426
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNoZXd6enoiLCJpZCI6IjYzYWJlODM3YWRmM2E4ZDNiZjIzYWIwMyIsImlhdCI6MTY3MjM2OTI0MiwiZXhwIjoxNjcyMzcyODQyfQ.wVyo9r4IawdmoymaRwxEct8JbV2VK228urbgCoB9xbw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNoZXd6enoiLCJpZCI6IjYzYWJlODM3YWRmM2E4ZDNiZjIzYWIwMyIsImlhdCI6MTY3MjM3MjkxMiwiZXhwIjoxNjcyMzc2NTEyfQ.S2YRZesOvI3y7GUSLd0ZydvcQXQccxiOfi2d3uJo_DI
 
 ###

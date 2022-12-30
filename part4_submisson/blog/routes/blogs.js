@@ -1,4 +1,5 @@
 const Blog = require('../models/blog')
+const User = require('../models/user')
 const { tokenExtractor, userExtractor } = require('../utils/middleware')
 const express = require('express')
 const router = express.Router()
@@ -71,15 +72,15 @@ router.delete('/:id', tokenExtractor, userExtractor, async (req, res) => {
     // }
 
     const blog = await Blog.findById(id)
-    const userInBlog = blog.user.map(u => u.id)
-    const user = req.user
+    const userInBlog = blog.user.map(u => u._id)
+    const loginedUser = req.user
     console.log(blog)
     console.log(userInBlog)
 
-    if (userInBlog.includes(user._id)) {
+    if (userInBlog.map(i => i.toString()).includes(loginedUser._id.toString())) {
         // delete blog from blog array under user document
         userInBlog.forEach(async (u) => {
-            const user = await Blog.findById(u)
+            const user = await User.findById(u)
             user.blogs = user.blogs.filter(b => b.id.toString() !== id.toString())
             await user.save()
         })
@@ -87,7 +88,10 @@ router.delete('/:id', tokenExtractor, userExtractor, async (req, res) => {
         // delete blog from blog document
         await Blog.deleteOne({ _id: id })
 
-        res.status(204).end()
+        res.status(204).json({
+            operation: 'Delete Blog',
+            status: 'success'
+        })
     } else {
         res.status(401).send('Unauthorised Action')
     }
