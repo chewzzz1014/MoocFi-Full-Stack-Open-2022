@@ -1,7 +1,6 @@
 const Blog = require('../models/blog')
-const User = require('../models/user')
+const { tokenExtractor, userExtractor } = require('../utils/middleware')
 const express = require('express')
-const jwt = require('jsonwebtoken')
 const router = express.Router()
 
 // we are using express-async-errors library. No try-catch block needed
@@ -26,7 +25,7 @@ router.get('/:id', async (req, res, next) => {
 })
 
 
-router.post('/', async (req, res, next) => {
+router.post('/', tokenExtractor, userExtractor, async (req, res, next) => {
     const { body } = req
     // move to middleware tokenExtractor
     //const token = getTokenFrom(req)
@@ -57,7 +56,7 @@ router.post('/', async (req, res, next) => {
     res.json(savedBlog)
 })
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', tokenExtractor, userExtractor, async (req, res) => {
     const { id } = req.params
 
     // move to middleware tokenExtractor

@@ -20,7 +20,7 @@ app.use(express.json())
 app.use(requestLogger)
 
 //app.use(tokenExtractor)
-app.use('/api/blogs', tokenExtractor, userExtractor, blogRoutes)
+app.use('/api/blogs', blogRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/login', loginRoutes)
 
