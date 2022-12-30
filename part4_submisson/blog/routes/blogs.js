@@ -73,21 +73,25 @@ router.delete('/:id', async (req, res, next) => {
 
     const blog = await Blog.findById(id)
     const userInBlog = blog.user.map(u => u.id)
-
+    const user = req.user
     console.log(blog)
     console.log(userInBlog)
 
-    // delete blog from blog array under user document
-    userInBlog.forEach(async (u) => {
-        const user = await Blog.findById(u)
-        user.blogs = user.blogs.filter(b => b.id.toString() !== id.toString())
-        await user.save()
-    })
+    if (userInBlog.includes(user._id)) {
+        // delete blog from blog array under user document
+        userInBlog.forEach(async (u) => {
+            const user = await Blog.findById(u)
+            user.blogs = user.blogs.filter(b => b.id.toString() !== id.toString())
+            await user.save()
+        })
 
-    // delete blog from blog document
-    await Blog.deleteOne({ _id: id })
+        // delete blog from blog document
+        await Blog.deleteOne({ _id: id })
 
-    res.status(204).end()
+        res.status(204).end()
+    } else {
+        res.status(401).send('Unauthorised Action')
+    }
 })
 
 module.exports = router
