@@ -6,15 +6,6 @@ const router = express.Router()
 
 // we are using express-async-errors library. No try-catch block needed
 
-const getTokenFrom = (req) => {
-    const authorization = req.get('authorization')
-    if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-        return authorization.substring(7)
-    }
-    return null
-}
-
-
 router.get('/', async (req, res, next) => {
     // Blog
     //     .find({})
@@ -37,8 +28,8 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
     const { body } = req
-    const token = getTokenFrom(req)
-    const decodedToken = jwt.verify(token, process.env.SECRET)
+    //const token = getTokenFrom(req)
+    const decodedToken = jwt.verify(req.token, process.env.SECRET)
     if (!decodedToken.id) {
         return res.status(401).json({
             error: 'token missing or invalid'
