@@ -28,17 +28,20 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
     const { body } = req
+    // move to middleware tokenExtractor
     //const token = getTokenFrom(req)
-    const decodedToken = jwt.verify(req.token, process.env.SECRET)
-    if (!decodedToken.id) {
-        return res.status(401).json({
-            error: 'token missing or invalid'
-        })
-    }
 
-    console.log(decodedToken.id)
-    const user = await User.findById(decodedToken.id)
+    // move to middleware userExtractor
+    // const decodedToken = jwt.verify(req.token, process.env.SECRET)
+    // if (!decodedToken.id) {
+    //     return res.status(401).json({
+    //         error: 'token missing or invalid'
+    //     })
+    // }
+    // console.log(decodedToken.id)
+    // const user = await User.findById(decodedToken.id)
 
+    const user = req.user
     const blog = new Blog({
         title: body.title,
         author: body.author,
@@ -56,13 +59,17 @@ router.post('/', async (req, res, next) => {
 
 router.delete('/:id', async (req, res, next) => {
     const { id } = req.params
+
+    // move to middleware tokenExtractor
     //const token = getTokenFrom(req)
-    const decodedToken = jwt.verify(req.token, process.env.SECRET)
-    if (!decodedToken.id) {
-        return res.status(401).json({
-            error: 'token missing or invalid'
-        })
-    }
+
+    // move to middleware userExtractor
+    // const decodedToken = jwt.verify(req.token, process.env.SECRET)
+    // if (!decodedToken.id) {
+    //     return res.status(401).json({
+    //         error: 'token missing or invalid'
+    //     })
+    // }
 
     const blog = await Blog.findById(id)
     const userInBlog = blog.user.map(u => u.id)
