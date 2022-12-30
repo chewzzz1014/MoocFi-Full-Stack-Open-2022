@@ -56,8 +56,8 @@ router.post('/', async (req, res, next) => {
 
 router.delete('/:id', async (req, res, next) => {
     const { id } = req.params
-    const token = getTokenFrom(req)
-    const decodedToken = jwt.verify(token, process.env.SECRET)
+    //const token = getTokenFrom(req)
+    const decodedToken = jwt.verify(req.token, process.env.SECRET)
     if (!decodedToken.id) {
         return res.status(401).json({
             error: 'token missing or invalid'
