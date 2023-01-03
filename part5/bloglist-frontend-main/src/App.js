@@ -75,7 +75,7 @@ const App = () => {
 
     try {
       newBlog.user = user.username
-      //newBlog.likes = 0
+      newBlog.likes = 0
       const createdBlog = await blogService.create(newBlog)
       setBlogs(blogs.concat(createdBlog))
       setSuccessMessage({
@@ -170,7 +170,7 @@ const App = () => {
   const hasLoginUI = () => (
     <div>
       <h2>Blogs</h2>
-      <Notification message={errorMessage ? successMessage : null} />
+      <Notification message={errorMessage || successMessage || null} />
       <p>{user.username} logged in <button onClick={handleLogout}>logout</button></p>
       <h2>create new</h2>
       {blogForm()}

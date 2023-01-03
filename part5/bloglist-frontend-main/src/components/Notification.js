@@ -5,8 +5,8 @@ const Notification = (props) => {
   }
 
   return (
-    <div className={`${message.status === 'error' ? 'error' : 'success'}`}>
-      {message}
+    <div className={message.status}>
+      {message.msg}
     </div>
   )
 }
