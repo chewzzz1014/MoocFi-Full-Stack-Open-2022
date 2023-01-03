@@ -93,7 +93,10 @@ const App = () => {
     e.preventDefault()
 
     try {
-      newBlog.user = user.username
+      newBlog.user = newBlog.user.concat({
+        username: user.username,
+        user: user.name
+      })
       newBlog.likes = 0
       const createdBlog = await blogService.create(newBlog)
       //console.log(createdBlog)
