@@ -26,9 +26,9 @@ app.use(express.static('build'))
 app.use(express.json())
 app.use(middleware.requestLogger)
 
-app.use('/api/login', loginRouter)
-app.use('/api/notes', notesRouter)
-app.use('/api/users', usersRouter)
+app.use('/api/noteAppLogin', loginRouter)
+app.use('/api/noteAppNotes', notesRouter)
+app.use('/api/noteAppUsers', usersRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)

@@ -1,2 +1,2 @@
-POST http://localhost:3001/api/notes 
+POST http://localhost:3001/api/noteAppNotes 
 Content-Type: application/json
