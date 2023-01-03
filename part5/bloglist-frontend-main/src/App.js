@@ -110,14 +110,26 @@ const App = () => {
     </form>
   )
 
+  const hasLoginUI = () => (
+    <div>
+      <h2>Blogs</h2>
+      <p>{user.username} logged in <button onClick={handleLogout}>logout</button></p>
+      <h2>create new</h2>
+      {blogForm()}
+      {bloglist()}
+    </div>
+  )
+
+  const hasNotLoginUI = () => (
+    <div>
+      <h1>Login to Application</h1>
+      {loginForm()}
+    </div>
+  )
+
   return (
     <div>
-      {!user && <h1>Login to Application</h1>}
-      {!user && loginForm()}
-      {user && <h2>Blogs</h2>}
-      {user && <p>{user.username} logged in <button onClick={handleLogout}>logout</button></p>}
-      {user && bloglist()}
-      {user && blogForm()}
+      {user ? hasLoginUI() : hasNotLoginUI()}
     </div>
   )
 }
