@@ -129,14 +129,42 @@ const App = () => {
     const confirmDelete = window.confirm(`Remove blog ${blog.title} by ${blog.author}`)
 
     if (confirmDelete) {
-      const deletedBlog = await blogService.deleteBlog(blog._id)
+      try {
+        const deletedBlog = await blogService.deleteBlog(blog._id)
+        setBlogs(blogs.filter(b => b._id !== blog._id))
+
+        setSuccessMessage({
+          msg: `Blog ${blog.title} deleted`,
+          status: 'success'
+        })
+        setTimeout(() => {
+          setSuccessMessage(null)
+        }, 5000)
+      } catch (e) {
+        setErrorMessage({
+          msg: e.response.data.error,
+          status: 'error'
+        })
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      }
     }
-    setBlogs(blogs.filter(b => b._id !== blog._id))
   }
 
   const handleLike = async (blog) => {
-    const updateBlog = await blogService.likeBlog(blog._id)
-    setBlogs(blogs.filter(b => b._id !== blog._id ? updateBlog : b))
+    try {
+      const updateBlog = await blogService.likeBlog(blog._id)
+      setBlogs(blogs.map(b => b._id === blog._id ? updateBlog : b))
+    } catch (e) {
+      setErrorMessage({
+        msg: e.response.data.error,
+        status: 'error'
+      })
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
   }
 
   const bloglist = () => (

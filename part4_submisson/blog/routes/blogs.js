@@ -37,10 +37,12 @@ router.post('/', tokenExtractor, userExtractor, async (req, res, next) => {
     res.json(savedBlog)
 })
 
-router.put('/:id', tokenExtractor, userExtractor, async (req, res) => {
+router.put('/:id', async (req, res) => {
     const { id } = req.params
+    console.log(id)
     const blog = await Blog.findById(id)
-    blog.likes++
+    console.log(blog)
+    blog.likes = Number(blog.likes) + 1
 
     const savedBlog = await blog.save()
     res.json(savedBlog)
