@@ -50,6 +50,18 @@ const App = () => {
     }
   }
 
+  const handleLogout = async (e) => {
+    e.preventDefault()
+    console.log('logout')
+
+    window.localStorage.removeItem('loggedUser')
+
+    //blogService.setToken(user.token)
+    setUser(null)
+    setUsername('')
+    setPassword('')
+  }
+
   const addBlog = (e) => {
     e.preventDefault()
 
@@ -58,7 +70,6 @@ const App = () => {
 
   const bloglist = () => (
     <div>
-      <h2>blogs</h2>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
@@ -67,7 +78,6 @@ const App = () => {
 
   const loginForm = () => (
     <form onSubmit={handleLogin}>
-      <h2>Login</h2>
       <div>
         username
         <input
@@ -102,8 +112,10 @@ const App = () => {
 
   return (
     <div>
-      <h1>Blog</h1>
+      {!user && <h1>Login to Application</h1>}
       {!user && loginForm()}
+      {user && <h2>Blogs</h2>}
+      {user && <p>{user.username} logged in <button onClick={handleLogout}>logout</button></p>}
       {user && bloglist()}
       {user && blogForm()}
     </div>
