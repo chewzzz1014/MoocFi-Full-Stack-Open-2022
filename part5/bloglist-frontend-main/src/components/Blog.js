@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-function Blog({ blog, handleDelete }) {
+function Blog({ blog, handleDelete, handleLike }) {
 
   const [visibility, setVisibility] = useState(false)
 
@@ -15,7 +15,7 @@ function Blog({ blog, handleDelete }) {
   const details = (
     <>
       <p>{blog.url}</p>
-      <p>likes {blog.likes}</p>
+      <p>likes {blog.likes} <button onClick={() => handleLike(blog)}>like</button></p>
       {blog.user && blog.user.map(u => <p>{u.username}</p>)}
       <button onClick={() => handleDelete(blog)}>remove</button>
     </>

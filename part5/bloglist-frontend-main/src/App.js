@@ -134,10 +134,15 @@ const App = () => {
     setBlogs(blogs.filter(b => b._id !== blog._id))
   }
 
+  const handleLike = async (blog) => {
+    const updateBlog = await blogService.likeBlog(blog._id)
+    setBlogs(blogs.filter(b => b._id !== blog._id ? updateBlog : b))
+  }
+
   const bloglist = () => (
     <div>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} handleDelete={handleDelete} />
+        <Blog key={blog.id} blog={blog} handleDelete={handleDelete} handleLike={handleLike} />
       )}
     </div>
   )

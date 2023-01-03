@@ -37,6 +37,15 @@ router.post('/', tokenExtractor, userExtractor, async (req, res, next) => {
     res.json(savedBlog)
 })
 
+router.put('/:id', tokenExtractor, userExtractor, async (req, res) => {
+    const { id } = req.params
+    const blog = await Blog.findById(id)
+    blog.likes++
+
+    const savedBlog = await blog.save()
+    res.json(savedBlog)
+})
+
 router.delete('/:id', tokenExtractor, userExtractor, async (req, res) => {
     const { id } = req.params
 
