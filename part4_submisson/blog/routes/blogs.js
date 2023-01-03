@@ -1,23 +1,21 @@
 const Blog = require('../models/blog')
 const User = require('../models/user')
-const { tokenExtractor, userExtractor } = require('../utils/middleware')
+const { getTokenFrom, tokenExtractor, userExtractor } = require('../utils/middleware')
 const express = require('express')
 const router = express.Router()
+const jwt = require('jsonwebtoken')
 
 // we are using express-async-errors library. No try-catch block needed
 
-router.get('/', async (req, res, next) => {
-    // Blog
-    //     .find({})
-    //     .then(blogs => {
-    //         res.json(blogs)
-    //     })
-    //try {
+router.get('/', async (req, res) => {
+    const token = getTokenFrom(req)
+    const decodedToken = jwt.verify(token, process.env.SECRET)
+
+    if (!token || !decodedToken.id) {
+        return res.status(401).json({ error: 'token missing or invalid' })
+    }
     const foundBlogs = await Blog.find({}).populate('user', { username: 1, name: 1 })
     res.json(foundBlogs)
-    //} catch (err) {
-    //    next(err)
-    // }
 })
 
 router.get('/:id', async (req, res, next) => {

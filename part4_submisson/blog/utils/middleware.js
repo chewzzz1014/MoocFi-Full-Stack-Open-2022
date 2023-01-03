@@ -69,5 +69,6 @@ module.exports = {
     requestLogger,
     unknownEndpoint,
     tokenExtractor,
-    userExtractor
+    userExtractor,
+    getTokenFrom
 }
