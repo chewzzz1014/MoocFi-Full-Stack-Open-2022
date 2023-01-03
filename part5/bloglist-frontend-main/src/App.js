@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
+import './index.css'
 import Blog from './components/Blog'
+import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -8,12 +10,14 @@ const App = () => {
   const [newBlog, setNewBlog] = useState({
     title: '',
     author: '',
-    url: ''
+    url: '',
+    user: []
   })
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccessMessage] = useState(null)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -66,11 +70,32 @@ const App = () => {
     setPassword('')
   }
 
-  const addBlog = (e) => {
+  const addBlog = async (e) => {
     e.preventDefault()
 
-    console.log('In addBlog method!')
-    console.log(newBlog)
+    try {
+      newBlog.user = user.username
+      //newBlog.likes = 0
+      const createdBlog = await blogService.create(newBlog)
+      setBlogs(blogs.concat(createdBlog))
+      setSuccessMessage({
+        msg: `a new blog ${createdBlog.title} by ${createdBlog.author} added`,
+        status: 'success'
+      })
+      setNewBlog({
+        title: '',
+        author: '',
+        url: '',
+      })
+    } catch (e) {
+      setErrorMessage({
+        msg: e.response.data.error,
+        status: 'error'
+      })
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
   }
 
   const bloglist = () => (
@@ -105,9 +130,7 @@ const App = () => {
     </form>
   )
 
-  const handleBlogForm = (e) => {
-    const [name, value] = e.target
-
+  const handleBlogForm = ({ name, value }) => {
     setNewBlog({
       ...newBlog,
       [name]: value
@@ -121,7 +144,7 @@ const App = () => {
         <input
           name='title'
           value={newBlog.title}
-          onChange={(e) => handleBlogForm(e.target.value)}
+          onChange={(e) => handleBlogForm(e.target)}
         />
       </div>
       <div>
@@ -129,7 +152,7 @@ const App = () => {
         <input
           name='author'
           value={newBlog.author}
-          onChange={(e) => handleBlogForm(e.target.value)}
+          onChange={(e) => handleBlogForm(e.target)}
         />
       </div>
       <div>
@@ -137,7 +160,7 @@ const App = () => {
         <input
           name='url'
           value={newBlog.url}
-          onChange={(e) => handleBlogForm(e.target.value)}
+          onChange={(e) => handleBlogForm(e.target)}
         />
       </div>
       <button type="submit">create</button>
@@ -147,6 +170,7 @@ const App = () => {
   const hasLoginUI = () => (
     <div>
       <h2>Blogs</h2>
+      <Notification message={errorMessage ? successMessage : null} />
       <p>{user.username} logged in <button onClick={handleLogout}>logout</button></p>
       <h2>create new</h2>
       {blogForm()}
