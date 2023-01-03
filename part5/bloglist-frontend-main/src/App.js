@@ -50,8 +50,19 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
+
+      setSuccessMessage({
+        msg: `Welcome, ${user.username}!`,
+        status: 'success'
+      })
+      setTimeout(() => {
+        setSuccessMessage(null)
+      }, 5000)
     } catch (e) {
-      setErrorMessage('Wrong Credentials')
+      setErrorMessage({
+        msg: 'wrong username or password',
+        status: 'error'
+      })
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
@@ -82,6 +93,10 @@ const App = () => {
         msg: `a new blog ${createdBlog.title} by ${createdBlog.author} added`,
         status: 'success'
       })
+      setTimeout(() => {
+        setSuccessMessage(null)
+      }, 5000)
+
       setNewBlog({
         title: '',
         author: '',
