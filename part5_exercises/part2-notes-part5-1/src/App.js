@@ -86,33 +86,48 @@ const App = () => {
     ? notes
     : notes.filter(note => note.important)
 
+  const loginForm = () => (
+    <form onSubmit={handleLogin}>
+      <h2>Login</h2>
+      <div>
+        username
+        <input
+          type="text"
+          value={username}
+          name="Username"
+          onChange={({ target }) => setUsername(target.value)}
+        />
+      </div>
+      <div>
+        password
+        <input
+          type="password"
+          value={password}
+          name="Password"
+          onChange={({ target }) => setPassword(target.value)}
+        />
+      </div>
+      <button type="submit">login</button>
+    </form>
+  )
+
+  const noteForm = () => (
+    <form onSubmit={addNote}>
+      <input
+        value={newNote}
+        onChange={handleNoteChange}
+      />
+      <button type="submit">save</button>
+    </form>
+  )
+
   return (
     <div>
       <h1>Notes</h1>
       <Notification message={errorMessage} />
 
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          username
-          <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
-          />
-        </div>
-        <div>
-          password
-          <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type="submit">login</button>
-      </form>
+      {!user && loginForm()}
+      {user && noteForm()}
 
       <div>
         <button onClick={() => setShowAll(!showAll)}>
@@ -128,13 +143,6 @@ const App = () => {
           />
         )}
       </ul>
-      <form onSubmit={addNote}>
-        <input
-          value={newNote}
-          onChange={handleNoteChange}
-        />
-        <button type="submit">save</button>
-      </form>
       <Footer />
     </div>
   )
