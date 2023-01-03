@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import './index.css'
 import Blog from './components/Blog'
+import AddBlogForm from './components/AddBlogFrom'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -8,6 +9,7 @@ import loginService from './services/login'
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [newBlog, setNewBlog] = useState({
+    id: '',
     title: '',
     author: '',
     url: '',
@@ -93,6 +95,7 @@ const App = () => {
       newBlog.user = user.username
       newBlog.likes = 0
       const createdBlog = await blogService.create(newBlog)
+      //console.log(createdBlog)
       setBlogs(blogs.concat(createdBlog))
       setSuccessMessage({
         msg: `a new blog ${createdBlog.title} by ${createdBlog.author} added`,
@@ -157,43 +160,17 @@ const App = () => {
     })
   }
 
-  const blogForm = () => (
-    <form onSubmit={addBlog}>
-      <div>
-        title:
-        <input
-          name='title'
-          value={newBlog.title}
-          onChange={(e) => handleBlogForm(e.target)}
-        />
-      </div>
-      <div>
-        author:
-        <input
-          name='author'
-          value={newBlog.author}
-          onChange={(e) => handleBlogForm(e.target)}
-        />
-      </div>
-      <div>
-        url:
-        <input
-          name='url'
-          value={newBlog.url}
-          onChange={(e) => handleBlogForm(e.target)}
-        />
-      </div>
-      <button type="submit">create</button>
-    </form>
-  )
-
   const hasLoginUI = () => (
     <div>
       <h2>Blogs</h2>
       <Notification message={errorMessage || successMessage || null} />
       <p>{user.username} logged in <button onClick={handleLogout}>logout</button></p>
       <h2>create new</h2>
-      {blogForm()}
+      <AddBlogForm
+        addBlog={addBlog}
+        newBlog={newBlog}
+        handleBlogForm={handleBlogForm}
+      />
       {bloglist()}
     </div>
   )
