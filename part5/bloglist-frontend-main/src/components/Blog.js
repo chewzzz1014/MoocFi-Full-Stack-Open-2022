@@ -16,7 +16,8 @@ function Blog({ blog, handleDelete, handleLike }) {
     <>
       <p>{blog.url}</p>
       <p>likes {blog.likes} <button onClick={() => handleLike(blog)}>like</button></p>
-      {blog.user && blog.user.map(u => u)}
+      <p>{blog.user && blog.user.map(u => u.username)}
+      </p>
       <button onClick={() => handleDelete(blog)}>remove</button>
     </>
   )
