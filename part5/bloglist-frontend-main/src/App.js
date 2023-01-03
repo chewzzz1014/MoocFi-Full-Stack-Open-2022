@@ -5,7 +5,11 @@ import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [newBlog, setNewBlog] = useState('')
+  const [newBlog, setNewBlog] = useState({
+    title: '',
+    author: '',
+    url: ''
+  })
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -66,6 +70,7 @@ const App = () => {
     e.preventDefault()
 
     console.log('In addBlog method!')
+    console.log(newBlog)
   }
 
   const bloglist = () => (
@@ -100,13 +105,42 @@ const App = () => {
     </form>
   )
 
+  const handleBlogForm = (e) => {
+    const [name, value] = e.target
+
+    setNewBlog({
+      ...newBlog,
+      [name]: value
+    })
+  }
+
   const blogForm = () => (
     <form onSubmit={addBlog}>
-      <input
-        value={newBlog}
-        onChange={(e) => setNewBlog(e.target.value)}
-      />
-      <button type="submit">save</button>
+      <div>
+        title:
+        <input
+          name='title'
+          value={newBlog.title}
+          onChange={(e) => handleBlogForm(e.target.value)}
+        />
+      </div>
+      <div>
+        author:
+        <input
+          name='author'
+          value={newBlog.author}
+          onChange={(e) => handleBlogForm(e.target.value)}
+        />
+      </div>
+      <div>
+        url:
+        <input
+          name='url'
+          value={newBlog.url}
+          onChange={(e) => handleBlogForm(e.target.value)}
+        />
+      </div>
+      <button type="submit">create</button>
     </form>
   )
 
