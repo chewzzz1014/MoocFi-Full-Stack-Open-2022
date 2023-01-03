@@ -20,6 +20,7 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
   const [successMessage, setSuccessMessage] = useState(null)
+  const [createBlogVisible, setCreateBlogVisible] = useState(false)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -166,11 +167,13 @@ const App = () => {
       <Notification message={errorMessage || successMessage || null} />
       <p>{user.username} logged in <button onClick={handleLogout}>logout</button></p>
       <h2>create new</h2>
-      <AddBlogForm
+      {!createBlogVisible && <button onClick={() => setCreateBlogVisible(!createBlogVisible)}>new note</button>}
+      {createBlogVisible && <AddBlogForm
         addBlog={addBlog}
         newBlog={newBlog}
         handleBlogForm={handleBlogForm}
-      />
+      />}
+      {createBlogVisible && <button onClick={() => setCreateBlogVisible(!createBlogVisible)}>cancel</button>}
       {bloglist()}
     </div>
   )
