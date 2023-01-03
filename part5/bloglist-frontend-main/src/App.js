@@ -116,7 +116,7 @@ const App = () => {
       })
     } catch (e) {
       setErrorMessage({
-        msg: e.response.data.error,
+        msg: e.response.data,
         status: 'error'
       })
       setTimeout(() => {

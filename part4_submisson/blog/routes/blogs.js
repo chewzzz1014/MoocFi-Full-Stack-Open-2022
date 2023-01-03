@@ -12,16 +12,16 @@ router.get('/', tokenExtractor, userExtractor, async (req, res) => {
     res.json(foundBlogs)
 })
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', async (req, res) => {
     const foundBlog = await Blog.findOne({ _id: req.params.id })
     res.status(200).json(foundBlog)
 })
 
-
 router.post('/', tokenExtractor, userExtractor, async (req, res, next) => {
     const { body } = req
-
     const user = req.user
+
+    //const foundUser = await User.findById(user._id)
     const blog = new Blog({
         title: body.title,
         author: body.author,
