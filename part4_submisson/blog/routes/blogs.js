@@ -7,13 +7,7 @@ const jwt = require('jsonwebtoken')
 
 // we are using express-async-errors library. No try-catch block needed
 
-router.get('/', async (req, res) => {
-    const token = getTokenFrom(req)
-    const decodedToken = jwt.verify(token, process.env.SECRET)
-
-    if (!token || !decodedToken.id) {
-        return res.status(401).json({ error: 'token missing or invalid' })
-    }
+router.get('/', tokenExtractor, userExtractor, async (req, res) => {
     const foundBlogs = await Blog.find({}).populate('user', { username: 1, name: 1 })
     res.json(foundBlogs)
 })
@@ -26,18 +20,6 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/', tokenExtractor, userExtractor, async (req, res, next) => {
     const { body } = req
-    // move to middleware tokenExtractor
-    //const token = getTokenFrom(req)
-
-    // move to middleware userExtractor
-    // const decodedToken = jwt.verify(req.token, process.env.SECRET)
-    // if (!decodedToken.id) {
-    //     return res.status(401).json({
-    //         error: 'token missing or invalid'
-    //     })
-    // }
-    // console.log(decodedToken.id)
-    // const user = await User.findById(decodedToken.id)
 
     const user = req.user
     const blog = new Blog({
@@ -57,17 +39,6 @@ router.post('/', tokenExtractor, userExtractor, async (req, res, next) => {
 
 router.delete('/:id', tokenExtractor, userExtractor, async (req, res) => {
     const { id } = req.params
-
-    // move to middleware tokenExtractor
-    //const token = getTokenFrom(req)
-
-    // move to middleware userExtractor
-    // const decodedToken = jwt.verify(req.token, process.env.SECRET)
-    // if (!decodedToken.id) {
-    //     return res.status(401).json({
-    //         error: 'token missing or invalid'
-    //     })
-    // }
 
     const blog = await Blog.findById(id)
     const userInBlog = blog.user.map(u => u._id)

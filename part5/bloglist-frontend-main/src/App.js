@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
+import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
+  const [newBlog, setNewBlog] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -28,7 +30,7 @@ const App = () => {
     event.preventDefault()
     //console.log('logging in with', username, password)
     try {
-      const user = await blogService.login({
+      const user = await loginService.login({
         username, password
       })
 
@@ -46,6 +48,12 @@ const App = () => {
         setErrorMessage(null)
       }, 5000)
     }
+  }
+
+  const addBlog = (e) => {
+    e.preventDefault()
+
+    console.log('In addBlog method!')
   }
 
   const bloglist = () => (
@@ -82,11 +90,22 @@ const App = () => {
     </form>
   )
 
+  const blogForm = () => (
+    <form onSubmit={addBlog}>
+      <input
+        value={newBlog}
+        onChange={(e) => setNewBlog(e.target.value)}
+      />
+      <button type="submit">save</button>
+    </form>
+  )
+
   return (
     <div>
       <h1>Blog</h1>
       {!user && loginForm()}
       {user && bloglist()}
+      {user && blogForm()}
     </div>
   )
 }
