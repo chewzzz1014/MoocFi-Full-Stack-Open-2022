@@ -1,4 +1,6 @@
 import axios from 'axios'
+// const baseUrl = 'https://localhost:3001/api/notes'
+// we've set the proxy as localhost:3001
 const baseUrl = '/api/notes'
 
 const getAll = () => {
