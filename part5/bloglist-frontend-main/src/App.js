@@ -93,13 +93,14 @@ const App = () => {
     e.preventDefault()
 
     try {
-      newBlog.user = newBlog.user.concat({
+      newBlog.user = [{
         username: user.username,
-        user: user.name
-      })
+        name: user.name
+      }]
+
       newBlog.likes = 0
       const createdBlog = await blogService.create(newBlog)
-      //console.log(createdBlog)
+
       setBlogs(blogs.concat(createdBlog))
       setSuccessMessage({
         msg: `a new blog ${createdBlog.title} by ${createdBlog.author} added`,
@@ -116,7 +117,7 @@ const App = () => {
       })
     } catch (e) {
       setErrorMessage({
-        msg: e.response.data,
+        msg: e.message,
         status: 'error'
       })
       setTimeout(() => {
@@ -142,7 +143,7 @@ const App = () => {
         }, 5000)
       } catch (e) {
         setErrorMessage({
-          msg: e.response.data.error,
+          msg: e.message,
           status: 'error'
         })
         setTimeout(() => {
@@ -158,7 +159,7 @@ const App = () => {
       setBlogs(blogs.map(b => b._id === blog._id ? updateBlog : b))
     } catch (e) {
       setErrorMessage({
-        msg: e.response.data.error,
+        msg: e.message,
         status: 'error'
       })
       setTimeout(() => {

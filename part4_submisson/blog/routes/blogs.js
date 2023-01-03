@@ -34,6 +34,8 @@ router.post('/', tokenExtractor, userExtractor, async (req, res, next) => {
     user.blogs = user.blogs.concat(savedBlog._id)
     await user.save()
 
+    await savedBlog.populate('user')
+
     res.json(savedBlog)
 })
 

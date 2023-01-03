@@ -21,7 +21,6 @@ function Blog({ blog, handleDelete, handleLike }) {
       <button onClick={() => handleDelete(blog)}>remove</button>
     </>
   )
-  console.log(blog)
   return (
     <div style={blogStyle}>
       {blog.title} {blog.author}
