@@ -49,6 +49,7 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (e) {
+      console.log(e)
       setErrorMessage('Wrong Credentials')
       setTimeout(() => {
         setErrorMessage(null)
@@ -141,8 +142,12 @@ const App = () => {
       <h1>Notes</h1>
       <Notification message={errorMessage} />
 
-      {!user && loginForm()}
-      {user && noteForm()}
+      {user ? <div>
+        <p>{user.name} logged-in</p>
+        {noteForm()}
+      </div>
+        : loginForm()
+      }
 
       <div>
         <button onClick={() => setShowAll(!showAll)}>
