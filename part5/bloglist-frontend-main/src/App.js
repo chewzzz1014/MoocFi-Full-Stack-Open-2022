@@ -58,6 +58,11 @@ const App = () => {
       setTimeout(() => {
         setSuccessMessage(null)
       }, 5000)
+
+      blogService.getAll().then(blogs =>
+        setBlogs(blogs)
+      )
+
     } catch (e) {
       setErrorMessage({
         msg: 'wrong username or password',
@@ -196,6 +201,7 @@ const App = () => {
   const hasNotLoginUI = () => (
     <div>
       <h1>Login to Application</h1>
+      <Notification message={errorMessage || successMessage || null} />
       {loginForm()}
     </div>
   )

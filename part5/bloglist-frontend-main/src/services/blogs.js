@@ -26,4 +26,6 @@ const create = async newObject => {
   return request.data
 }
 
+
+
 export default { getAll, setToken, create }
