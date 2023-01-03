@@ -23,7 +23,7 @@ function Blog({ blog, handleDelete, handleLike }) {
   //console.log(blog)
   return (
     <div style={blogStyle}>
-      {blog.title} {blog.author} {blog._id}
+      {blog.title} {blog.author}
       <button onClick={() => setVisibility(!visibility)}>{`${!visibility ? 'view' : 'hide'}`}</button>
       {visibility && details}
     </div>
