@@ -3,6 +3,7 @@ import './index.css'
 import Blog from './components/Blog'
 import AddBlogForm from './components/AddBlogFrom'
 import Notification from './components/Notification'
+import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -21,6 +22,7 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [successMessage, setSuccessMessage] = useState(null)
   const [createBlogVisible, setCreateBlogVisible] = useState(false)
+  const [showAll, setShowAll] = useState(true)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -213,23 +215,25 @@ const App = () => {
       <Notification message={errorMessage || successMessage || null} />
       <p>{user.username} logged in <button onClick={handleLogout}>logout</button></p>
       <h2>create new</h2>
-      {!createBlogVisible && <button onClick={() => setCreateBlogVisible(!createBlogVisible)}>new note</button>}
-      {createBlogVisible && <AddBlogForm
-        addBlog={addBlog}
-        newBlog={newBlog}
-        handleBlogForm={handleBlogForm}
-      />}
-      {createBlogVisible && <button onClick={() => setCreateBlogVisible(!createBlogVisible)}>cancel</button>}
+      <Togglable buttonLabel='new blog'>
+        <button onClick={() => setCreateBlogVisible(!createBlogVisible)}>new blog</button>
+        <AddBlogForm
+          addBlog={addBlog}
+          newBlog={newBlog}
+          handleBlogForm={handleBlogForm}
+        />
+        <button onClick={() => setCreateBlogVisible(!createBlogVisible)}>cancel</button>
+      </Togglable>
       {bloglist()}
     </div>
   )
 
   const hasNotLoginUI = () => (
-    <div>
+    <Togglable buttonLabel='login'>
       <h1>Login to Application</h1>
       <Notification message={errorMessage || successMessage || null} />
       {loginForm()}
-    </div>
+    </Togglable>
   )
 
   return (

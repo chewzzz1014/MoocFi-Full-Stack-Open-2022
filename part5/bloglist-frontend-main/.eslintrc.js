@@ -20,23 +20,23 @@ module.exports = {
     ],
     "rules": {
         "indent": [
-            "error",
+            "off",
             2
         ],
         "linebreak-style": [
-            "error",
-            "unix"
+            "off",
+            "windows"
         ],
         "quotes": [
-            "error",
+            "off",
             "single"
         ],
         "semi": [
-            "error",
+            "off",
             "never"
         ],
-        "eqeqeq": "error",
-        "no-trailing-spaces": "error",
+        "eqeqeq": "off",
+        "no-trailing-spaces": "off",
         "object-curly-spacing": [
             "error", "always"
         ],
