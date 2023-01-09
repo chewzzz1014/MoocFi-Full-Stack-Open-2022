@@ -10,7 +10,12 @@ test('<NoteForm /> updates parent state and calls onSubmit', async () => {
 
     render(<NoteForm createNote={createNote} />)
 
-    const input = screen.getByRole('textbox')
+    // use getAllByRole for many input fields
+    // getAllByRole will return array 
+    //const input = screen.getByRole('textbox')
+
+    // better appraoch is to use placeholder text
+    const input = screen.getByPlaceholderText('write here note content')
     const sendBtn = screen.getByText('save')
 
     await user.type(input, 'testing a form...')
