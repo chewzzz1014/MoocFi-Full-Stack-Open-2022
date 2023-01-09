@@ -17,12 +17,12 @@ describe('<Togglable />', () => {
         ).container
     })
 
-    test('renders its children', aysnc() => {
+    test('renders its children', async () => {
         await screen.findAllByText('togglable content')
     })
 
     test('at start the children are not displayed', () => {
-        const dic = container.querySelector('.togglableContent')
+        const div = container.querySelector('.togglableContent')
         expect(div).toHaveStyle('display: none')
     })
 
