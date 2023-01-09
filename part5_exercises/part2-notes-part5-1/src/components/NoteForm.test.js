@@ -8,16 +8,20 @@ test('<NoteForm /> updates parent state and calls onSubmit', async () => {
     const createNote = jest.fn()
     const user = userEvent.setup()
 
-    const { container } = render(<NoteForm createNote={createNote} />)
+    // for selecting using css style
+    //const { container } = render(<NoteForm createNote={createNote} />)
+
+    render(<NoteForm createNote={createNote} />)
 
     // use getAllByRole for many input fields
     // getAllByRole will return array 
     //const input = screen.getByRole('textbox')
 
-    //  use placeholder text to select the input field
-    //const input = screen.getByPlaceholderText('write here note content')
+    // select based on id. Need container
+    //const input = container.querySelector('#note-input')
 
-    const input = container.querySelector('#note-input')
+    //  use placeholder text to select the input field
+    const input = screen.getByPlaceholderText('write here note content')
     const sendBtn = screen.getByText('save')
 
     await user.type(input, 'testing a form...')
