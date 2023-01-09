@@ -90,32 +90,42 @@ const App = () => {
     setPassword('')
   }
 
-  const addBlog = async (e) => {
-    e.preventDefault()
+  const bloglist = () => (
+    <div>
+      {blogs.map(blog =>
+        <Blog key={blog.id} blog={blog} handleDelete={handleDelete} handleLike={handleLike} />
+      )}
+    </div>
+  )
 
+  const loginForm = () => (
+    <form onSubmit={handleLogin}>
+      <div>
+        username
+        <input
+          type="text"
+          value={username}
+          name="Username"
+          onChange={({ target }) => setUsername(target.value)}
+        />
+      </div>
+      <div>
+        password
+        <input
+          type="password"
+          value={password}
+          name="Password"
+          onChange={({ target }) => setPassword(target.value)}
+        />
+      </div>
+      <button type="submit">login</button>
+    </form>
+  )
+
+  const handleLike = async (blog) => {
     try {
-      newBlog.user = [{
-        username: user.username,
-        name: user.name
-      }]
-
-      newBlog.likes = 0
-      const createdBlog = await blogService.create(newBlog)
-
-      setBlogs(blogs.concat(createdBlog))
-      setSuccessMessage({
-        msg: `a new blog ${createdBlog.title} by ${createdBlog.author} added`,
-        status: 'success'
-      })
-      setTimeout(() => {
-        setSuccessMessage(null)
-      }, 5000)
-
-      setNewBlog({
-        title: '',
-        author: '',
-        url: '',
-      })
+      const updateBlog = await blogService.likeBlog(blog._id)
+      setBlogs(blogs.map(b => b._id === blog._id ? updateBlog : b))
     } catch (e) {
       setErrorMessage({
         msg: e.message,
@@ -155,10 +165,32 @@ const App = () => {
     }
   }
 
-  const handleLike = async (blog) => {
+  const addBlog = async (e) => {
+    e.preventDefault()
+
     try {
-      const updateBlog = await blogService.likeBlog(blog._id)
-      setBlogs(blogs.map(b => b._id === blog._id ? updateBlog : b))
+      newBlog.user = [{
+        username: user.username,
+        name: user.name
+      }]
+
+      newBlog.likes = 0
+      const createdBlog = await blogService.create(newBlog)
+
+      setBlogs(blogs.concat(createdBlog))
+      setSuccessMessage({
+        msg: `a new blog ${createdBlog.title} by ${createdBlog.author} added`,
+        status: 'success'
+      })
+      setTimeout(() => {
+        setSuccessMessage(null)
+      }, 5000)
+
+      setNewBlog({
+        title: '',
+        author: '',
+        url: '',
+      })
     } catch (e) {
       setErrorMessage({
         msg: e.message,
@@ -169,38 +201,6 @@ const App = () => {
       }, 5000)
     }
   }
-
-  const bloglist = () => (
-    <div>
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} handleDelete={handleDelete} handleLike={handleLike} />
-      )}
-    </div>
-  )
-
-  const loginForm = () => (
-    <form onSubmit={handleLogin}>
-      <div>
-        username
-        <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div>
-        password
-        <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button type="submit">login</button>
-    </form>
-  )
 
   const handleBlogForm = ({ name, value }) => {
     setNewBlog({
@@ -242,5 +242,6 @@ const App = () => {
     </div>
   )
 }
+
 
 export default App

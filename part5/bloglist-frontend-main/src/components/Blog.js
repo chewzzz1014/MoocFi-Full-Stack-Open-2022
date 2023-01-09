@@ -13,17 +13,17 @@ function Blog({ blog, handleDelete, handleLike }) {
   }
 
   const details = (
-    <>
+    <div id='blog-item-details'>
       <p>{blog.url}</p>
-      <p>likes {blog.likes} <button onClick={() => handleLike(blog)}>like</button></p>
+      <p>likes {blog.likes} <button onClick={() => handleLike(blog)} id='likes-btn'>like</button></p>
       <p>{blog.user && blog.user.map(u => u.username)}
       </p>
       <button onClick={() => handleDelete(blog)}>remove</button>
-    </>
+    </div>
   )
   return (
-    <div style={blogStyle}>
-      {blog.title} {blog.author}
+    <div style={blogStyle} id='blog-item-main'>
+      <span id='blog-title-author'>{blog.title} {blog.author}</span>
       <button onClick={() => setVisibility(!visibility)}>{`${!visibility ? 'view' : 'hide'}`}</button>
       {visibility && details}
     </div>
