@@ -15,9 +15,8 @@ test('renders content', () => {
     //expect(div).toHaveTextContent('Component testing is done with react-testing-library')
 
     render(<Note note={note} />)
-
-    screen.debug()
-
     const element = screen.getByText('Component testing is done with react-testing library')
+    screen.debug(element)
+
     expect(element).toBeDefined()
 })
