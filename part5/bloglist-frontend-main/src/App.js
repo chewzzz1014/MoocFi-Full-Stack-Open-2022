@@ -222,8 +222,6 @@ const App = () => {
           newBlog={newBlog}
           handleBlogForm={handleBlogForm}
         />
-        <button onClick={() => setCreateBlogVisible(!createBlogVisible)}>cancel</button>
-        {bloglist()}
       </Togglable>
       {bloglist()}
     </div>
