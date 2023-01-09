@@ -228,17 +228,17 @@ const App = () => {
   )
 
   const hasNotLoginUI = () => (
-    <Togglable buttonLabel='login'>
+    <div>
       <h1>Login to Application</h1>
       <Notification message={errorMessage || successMessage || null} />
       {loginForm()}
-    </Togglable>
+    </div>
   )
 
 
   return (
     <div>
-      {user ? hasLoginUI() : hasNotLoginUI()}
+      {user === null ? hasNotLoginUI() : hasLoginUI()}
     </div>
   )
 }
