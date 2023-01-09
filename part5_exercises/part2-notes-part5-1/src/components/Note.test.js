@@ -27,11 +27,11 @@ test('renders content', () => {
 // test the button
 test('clicking the button calls event handler once', async () => {
     const note = {
-        content: 'make no important',
+        content: 'Component testing is done with react-testing library',
         important: true
     }
 
-    //event handler (a mocj function defined with Jest)
+    //event handler (a mock function defined with Jest)
     const mockHandler = jest.fn()
 
     render(
