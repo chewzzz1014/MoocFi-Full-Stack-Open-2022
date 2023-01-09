@@ -22,7 +22,6 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [successMessage, setSuccessMessage] = useState(null)
   const [createBlogVisible, setCreateBlogVisible] = useState(false)
-  const [showAll, setShowAll] = useState(true)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -133,7 +132,8 @@ const App = () => {
 
     if (confirmDelete) {
       try {
-        const deletedBlog = await blogService.deleteBlog(blog._id)
+        //const deletedBlog = await blogService.deleteBlog(blog._id)
+        await blogService.deleteBlog(blog._id)
         setBlogs(blogs.filter(b => b._id !== blog._id))
 
         setSuccessMessage({
@@ -223,6 +223,7 @@ const App = () => {
           handleBlogForm={handleBlogForm}
         />
         <button onClick={() => setCreateBlogVisible(!createBlogVisible)}>cancel</button>
+        {bloglist()}
       </Togglable>
       {bloglist()}
     </div>
@@ -235,6 +236,7 @@ const App = () => {
       {loginForm()}
     </Togglable>
   )
+
 
   return (
     <div>
