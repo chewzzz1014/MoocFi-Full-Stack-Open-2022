@@ -21,6 +21,9 @@ test('renders content', () => {
         url: 'https://google.com'
     }
 
+    const handleDelete = jest.fn()
+    const handleLike = jest.fn()
+
     const { container } = render(<Blog key={'212222'} blog={blog} handleDelete={handleDelete} handleLike={handleLike} />)
 
     const div = container.querySelector('#blog-title-author')
@@ -54,26 +57,36 @@ test('event handler is called twice if like button is clicked twice', async () =
         url: 'https://google.com'
     }
 
-    const { container } = render(<Blog key={'212222'} blog={blog} handleDelete={handleDelete} handleLike={handleLike} />)
+    const handleDelete = jest.fn()
+    const handleLike = jest.fn()
 
-    const mockHandler = jest.fn()
+    const { container } = render(<Blog key={'212222'} blog={blog} handleDelete={handleDelete} handleLike={handleLike} />)
 
     const user = userEvent.setup()
     const button = container.querySelector('#likes-btn')
     await user.click(button)
     await user.click(button)
 
-    expect(mockHandler.mock.calls).toHaveLength(2)
+    expect(handleLike.mock.calls).toHaveLength(2)
 })
 
 test('<AddBlogForm /> updates parent state and call', async () => {
-    const createBlog = jest.fn()
+    //const createBlog = jest.fn()
     const user = userEvent.setup()
+
+    const addBlog = jest.fn()
+    const handleBlogForm = jest.fn()
 
     const { container } = render(<AddBlogForm
         addBlog={addBlog}
         handleBlogForm={handleBlogForm}
+        newBlog={{
+            title: '',
+            author: '',
+            url: '',
+        }}
     />)
+
 
     const input1 = container.querySelector('#title-input')
     const input2 = container.querySelector('#author-input')
@@ -85,8 +98,8 @@ test('<AddBlogForm /> updates parent state and call', async () => {
     await user.type(input3, 'https://google.com')
     await user.click(subBtn)
 
-    expect(createBlog.mock.calls).toHaveLength(1)
-    expect(createBlog.mock.calls[0][0].content).toBe('Wonderful World')
-    expect(createBlog.mock.calls[0][1].content).toBe('John White')
-    expect(createBlog.mock.calls[0][2].content).toBe('https://google.com')
+    expect(addBlog.mock.calls).toHaveLength(1)
+    expect(addBlog.mock.calls[0][0].content).toBe('Wonderful World')
+    expect(addBlog.mock.calls[0][1].content).toBe('John White')
+    expect(addBlog.mock.calls[0][2].content).toBe('https://google.com')
 })

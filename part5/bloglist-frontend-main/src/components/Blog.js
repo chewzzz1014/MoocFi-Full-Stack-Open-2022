@@ -15,7 +15,7 @@ function Blog({ blog, handleDelete, handleLike }) {
   const details = (
     <div id='blog-item-details'>
       <p>{blog.url}</p>
-      <p>likes {blog.likes} <button onClick={() => handleLike(blog)} id='likes-btn'>like</button></p>
+      <p>likes {blog.likes} <button id='likes-btn' onClick={() => handleLike(blog)}>like</button></p>
       <p>{blog.user && blog.user.map(u => u.username)}
       </p>
       <button onClick={() => handleDelete(blog)}>remove</button>
