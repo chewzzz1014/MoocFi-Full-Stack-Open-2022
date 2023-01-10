@@ -31,7 +31,7 @@ test('renders content', () => {
     expect(div).toBeDefined()
 })
 
-/*
+
 test('show blog url and likes after show button is clicked', async () => {
     const blog = {
         title: 'What Do You Mean',
@@ -44,15 +44,15 @@ test('show blog url and likes after show button is clicked', async () => {
 
     const { container } = render(<Blog key={'212222'} blog={blog} handleDelete={handleDelete} handleLike={handleLike} />)
 
-    const mockHandler = jest.fn()
-
     const user = userEvent.setup()
-    const button = screen.getByText('view', { exact: false })
-    await user.click(button)
 
-    //expect(mockHandler.mock.calls).toContainElement()
+    const button1 = container.querySelector('#view-details-btn')
+    await user.click(button1)
+
+    const div = container.querySelector('#blog-item-details')
+    expect(div).toBeDefined()
 })
-*/
+
 
 // passed
 test('event handler is called twice if like button is clicked twice', async () => {
