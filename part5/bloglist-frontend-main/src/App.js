@@ -216,7 +216,7 @@ const App = () => {
       <p>{user.username} logged in <button onClick={handleLogout}>logout</button></p>
       <h2>create new</h2>
       <Togglable buttonLabel='new blog'>
-        <button onClick={() => setCreateBlogVisible(!createBlogVisible)}>new blog</button>
+        <button id='new-blog-btn' onClick={() => setCreateBlogVisible(!createBlogVisible)}>new blog</button>
         <AddBlogForm
           addBlog={addBlog}
           newBlog={newBlog}
