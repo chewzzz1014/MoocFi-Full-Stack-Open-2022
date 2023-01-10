@@ -14,6 +14,7 @@ import userEvent from '@testing-library/user-event'
 import Blog from './Blog'
 import AddBlogForm from './AddBlogFrom'
 
+// passed
 test('renders content', () => {
     const blog = {
         title: 'What Do You Mean',
@@ -38,6 +39,9 @@ test('show blog url and likes after show button is clicked', async () => {
         url: 'https://google.com'
     }
 
+    const handleDelete = jest.fn()
+    const handleLike = jest.fn()
+
     const { container } = render(<Blog key={'212222'} blog={blog} handleDelete={handleDelete} handleLike={handleLike} />)
 
     const mockHandler = jest.fn()
@@ -50,19 +54,25 @@ test('show blog url and likes after show button is clicked', async () => {
 })
 */
 
+// passed
 test('event handler is called twice if like button is clicked twice', async () => {
     const blog = {
-        title: 'What Do You Mean',
-        author: 'Mr Z',
-        url: 'https://google.com'
+        _id: '63b426f528b663126b506fd4',
+        title: 'Queen',
+        author: 'John White',
+        url: 'http://www.pubs/journals/ features/apl-apl0000042.pdf'
     }
 
     const handleDelete = jest.fn()
     const handleLike = jest.fn()
 
-    const { container } = render(<Blog key={'212222'} blog={blog} handleDelete={handleDelete} handleLike={handleLike} />)
+    const { container } = render(<Blog key={blog._id} blog={blog} handleDelete={handleDelete} handleLike={handleLike} />)
 
     const user = userEvent.setup()
+
+    const button1 = container.querySelector('#view-details-btn')
+    await user.click(button1)
+
     const button = container.querySelector('#likes-btn')
     await user.click(button)
     await user.click(button)

@@ -93,7 +93,7 @@ const App = () => {
   const bloglist = () => (
     <div>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} handleDelete={handleDelete} handleLike={handleLike} />
+        <Blog key={blog.id} blog={blog} handleDelete={handleDelete} handleLike={() => handleLike(blog._id)} />
       )}
     </div>
   )
@@ -122,10 +122,10 @@ const App = () => {
     </form>
   )
 
-  const handleLike = async (blog) => {
+  const handleLike = async (id) => {
     try {
-      const updateBlog = await blogService.likeBlog(blog._id)
-      setBlogs(blogs.map(b => b._id === blog._id ? updateBlog : b))
+      const updateBlog = await blogService.likeBlog(id)
+      setBlogs(blogs.map(b => b._id === id ? updateBlog : b))
     } catch (e) {
       setErrorMessage({
         msg: e.message,
