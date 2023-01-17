@@ -39,6 +39,7 @@ router.post('/', async (req, res) => {
     })
 
     const savedUser = await user.save()
+    console.log('user created')
     res.status(201).json(savedUser)
 })
 

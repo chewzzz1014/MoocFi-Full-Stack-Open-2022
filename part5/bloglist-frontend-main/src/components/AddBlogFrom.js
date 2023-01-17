@@ -3,6 +3,7 @@ const AddBlogForm = ({
     handleBlogForm,
     newBlog
 }) => {
+
     return (
         <form onSubmit={addBlog}>
             <div>

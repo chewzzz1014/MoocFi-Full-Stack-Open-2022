@@ -167,17 +167,35 @@ const App = () => {
     }
   }
 
-  const addBlog = async (e) => {
-    e.preventDefault()
+  const addBlog = async (e, autoCreate) => {
+    if (e !== null)
+      e.preventDefault()
 
+    let createdBlog
     try {
-      newBlog.user = [{
-        username: user.username,
-        name: user.name
-      }]
+      if (!autoCreate) {
+        newBlog.user = [{
+          username: user.username,
+          name: user.name
+        }]
 
-      newBlog.likes = 0
-      const createdBlog = await blogService.create(newBlog)
+        newBlog.likes = 0
+        createdBlog = await blogService.create(newBlog)
+      } else {
+        let createdBlogBefore;
+        createdBlogBefore.user = [{
+          username: user.username,
+          name: user.name
+        }]
+        createdBlogBefore = {
+          ...createdBlogBefore,
+          title: 'Interstellar',
+          author: 'Nolan',
+          url: 'localhost:2020'
+        }
+        console.log('created default blog')
+        createdBlog = await blogService.create(createdBlogBefore)
+      }
 
       setBlogs(blogs.concat(createdBlog))
       setSuccessMessage({
@@ -240,6 +258,7 @@ const App = () => {
 
   return (
     <div>
+      {user && addBlog(null, true)}
       {user === null ? hasNotLoginUI() : hasLoginUI()}
     </div>
   )
