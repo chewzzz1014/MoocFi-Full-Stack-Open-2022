@@ -11,4 +11,10 @@ describe('Note app', function () {
     it('login form can be opened', function () {
         cy.contains('login').click()
     })
+
+    it('user can login', function () {
+        cy.contains('login').click()
+        cy.get('#username-input').type('mluukkai')
+        cy.get('#password-input').type('salainen')
+    })
 })

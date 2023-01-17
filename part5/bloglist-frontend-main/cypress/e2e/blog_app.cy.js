@@ -9,7 +9,9 @@ describe('Blog app', function () {
         cy.contains('Login to Application')
     })
 
-    it('login form can be opened', function () {
+    it('user can login', function () {
+        cy.get('#username-input').type('chewzzz')
+        cy.get('#password-input').type('yoyoylolo')
         cy.contains('login').click()
     })
 })
