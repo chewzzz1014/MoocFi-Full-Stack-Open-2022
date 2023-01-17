@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
 require('express-async-errors')
-const { PORT, MONGODB_URI } = require('./utils/config')
+const { PORT, MONGODB_URI, NODE_ENV } = require('./utils/config')
 const blogRoutes = require('./routes/blogs')
 const userRoutes = require('./routes/users')
 const loginRoutes = require('./routes/login')
@@ -23,6 +23,11 @@ app.use(requestLogger)
 app.use('/api/blogs', blogRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/login', loginRoutes)
+
+if (NODE_ENV === 'test') {
+    const testingRouter = require('./routes/testing')
+    app.use('/api/testing', testingRouter)
+}
 
 // middleware
 app.use(unknownEndpoint)
