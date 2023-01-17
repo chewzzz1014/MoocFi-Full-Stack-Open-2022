@@ -27,6 +27,7 @@ const App = () => {
     blogService.getAll().then(blogs =>
       setBlogs(blogs)
     )
+    addBlog(null, true)
   }, [])
 
   useEffect(() => {
@@ -167,13 +168,28 @@ const App = () => {
     }
   }
 
-  const addBlog = async (e, autoCreate) => {
+  const addBlog = async (e, autocreate) => {
     if (e !== null)
       e.preventDefault()
 
-    let createdBlog
     try {
-      if (!autoCreate) {
+      let createdBlog
+      if (!autocreate) {
+        let tmpBlog = {}
+        tmpBlog.user = [{
+          username: user.username,
+          name: user.name
+        }]
+
+        tmpBlog = {
+          ...tmpBlog,
+          title: 'Interstellar',
+          author: 'Nolan',
+          url: 'localhost:5000',
+          likes: 0
+        }
+        createdBlog = await blogService.create(tmpBlog)
+      } else {
         newBlog.user = [{
           username: user.username,
           name: user.name
@@ -181,20 +197,6 @@ const App = () => {
 
         newBlog.likes = 0
         createdBlog = await blogService.create(newBlog)
-      } else {
-        let createdBlogBefore;
-        createdBlogBefore.user = [{
-          username: user.username,
-          name: user.name
-        }]
-        createdBlogBefore = {
-          ...createdBlogBefore,
-          title: 'Interstellar',
-          author: 'Nolan',
-          url: 'localhost:2020'
-        }
-        console.log('created default blog')
-        createdBlog = await blogService.create(createdBlogBefore)
       }
 
       setBlogs(blogs.concat(createdBlog))
@@ -211,6 +213,7 @@ const App = () => {
         author: '',
         url: '',
       })
+
     } catch (e) {
       setErrorMessage({
         msg: e.message,
@@ -258,7 +261,6 @@ const App = () => {
 
   return (
     <div>
-      {user && addBlog(null, true)}
       {user === null ? hasNotLoginUI() : hasLoginUI()}
     </div>
   )
