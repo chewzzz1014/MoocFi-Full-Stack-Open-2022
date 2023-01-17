@@ -41,5 +41,21 @@ describe('Blog app', function () {
             cy.contains('create').click()
             cy.contains('a new blog a blog created by cypress by cypress added')
         })
+
+        describe('and a blog exists', function () {
+            beforeEach(function () {
+                cy.contains('Interstellar Nolan')
+            })
+            it('it can view details', function () {
+                cy.contains('Interstellar Nolan')
+                    .contains('view')
+                    .click()
+
+                cy.contains('Interstellar Nolan')
+                    .contains('localhost:5000')
+                    .contains('likes 0')
+                    .contains('chewzzz')
+            })
+        })
     })
 })
