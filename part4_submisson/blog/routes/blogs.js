@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken')
 
 // we are using express-async-errors library. No try-catch block needed
 
-router.get('/', tokenExtractor, userExtractor, async (req, res) => {
+router.get('/', async (req, res) => {
     const foundBlogs = await Blog.find({}).populate('user', { username: 1, name: 1 })
     res.json(foundBlogs)
 })

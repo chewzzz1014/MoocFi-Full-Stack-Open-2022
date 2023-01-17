@@ -18,11 +18,12 @@ describe('Blog app', function () {
     })
 
     it('a new blog can be created', function () {
-        cy.contains('new blog').click()      cy.get('title').type('a blog created by cypress')
+        cy.contains('new blog').click()
+        cy.get('title').type('a blog created by cypress')
         cy.get('author').type('cypress')
         cy.get('url').type('localhost:3000')
 
-        cy.contains('createdsave').click()
+        cy.contains('create').click()
         cy.contains('a new blog a blog created by cypress by cypress added')
     })
 })

@@ -19,7 +19,8 @@ describe('Note app', function () {
     })
 
     it('a new note can be created', function () {
-        cy.contains('new note').click()      cy.get('input').type('a note created by cypress')
+        cy.contains('new note').click()
+        cy.get('input').type('a note created by cypress')
         cy.contains('save').click()
         cy.contains('a note created by cypress')
     })
