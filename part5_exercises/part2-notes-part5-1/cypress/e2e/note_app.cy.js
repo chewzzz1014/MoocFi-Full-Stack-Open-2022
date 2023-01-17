@@ -1,5 +1,12 @@
 describe('Note app', function () {
     beforeEach(function () {
+        cy.request('POST', 'http://localhost:3001/api/testing/reset')
+        const user = {
+            name: 'Chew Zi Qing',
+            username: 'chewzzz',
+            password: 'yoyoylolo'
+        }
+        cy.request('POST', 'http://localhost:3001/api/users/', user)
         cy.visit('http://localhost:3000')
     })
 
@@ -14,8 +21,8 @@ describe('Note app', function () {
 
     it('user can login', function () {
         cy.contains('login').click()
-        cy.get('#username-input').type('mluukkai')
-        cy.get('#password-input').type('salainen')
+        cy.get('#username-input').type('chewzzz')
+        cy.get('#password-input').type('yoyoylolo')
     })
 
     it('a new note can be created', function () {
@@ -28,8 +35,8 @@ describe('Note app', function () {
     describe('when logged in', function () {
         beforeEach(function () {
             cy.contains('login').click()
-            cy.get('input:first').type('mluukkai')
-            cy.get('input:last').type('salainen')
+            cy.get('input:first').type('chewzzz')
+            cy.get('input:last').type('yoyoylolo')
             cy.get('#login-button').click()
         })
 
