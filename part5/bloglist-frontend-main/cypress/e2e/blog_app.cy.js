@@ -17,17 +17,22 @@ describe('Blog app', function () {
         cy.contains('chewzzz logged in')
     })
 
-    it('a new blog can be created', function () {
-        cy.get('#username-input').type('chewzzz')
-        cy.get('#password-input').type('yoyoylolo')
-        cy.get('#login-btn').click()
+    describe('when logged in', function () {
+        beforeEach(function () {
+            cy.get('#username-input').type('chewzzz')
+            cy.get('#password-input').type('yoyoylolo')
+            cy.get('#login-btn').click()
 
-        cy.contains('new blog').click()
-        cy.get('#title-input').type('a blog created by cypress')
-        cy.get('#author-input').type('cypress')
-        cy.get('#url-input').type('localhost:3000')
+        })
 
-        cy.contains('create').click()
-        cy.contains('a new blog a blog created by cypress by cypress added')
+        it('a new blog can be created', function () {
+            cy.contains('new blog').click()
+            cy.get('#title-input').type('a blog created by cypress')
+            cy.get('#author-input').type('cypress')
+            cy.get('#url-input').type('localhost:3000')
+
+            cy.contains('create').click()
+            cy.contains('a new blog a blog created by cypress by cypress added')
+        })
     })
 })
