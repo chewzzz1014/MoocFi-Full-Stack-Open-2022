@@ -17,4 +17,10 @@ describe('Note app', function () {
         cy.get('#username-input').type('mluukkai')
         cy.get('#password-input').type('salainen')
     })
+
+    it('a new note can be created', function () {
+        cy.contains('new note').click()      cy.get('input').type('a note created by cypress')
+        cy.contains('save').click()
+        cy.contains('a note created by cypress')
+    })
 })
