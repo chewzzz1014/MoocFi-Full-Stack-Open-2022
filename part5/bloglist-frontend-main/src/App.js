@@ -27,7 +27,6 @@ const App = () => {
     blogService.getAll().then(blogs =>
       setBlogs(blogs)
     )
-    addBlog(null, true)
   }, [])
 
   useEffect(() => {
@@ -36,6 +35,7 @@ const App = () => {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
       blogService.setToken(user.token)
+      addBlog(null, true)
     }
   }, [])
 
