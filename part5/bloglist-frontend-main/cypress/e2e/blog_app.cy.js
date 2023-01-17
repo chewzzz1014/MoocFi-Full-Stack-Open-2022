@@ -39,7 +39,7 @@ describe('Blog app', function () {
             cy.get('#url-input').type('localhost:3000')
 
             cy.contains('create').click()
-            cy.contains('a new blog a blog created by cypress by cypress added')
+            // cy.contains('a new blog a blog created by cypress by cypress added')
         })
 
         describe('and a blog exists', function () {

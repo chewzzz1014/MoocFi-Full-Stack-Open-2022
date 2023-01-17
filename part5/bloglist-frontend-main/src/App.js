@@ -27,6 +27,7 @@ const App = () => {
     blogService.getAll().then(blogs =>
       setBlogs(blogs)
     )
+    // addBlog(null, true)
   }, [])
 
   useEffect(() => {
@@ -35,7 +36,7 @@ const App = () => {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
       blogService.setToken(user.token)
-      addBlog(null, true)
+      // addBlog(null, true)
     }
   }, [])
 
@@ -174,15 +175,12 @@ const App = () => {
 
     try {
       let createdBlog
-      if (!autocreate) {
-        let tmpBlog = {}
-        tmpBlog.user = [{
-          username: user.username,
-          name: user.name
-        }]
-
-        tmpBlog = {
-          ...tmpBlog,
+      if (autocreate) {
+        const tmpBlog = {
+          user: [{
+            username: user.username,
+            name: user.name
+          }],
           title: 'Interstellar',
           author: 'Nolan',
           url: 'localhost:5000',
