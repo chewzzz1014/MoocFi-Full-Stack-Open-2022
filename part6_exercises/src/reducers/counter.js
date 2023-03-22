@@ -1,4 +1,4 @@
-// make changes to state
+// make changes to state based on action type (action must have type)
 // will return new state
 // never mutate the state!!!
 
