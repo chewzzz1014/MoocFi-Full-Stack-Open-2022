@@ -1,10 +1,25 @@
 import store from './store/store'
 import {
-  addNote,
-  toggleImportance
-} from './actions/note'
+  createNote,
+  toggleImportanceOf
+} from './reducers/noteReducer'
+import {
+  useSelector,
+  useDispatch
+} from 'react-redux'
 
 function App() {
+  const addNote = (event) => {
+    event.preventDefault()
+    const content = event.target.note.value
+    event.target.note.value = ''
+    dispatch(createNote(content))
+  }
+
+  const toggleImportance = (id) => {
+    dispatch(toggleImportanceOf(id))
+  }
+
   return (
     <div>
       <form onSubmit={addNote}>

@@ -1,7 +1,7 @@
 // reducer must be pure function
 // pure function: do not cause any side effects and must return the same response when called with the same parameters
 
-const addNote = (content) => {
+const createNote = (content) => {
     return {
         type: 'NEW_NOTE',
         payload: {
@@ -12,7 +12,7 @@ const addNote = (content) => {
     }
 }
 
-const toggleImportance = (id) => {
+const toggleImportanceOf = (id) => {
     return {
         type: 'TOGGLE_IMPORTANCE',
         payload: { id }
@@ -37,7 +37,7 @@ const noteReducer = (state = [], action) => {
 }
 
 export {
-    toggleImportance,
-    addNote
+    toggleImportanceOf,
+    createNote
 }
 export default noteReducer
