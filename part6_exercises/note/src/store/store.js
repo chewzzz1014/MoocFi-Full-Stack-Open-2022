@@ -1,5 +1,5 @@
 import { createStore } from 'redux'
-import { noteReducer } from '../recuder/note'
+import { noteReducer } from '../reducers/note'
 
 const store = createStore(noteReducer)
 
