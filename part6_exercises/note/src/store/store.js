@@ -20,3 +20,5 @@ store.dispatch({
         id: 2
     }
 })
+
+export default store 
