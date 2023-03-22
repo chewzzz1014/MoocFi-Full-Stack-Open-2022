@@ -4,9 +4,6 @@ import {
   toggleImportance
 } from './actions/note'
 
-const generateId = () =>
-  Number((Math.random() * 1000000).toFixed(0))
-
 function App() {
   return (
     <div>

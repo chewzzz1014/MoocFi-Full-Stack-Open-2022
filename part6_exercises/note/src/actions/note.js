@@ -1,4 +1,5 @@
 import store from "../store/store"
+import { generateId } from "../utils/generateId"
 
 const addNote = (event) => {
     event.preventDefault()
