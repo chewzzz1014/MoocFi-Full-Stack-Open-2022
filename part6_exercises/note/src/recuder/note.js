@@ -8,6 +8,11 @@ const noteReducer = (state = [], action) => {
                 ...state,
                 action.payload
             ]
+        case 'TOGGLE_IMPORTANCE':
+            return state.map((note) => note.id === action.payload.id ? {
+                ...note,
+                important: !note.important
+            } : note)
         default:
             return state
     }
