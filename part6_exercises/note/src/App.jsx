@@ -7,6 +7,7 @@ import {
   useSelector,
   useDispatch
 } from 'react-redux'
+import NewNote from './components/NewNote'
 
 function App() {
   // to dispatch actions
@@ -14,23 +15,13 @@ function App() {
   // to access state
   const notes = useSelector(state => state)
 
-  const addNote = (event) => {
-    event.preventDefault()
-    const content = event.target.note.value
-    event.target.note.value = ''
-    dispatch(createNote(content))
-  }
-
   const toggleImportance = (id) => {
     dispatch(toggleImportanceOf(id))
   }
 
   return (
     <div>
-      <form onSubmit={addNote}>
-        <input name='note' />
-        <button type='submit'>add</button>
-      </form>
+      <NewNote />
       <ul>
         {notes.map(note => (
           <li
