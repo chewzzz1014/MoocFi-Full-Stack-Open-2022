@@ -5,13 +5,18 @@ import { counterReducer } from '../reducers/counter'
 
 const store = createStore(counterReducer)
 
-console.log(store.getState())
-store.dispatch({ type: 'INCREMENT' })
-store.dispatch({ type: 'INCREMENT' })
-store.dispatch({ type: 'INCREMENT' })
+// create callback function the store calls whenever an action is dispatched to the store
+store.subscribe(() => {
+    const storeNow = store.getState()
+    console.log(storeNow)
+})
 
-console.log(store.getState())
+
+store.dispatch({ type: 'INCREMENT' })
+store.dispatch({ type: 'INCREMENT' })
+store.dispatch({ type: 'INCREMENT' })
 store.dispatch({ type: 'ZERO' })
 store.dispatch({ type: 'DECREMENT' })
 
-console.log(store.getState())
+
+export default store 
