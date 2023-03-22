@@ -1,5 +1,6 @@
 // reducer must be pure function
 // pure function: do not cause any side effects and must return the same response when called with the same parameters
+import { generateId } from '../utils/generateId'
 
 const createNote = (content) => {
     return {

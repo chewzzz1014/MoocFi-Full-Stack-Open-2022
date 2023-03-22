@@ -9,6 +9,11 @@ import {
 } from 'react-redux'
 
 function App() {
+  // to dispatch actions
+  const dispatch = useDispatch()
+  // to access state
+  const notes = useSelector(state => state)
+
   const addNote = (event) => {
     event.preventDefault()
     const content = event.target.note.value
@@ -27,7 +32,7 @@ function App() {
         <button type='submit'>add</button>
       </form>
       <ul>
-        {store.getState().map(note => (
+        {notes.map(note => (
           <li
             key={note.id}
             onClick={() => toggleImportance(note.id)}
