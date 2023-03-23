@@ -22,10 +22,9 @@ const initialState = anecdotesAtStart.map(asObject)
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'VOTE':
-      return initialState.map(a => a.id === action.payload.id ? {
-        ...a,
-        votes: a.votes + 1
-      } : a)
+      return state.map(a => {
+        return a.id === action.payload.id ? { ...a, votes: a.votes + 1 } : a
+      })
     default:
       return state
   }
