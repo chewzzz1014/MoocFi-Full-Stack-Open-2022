@@ -5,6 +5,14 @@ const voteAction = (id) => {
     }
 }
 
+const addAction = (newAnec) => {
+    return {
+        type: 'ADD',
+        payload: newAnec
+    }
+}
+
 export {
-    voteAction
+    voteAction,
+    addAction
 }
