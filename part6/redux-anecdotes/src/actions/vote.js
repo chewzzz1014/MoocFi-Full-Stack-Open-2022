@@ -1,3 +1,5 @@
+import { getId } from "../reducers/anecdoteReducer"
+
 const voteAction = (id) => {
     return {
         type: 'VOTE',
@@ -5,10 +7,14 @@ const voteAction = (id) => {
     }
 }
 
-const addAction = (newAnec) => {
+const addAction = (newContent) => {
     return {
         type: 'ADD',
-        payload: newAnec
+        payload: {
+            content: newContent,
+            id: getId(),
+            votes: 0
+        }
     }
 }
 
