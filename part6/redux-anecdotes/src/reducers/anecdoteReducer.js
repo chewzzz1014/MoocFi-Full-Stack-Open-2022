@@ -23,7 +23,7 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'VOTE':
       return state.map(a => {
-        return a.id === action.payload.id ? { ...a, votes: a.votes + 1 } : a
+        return a.id === action.payload ? { ...a, votes: a.votes + 1 } : a
       })
     default:
       return state
