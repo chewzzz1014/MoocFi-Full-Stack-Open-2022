@@ -25,6 +25,11 @@ const reducer = (state = initialState, action) => {
       return state.map(a => {
         return a.id === action.payload ? { ...a, votes: a.votes + 1 } : a
       })
+    case 'ADD':
+      return [
+        ...state,
+        action.payload
+      ]
     default:
       return state
   }
