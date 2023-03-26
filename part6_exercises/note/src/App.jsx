@@ -3,7 +3,7 @@ import Notes from './components/Notes'
 
 function App() {
   const filterSelected = (value) => {
-
+    console.log(value)
   }
 
   return (
