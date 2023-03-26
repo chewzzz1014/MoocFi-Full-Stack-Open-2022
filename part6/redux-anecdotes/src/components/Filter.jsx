@@ -1,8 +1,12 @@
 import React from 'react'
+import { filter } from '../actions/filter'
+import { useDispatch } from 'react-redux'
 
 function Filter() {
+    const dispatch = useDispatch()
+
     const handleChange = (event) => {
-        console.log(event.target.value)
+        dispatch(filter(event.target.value))
     }
 
     const style = {
