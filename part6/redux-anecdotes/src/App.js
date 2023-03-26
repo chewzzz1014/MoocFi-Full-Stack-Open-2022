@@ -5,7 +5,11 @@ import AnecdoteList from './components/AnecdoteList'
 import Filter from './components/Filter'
 
 const App = () => {
-  const anecdotes = useSelector(state => state.anecdotes)
+  const anecdotes = useSelector(state =>
+    state.filter
+      ? state.anecdotes
+      : state.anecdotes.filter(a => a.content.toLowerCase().includes(state.filter.toLowerCase()))
+  )
   const dispatch = useDispatch()
 
   const vote = (id) => {
