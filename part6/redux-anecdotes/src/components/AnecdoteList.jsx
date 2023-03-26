@@ -3,7 +3,6 @@ import React from 'react'
 function AnecdoteList({ anecdotes, vote }) {
     return (
         <div>
-            <h2>Anecdotes</h2>
             {anecdotes.map(anecdote =>
                 <div key={anecdote.id}>
                     <div>
