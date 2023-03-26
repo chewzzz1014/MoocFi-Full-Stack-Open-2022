@@ -1,5 +1,7 @@
 import { createStore, combineReducers } from 'redux'
 import noteReducer from '../reducers/noteReducer'
+import { createNote } from '../reducers/noteReducer'
+import { filterChange } from '../reducers/filterRedecur'
 import filterReducer from '../reducers/filterRedecur'
 
 
@@ -8,6 +10,9 @@ const reducer = combineReducers({
     filter: filterReducer
 })
 const store = createStore(reducer)
+
+store.dispatch(filterChange('IMPORTANT'))
+store.dispatch(createNote('combineReducers forms one reducer from many simple reducers'))
 
 store.dispatch({
     type: 'NEW_NOTE',

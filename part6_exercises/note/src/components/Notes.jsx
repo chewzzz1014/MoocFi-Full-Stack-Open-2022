@@ -15,7 +15,7 @@ function Note({ note, handleClick }) {
 
 function Notes() {
     const dispatch = useDispatch()
-    const notes = useSelector(state => state)
+    const notes = useSelector(state => state.notes)
 
     return (
         <ul>
