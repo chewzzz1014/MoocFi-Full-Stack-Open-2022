@@ -18,36 +18,40 @@ const initialState = [
     }
 ]
 
-const createNote = (content) => {
-    return {
-        type: 'NEW_NOTE',
-        payload: {
-            content,
-            important: false,
-            id: generateId()
-        }
-    }
-}
+// const createNote = (content) => {
+//     return {
+//         type: 'NEW_NOTE',
+//         payload: {
+//             content,
+//             important: false,
+//             id: generateId()
+//         }
+//     }
+// }
 
-const toggleImportanceOf = (id) => {
-    return {
-        type: 'TOGGLE_IMPORTANCE',
-        payload: { id }
-    }
-}
+// const toggleImportanceOf = (id) => {
+//     return {
+//         type: 'TOGGLE_IMPORTANCE',
+//         payload: { id }
+//     }
+// }
 
 const noteSlice = createSlice({
     name: 'notes',
     initialState,
     reducers: {
+        // has type value of notes/createNote
         createNote(state, action) {
             const content = action.payload
+            // we can mutate state in createSlice! redux toolkit utilizes Immer library that uses the mutated state to produce a new, immutable state
+            // the state changes remain immutable
             state.push({
                 content,
                 important: false,
                 id: generateId()
             })
         },
+        // has type value of notes/toggleImportanceOf
         toggleImportanceOf(state, action) {
             const id = action.payload
             const noteToChange = state.find(n => n.id === id)
