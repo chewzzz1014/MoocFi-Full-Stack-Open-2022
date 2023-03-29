@@ -1,5 +1,3 @@
-import { getId } from "../reducers/anecdoteReducer"
-
 const voteAction = (id) => {
     return {
         type: 'anecdotes/voteAnecdote',
