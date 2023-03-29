@@ -20,24 +20,16 @@ const store = configureStore({
 })
 
 store.dispatch(filterChange('IMPORTANT'))
-store.dispatch(createNote('combineReducers forms one reducer from many simple reducers'))
+// store.dispatch(createNote('combineReducers forms one reducer from many simple reducers'))
 
 store.dispatch({
-    type: 'NEW_NOTE',
-    payload: {
-        content: 'the app is in redux store',
-        important: true,
-        id: 1
-    }
+    type: 'notes/createNote',
+    payload: 'the app is in redux store'
 })
 
 store.dispatch({
-    type: 'NEW_NOTE',
-    payload: {
-        content: 'state changes are made with actions',
-        important: false,
-        id: 2
-    }
+    type: 'notes/createNote',
+    payload: 'state changes are made with'
 })
 
 export default store 
