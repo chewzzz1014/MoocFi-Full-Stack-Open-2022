@@ -64,6 +64,13 @@ const noteSlice = createSlice({
     }
 })
 
+
+// export action creators
+export const { createNote, toggleImportanceOf } = noteSlice.actions
+// export reducer
+export default noteSlice.reducer
+
+
 // using redux
 // const noteReducer = (state = initialState, action) => {
 //     switch (action.type) {
