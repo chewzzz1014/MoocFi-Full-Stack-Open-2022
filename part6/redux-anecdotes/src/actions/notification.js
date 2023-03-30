@@ -7,6 +7,12 @@ const addNotification = (value) => {
 
 const removeNotification = (value) => {
     return {
-        type: 'notifications/addNotification',
+        type: 'notifications/removeNotification',
+        payload: value
     }
+}
+
+export {
+    addNotification,
+    removeNotification
 }
