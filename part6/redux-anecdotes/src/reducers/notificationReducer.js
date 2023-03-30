@@ -8,12 +8,20 @@ const notificationSlice = createSlice({
             state.push(`added ${action.payload}`)
         },
         removeNotification(state, action) {
-            state.filter(n => n !== action.payload)
+            return []
+        },
+        voteNotification(state, action) {
+            state.push(`you voted ${action.payload}`)
         }
     }
 })
 
 // export action creators
-export const { addNotification, removeNotification } = notificationSlice.actions
+export const {
+    addNotification,
+    removeNotification,
+    voteNotification
+} = notificationSlice.actions
+
 // export reducer 
 export default notificationSlice.reducer

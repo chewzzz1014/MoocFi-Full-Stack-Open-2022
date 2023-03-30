@@ -12,7 +12,15 @@ const removeNotification = (value) => {
     }
 }
 
+const voteNotification = (value) => {
+    return {
+        type: 'notifications/voteNotification',
+        payload: value
+    }
+}
+
 export {
     addNotification,
-    removeNotification
+    removeNotification,
+    voteNotification
 }

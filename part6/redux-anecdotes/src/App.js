@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { voteAction, addAction } from './actions/vote'
-import { addNotification, removeNotification } from './reducers/notificationReducer'
+import { addNotification, removeNotification, voteNotification } from './reducers/notificationReducer'
 import AnecdoteForm from './components/AnecdoteForm'
 import AnecdoteList from './components/AnecdoteList'
 import Filter from './components/Filter'
@@ -10,7 +10,6 @@ import Notification from './components/Notification'
 const App = () => {
   const filter = useSelector(state => state.filter)
   let anecdotes = useSelector(state => state.anecdotes)
-  let notifications = useSelector(state => state.notifications)
 
   const [hasNotification, setHasNotification] = useState(false)
 
@@ -21,7 +20,15 @@ const App = () => {
   const dispatch = useDispatch()
 
   const vote = (id) => {
+    const content = anecdotes.find(a => a.id === id).content
+    dispatch(voteNotification(content))
     dispatch(voteAction(id))
+
+    setHasNotification(true)
+    setTimeout(() => {
+      dispatch(removeNotification(content))
+      setHasNotification(false)
+    }, 3000)
   }
 
   const addAnec = (e) => {
@@ -29,6 +36,7 @@ const App = () => {
     dispatch(addAction(e.target.contentField.value))
     dispatch(addNotification(e.target.contentField.value))
 
+    // show notifications for 3 seconds, then remove it
     setHasNotification(true)
     setTimeout(() => {
       dispatch(removeNotification(e.target.contentField.value))
