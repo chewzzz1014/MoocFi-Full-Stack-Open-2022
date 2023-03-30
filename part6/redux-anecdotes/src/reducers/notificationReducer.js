@@ -1,16 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = [
-    'If it hurts, do it more often',
-    'Adding manpower to a late software project makes it later!',
-]
-
 const notificationSlice = createSlice({
     name: 'notifications',
-    initialState,
+    initialState: [],
     reducers: {
         addNotification(state, action) {
-            state.push(action.payload)
+            state.push(`added ${action.payload}`)
         },
         removeNotification(state, action) {
             state.filter(n => n !== action.payload)
@@ -19,6 +14,6 @@ const notificationSlice = createSlice({
 })
 
 // export action creators
-export const { addNotification } = notificationSlice.actions
+export const { addNotification, removeNotification } = notificationSlice.actions
 // export reducer 
 export default notificationSlice.reducer
