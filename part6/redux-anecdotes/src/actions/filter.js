@@ -1,6 +1,6 @@
 const filter = (value) => {
     return {
-        type: 'FILTER',
+        type: 'filter/filterAnecdote',
         payload: value
     }
 }
