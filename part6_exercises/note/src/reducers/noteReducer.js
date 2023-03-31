@@ -38,7 +38,7 @@ const initialState = [
 
 const noteSlice = createSlice({
     name: 'notes',
-    initialState,
+    initialState: [],
     reducers: {
         // has type value of notes/createNote
         createNote(state, action) {
@@ -63,6 +63,9 @@ const noteSlice = createSlice({
             console.log(state)
 
             return state.map(note => note.id !== id ? note : changedNote)
+        },
+        appendNote(state, action) {
+            state.push(action.payload)
         }
     }
 })
