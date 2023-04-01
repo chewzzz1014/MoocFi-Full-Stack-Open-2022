@@ -66,13 +66,16 @@ const noteSlice = createSlice({
         },
         appendNote(state, action) {
             state.push(action.payload)
+        },
+        setNotes(state, action) {
+            return action.payload
         }
     }
 })
 
 
 // export action creators
-export const { createNote, toggleImportanceOf } = noteSlice.actions
+export const { createNote, toggleImportanceOf, appendNote, setNotes } = noteSlice.actions
 // export reducer
 export default noteSlice.reducer
 
