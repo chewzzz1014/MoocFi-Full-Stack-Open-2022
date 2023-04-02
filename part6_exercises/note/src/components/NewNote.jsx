@@ -9,10 +9,6 @@ function NewNote() {
         event.preventDefault()
         const content = event.target.note.value
         event.target.note.value = ''
-
-        // update server data
-        const newNote = await createNew(content)
-        // update state
         dispatch(createNote(newNote))
     }
 

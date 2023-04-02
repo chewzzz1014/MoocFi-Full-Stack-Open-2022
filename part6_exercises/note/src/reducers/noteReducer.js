@@ -1,8 +1,7 @@
 // reducer must be pure function
 // pure function: do not cause any side effects and must return the same response when called with the same parameters
-import { generateId } from '../utils/generateId'
 import { createSlice } from '@reduxjs/toolkit'
-
+import * as noteService from '../services/notes'
 
 // using createSlice to create reducer and action creators
 const initialState = [
@@ -71,7 +70,24 @@ const noteSlice = createSlice({
 
 
 // export action creators
-export const { createNote, toggleImportanceOf, appendNote, setNotes } = noteSlice.actions
+export const { toggleImportanceOf, appendNote, setNotes } = noteSlice.actions
+
+// export action creator
+export const initializeNotes = () => {
+    return async (dispatch) => {
+        const notes = await noteService.getAll()
+        dispatch(setNotes(notes))
+    }
+}
+
+// export action creator
+export const createNote = (content) => {
+    return async (dispatch) => {
+        const newNote = await noteService.createNew(content)
+        dispatch(appendNote(newNote))
+    }
+}
+
 // export reducer
 export default noteSlice.reducer
 
