@@ -45,11 +45,7 @@ const noteSlice = createSlice({
             const content = action.payload
             // we can mutate state in createSlice! redux toolkit utilizes Immer library that uses the mutated state to produce a new, immutable state
             // the state changes remain immutable
-            state.push({
-                content,
-                important: false,
-                id: generateId()
-            })
+            state.push(action.payload)
         },
         // has type value of notes/toggleImportanceOf
         toggleImportanceOf(state, action) {
