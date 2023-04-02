@@ -1,10 +1,9 @@
 import { createStore, combineReducers } from 'redux'
 import { configureStore } from '@reduxjs/toolkit'
 
-import noteReducer, { createNote } from '../reducers/noteReducer'
+import noteReducer, { setNotes } from '../reducers/noteReducer'
 import filterReducer, { filterChange } from '../reducers/filterRedecur'
-import noteService from './services/notes'
-import noteReducer, {setNotes} from '../reducers/noteReducer'
+import { getAll } from '../services/notes'
 
 // using redux library
 // const reducer = combineReducers({
@@ -34,7 +33,7 @@ store.dispatch({
     payload: 'state changes are made with'
 })
 
-noteService.getAll().then(notes => 
+getAll().then(notes => 
     store.dispatch(setNotes(notes))
 )
 
