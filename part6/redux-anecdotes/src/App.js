@@ -1,23 +1,29 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { voteAction, addAction } from './actions/vote'
 import { addNotification, removeNotification, voteNotification } from './reducers/notificationReducer'
+import { setAnecdote } from './reducers/anecdoteReducer'
+import { getAll } from './services/anecdotes'
 import AnecdoteForm from './components/AnecdoteForm'
 import AnecdoteList from './components/AnecdoteList'
 import Filter from './components/Filter'
 import Notification from './components/Notification'
 
 const App = () => {
+  const dispatch = useDispatch()
   const filter = useSelector(state => state.filter)
-  let anecdotes = useSelector(state => state.anecdotes)
-
   const [hasNotification, setHasNotification] = useState(false)
 
+  useEffect(() => {
+    getAll().then(anecdotes => dispatch(setAnecdote(anecdotes)))
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps  
+
+  let anecdotes = useSelector(state => state.anecdotes)
   anecdotes = anecdotes.filter(a =>
     a.content.toLowerCase().includes(filter.toLowerCase())
   )
 
-  const dispatch = useDispatch()
+  console.log(anecdotes)
 
   const vote = (id) => {
     const content = anecdotes.find(a => a.id === id).content
