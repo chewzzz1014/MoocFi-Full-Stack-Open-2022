@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { voteAction, addAction } from './actions/vote'
 import { addNotification, removeNotification, voteNotification } from './reducers/notificationReducer'
-import { setAnecdote } from './reducers/anecdoteReducer'
-import { getAll } from './services/anecdotes'
+import { setAnecdote, addAnecdote, voteAnecdote } from './reducers/anecdoteReducer'
+import { getAll, createNew, increaseVote} from './services/anecdotes'
 import AnecdoteForm from './components/AnecdoteForm'
 import AnecdoteList from './components/AnecdoteList'
 import Filter from './components/Filter'
@@ -25,22 +24,29 @@ const App = () => {
 
   console.log(anecdotes)
 
-  const vote = (id) => {
-    const content = anecdotes.find(a => a.id === id).content
-    dispatch(voteNotification(content))
-    dispatch(voteAction(id))
+  const vote = async (id) => {
+    // const content = anecdotes.find(a => a.id === id).content
+
+    // update backend, state
+    const updatedAnecdote = await increaseVote(id)
+    dispatch(voteAnecdote(updatedAnecdote))
+    dispatch(voteNotification(updatedAnecdote.content))
 
     setHasNotification(true)
     setTimeout(() => {
-      dispatch(removeNotification(content))
+      dispatch(removeNotification(updatedAnecdote.content))
       setHasNotification(false)
     }, 3000)
   }
 
-  const addAnec = (e) => {
+  const addAnec = async (e) => {
     e.preventDefault()
-    dispatch(addAction(e.target.contentField.value))
-    dispatch(addNotification(e.target.contentField.value))
+    const content = e.target.contentField.value
+
+    // update backend
+    const newAnecdote = await createNew(content)
+    dispatch(addAnecdote(newAnecdote))
+    dispatch(addNotification(content))
 
     // show notifications for 3 seconds, then remove it
     setHasNotification(true)
