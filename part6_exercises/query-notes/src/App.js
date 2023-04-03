@@ -10,10 +10,11 @@ const App = () => {
   // do something after mutation is executed
   // tell react query that old result of the query whose key is the string notes should be invalidated
   const newNoteMutation = useMutation(createNote, {
-    onSuccess: () => {
+    onSuccess: (newNote) => {
       // React Query will automatically update a query with the key notes, i.e. fetch the notes from the server.
       // As a result, the application renders the up-to-date state on the server, i.e. the added note is also rendered.
-      queryClient.invalidateQueries('notes')
+      const notes = queryClient.getQueriesData('notes')
+      queryClient.invalidateQueries('notes', notes.concat(newNote))
     }
   })
 
@@ -39,8 +40,11 @@ const App = () => {
   // first params: string acts as key to query
   // second params: function
   // return: object that indicates the status of the query
-  const result = useQuery(
-    'notes', getNotes)
+  const result = useQuery('notes', getNotes, {
+    // default functionality of React Query's queries : queries (whose status is stale) are updated when window focus
+    // eg: the active element of the application's user interface,
+    refetchOnWindowFocus: false
+  })
   console.log(result)
 
   if (result.isLoading) {
