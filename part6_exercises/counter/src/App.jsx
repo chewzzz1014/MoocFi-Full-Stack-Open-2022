@@ -1,5 +1,17 @@
 import {useReducer} from 'react'
 
+const Display = ({counter}) => {
+    return <div>{counter}</div>
+}
+
+const Button = ({dispatch, type, label}) => {
+    return (
+        <button onClick={() => dispatch({type})}>
+            {label}
+        </button>
+    )
+}
+
 const counterReducer = (state, action) => {
     switch(action.type){
         case "INC":
@@ -18,11 +30,11 @@ const App = () => {
 
     return (
         <div>
-            <div>{counter}</div>
+            <Display counter={counter} />
             <div>
-                <button onClick={() => counterDispatch({ type: "INC" })}>+</button>
-                <button onClick={() => counterDispatch({ type: "DEC" })}>-</button>
-                <button onClick={() => counterDispatch({ type: "ZERO" })}>0</button>
+                <Button dispatch={counterDispatch} type='INC' label='+' />
+                <Button dispatch={counterDispatch} type='DEC' label='-' />
+                <Button dispatch={counterDispatch} type='ZERO' label='0' />
             </div>
         </div>
     )
