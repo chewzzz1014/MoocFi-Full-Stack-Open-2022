@@ -1,4 +1,4 @@
-import {useReducer, useContext} from 'react'
+import {useContext} from 'react'
 import CounterContext from './CounterContext'
 
 const Display = ({counter}) => {
