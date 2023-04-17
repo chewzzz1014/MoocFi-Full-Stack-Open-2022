@@ -16,7 +16,7 @@ const App = () => {
 
   const handleVote = (anecdote) => {
     console.log(anecdote.id)
-    voteAnecdoteMutation.mutate({anecdote, votes: anecdote.votes+1})
+    voteAnecdoteMutation.mutate({...anecdote, votes: anecdote.votes+1})
   }
 
   const result = useQuery('anecdotes', getAnecdotes, {
