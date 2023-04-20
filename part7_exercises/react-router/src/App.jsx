@@ -1,6 +1,5 @@
 import './App.css'
 import { useState } from 'react'
-import ReactDOM from 'react-dom/client'
 
 const Home = () => (
   <div> <h2>TKTL notes app</h2> </div>
