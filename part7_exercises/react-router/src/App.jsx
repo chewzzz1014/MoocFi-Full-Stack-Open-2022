@@ -1,6 +1,5 @@
 import {
-  BrowserRouter as Router,
-  Routes, Route, Link, Navigate
+  Routes, Route, Link, Navigate, useMatch
 } from 'react-router-dom'
 import { useState } from 'react'
 import Notes from './components/Notes'
@@ -41,9 +40,11 @@ function App() {
     padding: 5
   }
 
+  const match = useMatch('/notes/:id') // to figure out id of the note to be displayed
+  const note = match ? notes.find(note => note.id === Number(match.params.id)) : null
+
   return (
     <div>
-      <Router>
         <div>
           <Link style={padding} to='/'>home</Link>
           <Link style={padding} to='/notes'>notes</Link>
@@ -55,13 +56,12 @@ function App() {
         </div>
 
         <Routes>
-          <Route path="/notes/:id" element={<Note notes={notes} />} />
+          <Route path="/notes/:id" element={<Note note={note} />} />
           <Route path="/notes" element={<Notes notes={notes} />} />
           <Route path="/users" element={user ? <Users /> : <Navigate replace to="/login" />} />
           <Route path="/login" element={<Login onLogin={login} />} />
           <Route path="/" element={<Home />} />
         </Routes>
-      </Router>
       <footer>
         <br />
         <em>Note app, Department of Computer Science 2023</em>
