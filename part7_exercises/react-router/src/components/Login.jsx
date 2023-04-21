@@ -7,7 +7,7 @@ function Login(props) {
   const onSubmit = (event) => {
     event.preventDefault()
     props.onLogin('chewzzz')
-    navigate('/')
+    navigate('/') // redirect to main page
   }
   return (
     <div>

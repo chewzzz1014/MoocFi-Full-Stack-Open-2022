@@ -2,7 +2,7 @@ import React from 'react'
 import {useParams} from 'react-router-dom'
 
 function Note({notes}) {
-    const id = useParams().id
+    const id = useParams().id // get param value of the link
     const note = notes.find(n => n.id === Number(id))
     return (
         <div>
