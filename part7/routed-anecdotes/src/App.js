@@ -3,14 +3,7 @@ import AnecdoteList from './components/AnecdoteList'
 import Menu from './components/Menu'
 import About from './components/About'
 import CreateNew from './components/CreateNew'
-
-const Footer = () => (
-  <div>
-    Anecdote app for <a href='https://fullstackopen.com/'>Full Stack Open</a>.
-
-    See <a href='https://github.com/fullstack-hy2020/routed-anecdotes/blob/master/src/App.js'>https://github.com/fullstack-hy2020/routed-anecdotes/blob/master/src/App.js</a> for the source code.
-  </div>
-)
+import Footer from './components/Footer'
 
 const App = () => {
   const [anecdotes, setAnecdotes] = useState([
