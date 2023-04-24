@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { Routes, Route, Link, Navigate, useMatch
+ } from 'react-router-dom'
 import AnecdoteList from './components/AnecdoteList'
 import Menu from './components/Menu'
 import About from './components/About'
@@ -44,14 +46,24 @@ const App = () => {
     setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
   }
 
+  const padding = {
+    padding: 5
+  }
+
   return (
     <div>
       <h1>Software anecdotes</h1>
+      <div>
+        <Link style={padding} to='/'>anecdotes</Link>
+        <Link style={padding} to='/create'>create new</Link>
+        <Link style={padding} to='/about'>about</Link>
+      </div>
       <Menu />
       <AnecdoteList anecdotes={anecdotes} />
       <About />
       <CreateNew addNew={addNew} />
       <Footer />
+      
     </div>
   )
 }
