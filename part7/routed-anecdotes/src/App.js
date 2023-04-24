@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Routes, Route, Link, Navigate, useMatch
  } from 'react-router-dom'
 import AnecdoteList from './components/AnecdoteList'
-import Menu from './components/Menu'
 import About from './components/About'
 import CreateNew from './components/CreateNew'
 import Footer from './components/Footer'
@@ -58,12 +57,14 @@ const App = () => {
         <Link style={padding} to='/create'>create new</Link>
         <Link style={padding} to='/about'>about</Link>
       </div>
-      <Menu />
-      <AnecdoteList anecdotes={anecdotes} />
-      <About />
-      <CreateNew addNew={addNew} />
-      <Footer />
       
+      <Routes>
+        <Route path="/create" element={<CreateNew addNew={addNew} />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />} />
+      </Routes>
+
+      <Footer />
     </div>
   )
 }
