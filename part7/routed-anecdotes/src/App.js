@@ -5,6 +5,7 @@ import AnecdoteList from './components/AnecdoteList'
 import About from './components/About'
 import CreateNew from './components/CreateNew'
 import Footer from './components/Footer'
+import Anecdote from './components/Anecdote'
 
 const App = () => {
   const [anecdotes, setAnecdotes] = useState([
@@ -49,6 +50,9 @@ const App = () => {
     padding: 5
   }
 
+  const match = useMatch('/anecdotes/:id')
+  const anecdote = match ? anecdotes.find(anecdote => anecdote.id === Number(match.params.id)) : null
+
   return (
     <div>
       <h1>Software anecdotes</h1>
@@ -59,6 +63,7 @@ const App = () => {
       </div>
       
       <Routes>
+        <Route path='/anecdotes/:id' element={<Anecdote anecdote={anecdotes} />} />
         <Route path="/create" element={<CreateNew addNew={addNew} />} />
         <Route path="/about" element={<About />} />
         <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />} />
