@@ -5,7 +5,7 @@ const CreateNew = (props) => {
     const [content, setContent] = useState('')
     const [author, setAuthor] = useState('')
     const [info, setInfo] = useState('')
-
+    const navigate = useNavigate()
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -15,7 +15,7 @@ const CreateNew = (props) => {
             info,
             votes: 0
         })
-        Navigate('/')
+        navigate('/')
     }
 
     return (
