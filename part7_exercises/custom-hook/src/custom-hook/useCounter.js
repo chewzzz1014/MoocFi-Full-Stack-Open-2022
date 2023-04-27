@@ -15,6 +15,7 @@ const useCounter = () => {
         setValue(0)
     }
 
+    // return an object: value and function
     return {
         value,
         increase,
