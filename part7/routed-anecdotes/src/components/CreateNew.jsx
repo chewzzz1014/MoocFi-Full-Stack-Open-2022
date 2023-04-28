@@ -10,9 +10,9 @@ const CreateNew = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault()
         props.addNew({
-            content,
-            author,
-            info,
+            content: content.value,
+            author: author.value,
+            info: info.value,
             votes: 0
         })
         navigate('/')
@@ -21,21 +21,36 @@ const CreateNew = (props) => {
     return (
         <div>
             <h2>create a new anecdote</h2>
-            <form onSubmit={handleSubmit}>
+            <form>
                 <div>
                     content
-                    <input {...content} />
+                    <input 
+                        type={content.type}
+                        name={content.name}
+                        value={content.value}
+                        onChange={content.onChange}
+                    />
                 </div>
                 <div>
                     author
-                    <input {...author} />
+                    <input
+                        type={author.type}
+                        name={author.name}
+                        value={author.value}
+                        onChange={author.onChange}
+                    />
                 </div>
                 <div>
                     url for more info
-                    <input {...info} />
+                    <input
+                        type={info.type}
+                        name={info.name}
+                        value={info.value}
+                        onChange={info.onChange}
+                    />
                 </div>
-                <button>create</button>
-                <button>reset</button>
+                <button onClick={handleSubmit}>create</button>
+                <button onClick={() => [content, author, info].forEach(x => x.reset())}>reset</button>
             </form>
         </div>
     )
