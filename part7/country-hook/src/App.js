@@ -16,19 +16,31 @@ const useField = (type) => {
 }
 
 const useCountry = (name) => {
-  const [country, setCountry] = useState(null)
+  const [country, setCountry] = useState('')
 
-  useEffect(() => {})
+  const fetchData = async () => {
+    console.log(name)
+    const result = await axios.get(`https://restcountries.com/v3.1/name/${name}?fullText=true`)
+    console.log(result.data[0])
+    setCountry(result.data[0])
+  }
+  useEffect(() => {
+    console.log(1)
+    fetchData()
+  }, [name])
 
-  return country
+  return {
+    country,
+    found: name.length > 0 && typeof country === 'object'
+  }
 }
 
-const Country = ({ country }) => {
+const Country = ({ country, found }) => {
   if (!country) {
     return null
   }
 
-  if (!country.found) {
+  if (!found) {
     return (
       <div>
         not found...
@@ -38,10 +50,10 @@ const Country = ({ country }) => {
 
   return (
     <div>
-      <h3>{country.data.name} </h3>
-      <div>capital {country.data.capital} </div>
-      <div>population {country.data.population}</div> 
-      <img src={country.data.flag} height='100' alt={`flag of ${country.data.name}`}/>  
+      <h3>{country.name.common} </h3>
+      <div>capital {country.capital[0]} </div>
+      <div>population {country.population}</div> 
+      <img src={country.flags.png} height='100' alt={`flag of ${country.name.common}`}/>  
     </div>
   )
 }
@@ -63,7 +75,7 @@ const App = () => {
         <button>find</button>
       </form>
 
-      <Country country={country} />
+      <Country {...country} />
     </div>
   )
 }
