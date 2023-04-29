@@ -17,21 +17,24 @@ const useField = (type) => {
 
 const useCountry = (name) => {
   const [country, setCountry] = useState('')
-
+  const [found, setFound] = useState(false)
+  
   const fetchData = async () => {
-    console.log(name)
-    const result = await axios.get(`https://restcountries.com/v3.1/name/${name}?fullText=true`)
-    console.log(result.data[0])
-    setCountry(result.data[0])
+    try {
+      const result = await axios.get(`https://restcountries.com/v3.1/name/${name}?fullText=true`)
+      setCountry(result.data[0])
+      setFound(true)
+    } catch (error) {
+      setFound(false)
+    }
   }
   useEffect(() => {
-    console.log(1)
     fetchData()
   }, [name])
 
   return {
     country,
-    found: name.length > 0 && typeof country === 'object'
+    found
   }
 }
 
