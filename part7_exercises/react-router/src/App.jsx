@@ -44,7 +44,7 @@ function App() {
   const note = match ? notes.find(note => note.id === Number(match.params.id)) : null
 
   return (
-    <div>
+    <div className='container'>
         <div>
           <Link style={padding} to='/'>home</Link>
           <Link style={padding} to='/notes'>notes</Link>
