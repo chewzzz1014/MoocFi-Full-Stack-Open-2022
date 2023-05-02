@@ -2,6 +2,8 @@ import {
   Routes, Route, Link, Navigate, useMatch
 } from 'react-router-dom'
 import { useState } from 'react'
+import {Alert} from 'react-bootstrap'
+
 import Notes from './components/Notes'
 import Note from './components/Note'
 import Users from './components/Users'
@@ -31,9 +33,14 @@ function App() {
   ])
 
   const [user, setUser] = useState(null)
+  const [message, setMessage] = useState(null)
 
   const login = (user) => {
     setUser(user)
+    setMessage(`welcome ${user}`)
+    setTimeout(() => {
+      setMessage(null)
+    }, 10000)
   }
 
   const padding = {
@@ -45,6 +52,11 @@ function App() {
 
   return (
     <div className='container'>
+      {(message &&
+          <Alert variant='success'>
+            {message}
+          </Alert>
+      )}
         <div>
           <Link style={padding} to='/'>home</Link>
           <Link style={padding} to='/notes'>notes</Link>
