@@ -24,7 +24,7 @@ function Login(props) {
             />
             <Form.Label>password:</Form.Label>
             <Form.Control
-              type='text'
+              type='password'
               name='password'
             />
             <Button variant='primary' type='submit'>
