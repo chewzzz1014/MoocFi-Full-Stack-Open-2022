@@ -2,7 +2,7 @@ import {
   Routes, Route, Link, Navigate, useMatch
 } from 'react-router-dom'
 import { useState } from 'react'
-import {Alert} from 'react-bootstrap'
+import {Alert, Navbar, Nav} from 'react-bootstrap'
 
 import Notes from './components/Notes'
 import Note from './components/Note'
@@ -58,13 +58,28 @@ function App() {
           </Alert>
       )}
         <div>
-          <Link style={padding} to='/'>home</Link>
-          <Link style={padding} to='/notes'>notes</Link>
-          <Link style={padding} to='/users'>users</Link>
-          {user
-            ? <em>{user} logged in</em>
-            : <Link style={padding} to="/login">login</Link>
-          }
+          <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
+            <Navbar.Toggle aria-controls='responsive-navbar-nav' />
+            <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav className='me-auto'>
+                <Nav.Link href='#' as='span'>
+                  <Link style={padding} to='/'>home</Link>
+                </Nav.Link>
+                <Nav.Link href='#' as='span'>
+                  <Link style={padding} to='/notes'>notes</Link>
+                </Nav.Link>
+                <Nav.Link href='#' as='span'>
+                  <Link style={padding} to='/users'>users</Link>
+                </Nav.Link>
+                <Nav.Link href='#' as='span'>
+                  {user
+                    ? <em>{user} logged in</em>
+                    : <Link style={padding} to="/login">login</Link>
+                  }
+                </Nav.Link>
+              </Nav>
+            </Navbar.Collapse>
+          </Navbar>
         </div>
 
         <Routes>
