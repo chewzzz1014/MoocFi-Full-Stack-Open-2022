@@ -9,6 +9,7 @@ import Note from './components/Note'
 import Users from './components/Users'
 import Login from './components/Login'
 import Home from './components/Home'
+import MUI from './MUI_demo/MUI'
 
 function App() {
   const [notes, setNotes] = useState([
@@ -77,6 +78,9 @@ function App() {
                     : <Link style={padding} to="/login">login</Link>
                   }
                 </Nav.Link>
+                <Nav.Link href='#' as='span'>
+                  <Link style={padding} to='/mui'>MUI</Link>
+                </Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Navbar>
@@ -87,6 +91,7 @@ function App() {
           <Route path="/notes" element={<Notes notes={notes} />} />
           <Route path="/users" element={user ? <Users /> : <Navigate replace to="/login" />} />
           <Route path="/login" element={<Login onLogin={login} />} />
+          <Route path='/mui' element={<MUI />} />
           <Route path="/" element={<Home />} />
         </Routes>
       <footer>
