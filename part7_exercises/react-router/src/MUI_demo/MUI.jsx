@@ -5,7 +5,10 @@ import {
     TableBody,
     TableRow,
     TableCell,
-    Paper
+    Paper,
+    TextField,
+    Button,
+    Alert
  } from '@mui/material'
  import {Link} from 'react-router-dom'
 
@@ -33,6 +36,9 @@ function MUI() {
     
     return (
         <Container>
+            <div>
+                {(<Alert severity="success">This is an example og Alert in Material UI</Alert>)}
+            </div>
             <h1>Table Demo</h1>
             <TableContainer component={Paper}>
                 <Table>
@@ -50,6 +56,21 @@ function MUI() {
                     </TableBody>
                 </Table>
             </TableContainer>
+
+            <h1>Form Demo</h1>
+            <form>
+                <div>
+                    <TextField label="username" />
+                </div>
+                <div>
+                    <TextField label="password" type='password' />
+                </div>
+                <div>
+                    <Button variant="contained" color="primary" type="submit">
+                        login
+                    </Button>
+                </div>
+            </form>
         </Container>
   )
 }

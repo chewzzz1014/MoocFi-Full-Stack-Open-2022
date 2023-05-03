@@ -79,7 +79,7 @@ function App() {
                   }
                 </Nav.Link>
                 <Nav.Link href='#' as='span'>
-                  <Link style={padding} to='/mui'>MUI</Link>
+                  <Link style={padding} to='/mui'>MUI Demo</Link>
                 </Nav.Link>
               </Nav>
             </Navbar.Collapse>
