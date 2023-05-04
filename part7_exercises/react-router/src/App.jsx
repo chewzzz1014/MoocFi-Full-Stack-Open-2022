@@ -10,6 +10,7 @@ import Users from './components/Users'
 import Login from './components/Login'
 import Home from './components/Home'
 import MUI from './MUI_demo/MUI'
+import StyledComponent from './styled_components/StyledComponent'
 
 function App() {
   const [notes, setNotes] = useState([
@@ -81,6 +82,9 @@ function App() {
                 <Nav.Link href='#' as='span'>
                   <Link style={padding} to='/mui'>MUI Demo</Link>
                 </Nav.Link>
+                <Nav.Link href='#' as='span'>
+                  <Link style={padding} to='/style'>Styled Component Demo</Link>
+                </Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Navbar>
@@ -92,6 +96,7 @@ function App() {
           <Route path="/users" element={user ? <Users /> : <Navigate replace to="/login" />} />
           <Route path="/login" element={<Login onLogin={login} />} />
           <Route path='/mui' element={<MUI />} />
+          <Route path='/style' element={<StyledComponent />} />
           <Route path="/" element={<Home />} />
         </Routes>
       <footer>
