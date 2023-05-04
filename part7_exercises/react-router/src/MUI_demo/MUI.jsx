@@ -8,7 +8,11 @@ import {
     Paper,
     TextField,
     Button,
-    Alert
+    Alert,
+    AppBar,
+    Toolbar,
+    IconButton,
+
  } from '@mui/material'
  import {Link} from 'react-router-dom'
 
@@ -39,6 +43,22 @@ function MUI() {
             <div>
                 {(<Alert severity="success">This is an example og Alert in Material UI</Alert>)}
             </div>
+
+            <h1>Nav Bar Demo</h1>
+            <AppBar position="static">
+                <Toolbar>
+                    <Button color="inherit" component={Link} to="/">
+                        home
+                    </Button>
+                    <Button color="inherit" component={Link} to="/notes">
+                        notes
+                    </Button>
+                    <Button color="inherit" component={Link} to="/users">
+                        users
+                    </Button>
+                </Toolbar>
+            </AppBar>
+
             <h1>Table Demo</h1>
             <TableContainer component={Paper}>
                 <Table>
