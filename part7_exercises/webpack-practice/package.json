@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "practising webpack",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "build": "webpack --mode=development"
+  },
   "author": "",
   "license": "MIT",
   "devDependencies": {
