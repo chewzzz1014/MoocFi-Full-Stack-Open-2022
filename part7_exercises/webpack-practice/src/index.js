@@ -1,7 +1,9 @@
+import React from 'react'
+import ReactDOM from 'react-dom/client'
 import App from './App'
 
-const hello = (name) => {
-    console.log(`hello ${name}!!`)
-}
+const root = ReactDOM.createRoot(document.getElementById('root'))
 
-App()
+root.render(
+    <App />
+)
