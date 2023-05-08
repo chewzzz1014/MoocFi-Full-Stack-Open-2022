@@ -16,7 +16,9 @@
     "webpack-cli": "^5.0.2"
   },
   "dependencies": {
+    "core-js": "^3.30.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "regenerator-runtime": "^0.13.11"
   }
 }
