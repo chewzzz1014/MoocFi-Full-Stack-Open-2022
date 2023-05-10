@@ -14,6 +14,9 @@ const config = () => {
           compress: true,
           port: 3000  
         },
+        // generate source map for the bundle
+        // to map errors that occur during execution of bundle to the corresponding part in original source code
+        devtool: 'source-map',
         // loaders to inform webpack of files need to be processed before they're bundled
         module: {
             rules: [
