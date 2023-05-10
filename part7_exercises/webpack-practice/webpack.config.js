@@ -8,6 +8,12 @@ const config = () => {
             path: path.resolve(__dirname, 'build'),
             filename: 'main.js'
         },
+        // webpack-dev-server config
+        devServer: {
+          static: path.resolve(__dirname, 'build'),
+          compress: true,
+          port: 3000  
+        },
         // loaders to inform webpack of files need to be processed before they're bundled
         module: {
             rules: [
