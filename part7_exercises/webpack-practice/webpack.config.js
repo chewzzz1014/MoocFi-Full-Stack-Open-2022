@@ -1,7 +1,12 @@
 // define functionality of webpack
 const path = require('path')
+const webpack = require('webpack')
 
-const config = () => {
+const config = (env, argv) => {
+    console.log('argv.mode', argv.mode)
+    
+    const backend_url = argv.mode === 'production' ? 'https://notes2023.fly.dev/api/notes' : 'http://localhost:3001/notes' 
+
     return {
         entry: './src/index.js',
         output: {
@@ -32,7 +37,13 @@ const config = () => {
                     use: ['style-loader', 'css-loader']
                 }
             ]
-        }
+        },
+        plugins: [
+            // define global default constant to be used in bundled code
+            new webpack.DefinePlugin({
+                BACKEND_URL: JSON.stringify(backend_url)
+            })
+        ]
     }
 }
 
