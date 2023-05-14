@@ -17,8 +17,8 @@ const useNotes = (url) => {
 function App() {
   const [counter, setCounter] = useState(0)
   const [values, setValues] = useState([])
-  const url = 'https://notes2023.fly.dev/api/notes'
-  const notes = useNotes(url)
+  // get value from global constant
+  const notes = useNotes(BACKEND_URL)
 
   const handleClick = () => {
     setCounter(counter+1)
@@ -29,7 +29,7 @@ function App() {
     <div className='container'>
       hello webpack {counter} clicks
       <button onClick={handleClick}>press</button>
-      <div>{notes.length} notes on server</div>
+      <div>{notes.length} notes on server {BACKEND_URL}</div>
     </div>
   )
 }
