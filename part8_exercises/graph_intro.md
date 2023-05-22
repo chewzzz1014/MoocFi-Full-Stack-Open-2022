@@ -55,3 +55,23 @@ query FetchBlogsQuery {
   }
 }
 ```
+
+## Schemas and Queries
+- Schema: describes the data sent between the client and the server.
+- Example:
+
+```
+type Person {
+  name: String!
+  phone: String
+  street: String!
+  city: String!
+  id: ID! 
+}
+
+type Query {
+  personCount: Int!
+  allPersons: [Person!]!
+  findPerson(name: String!): Person
+}
+```
