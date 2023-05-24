@@ -58,6 +58,7 @@ query FetchBlogsQuery {
 
 ## Schemas and Queries
 - Schema: describes the data sent between the client and the server.
+- Query: tells what kind of queries can be made to the API
 - Example:
 
 ```
@@ -75,3 +76,6 @@ type Query {
   findPerson(name: String!): Person
 }
 ```
+- personCount returns an integer
+- allPersons returns a list of Person objects
+- findPerson is given a string parameter and it returns a Person object.
