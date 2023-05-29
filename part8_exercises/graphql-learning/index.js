@@ -26,11 +26,15 @@ let persons = [
 
 // define graphql schema and query
 const typeDefs = `
+    type Address {
+        street: String!
+        city: String!
+    }
+
     type Person {
         name: String!
         phone: String
-        street: String!
-        city: String!
+        address: Address!
         id: ID!
     }
 
@@ -44,8 +48,8 @@ const typeDefs = `
 // server resolver
 // define how GraphQL queries are responded to
 // correspond to query in schema
-// type Person has default resolvers:
-/**
+//  field has default resolver if resolver is not defined
+/*
  *   Person: {    
  *      name: (root) => root.name,    
  *      phone: (root) => root.phone,    
@@ -60,6 +64,14 @@ const resolvers = {
         allPersons: () => persons,
         findPerson: (root, args) => 
             persons.find(p => p.name === args.name)
+    },
+    Person: {
+        address: (root) => {
+            return {
+                street: root.street,
+                city: root.city
+            }
+        }
     }
 }
 
