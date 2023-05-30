@@ -25,6 +25,7 @@ let persons = [
 ]
 
 // define graphql schema and query
+// mutation: to perform all operations which cause a change
 const typeDefs = `
     type Address {
         street: String!
@@ -43,6 +44,13 @@ const typeDefs = `
         allPersons: [Person!]!
         findPerson(name: String!): Person
     }
+
+    type Mutation {
+        name: String!
+        phone: String
+        street: String!
+        city: String!
+    }: Person
 `
 
 // server resolver
