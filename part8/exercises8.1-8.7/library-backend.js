@@ -105,12 +105,19 @@ const typeDefs = `
     id: ID!
     genres: [String!]
   }
+  type AuthorWork {
+    name: String!
+    bookCount: Int!
+  }
   type Query {
     bookCount: Int!
     authorCount: Int!
     allBooks: [Book!]
+    allAuthors: [AuthorWork!]
   }
 `
+
+const getAuthorBookCount = (a) => books.reduce((sum, b) => (b.author === a) ? sum + 1 : sum, 0)
 
 const resolvers = {
     Query: {
@@ -120,7 +127,19 @@ const resolvers = {
         books.forEach((b) => uniqueAuthor.includes(b.author) ? '' : uniqueAuthor.push(b.author))
         return uniqueAuthor.length
        },
-       allBooks: (root, args) => books
+       allBooks: () => books,
+       allAuthors: () => {
+        let uniqueAuthor = []
+
+        books.forEach(b => uniqueAuthor.includes(b.author) ? '' : uniqueAuthor.push(b.author))
+        
+        return uniqueAuthor.map(author => {
+            return {
+                name: author,
+                bookCount: getAuthorBookCount(author)
+            }
+        })
+       }
     }
 }
 
