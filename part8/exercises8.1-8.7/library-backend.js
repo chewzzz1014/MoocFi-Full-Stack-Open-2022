@@ -98,9 +98,17 @@ let books = [
 */
 
 const typeDefs = `
+  type Book {
+    title: String!
+    published: Int!
+    author: String!
+    id: ID!
+    genres: [String!]
+  }
   type Query {
     bookCount: Int!
     authorCount: Int!
+    allBooks: [Book!]
   }
 `
 
@@ -111,7 +119,8 @@ const resolvers = {
         let uniqueAuthor = []
         books.forEach((b) => uniqueAuthor.includes(b.author) ? '' : uniqueAuthor.push(b.author))
         return uniqueAuthor.length
-       }
+       },
+       allBooks: (root, args) => books
     }
 }
 
