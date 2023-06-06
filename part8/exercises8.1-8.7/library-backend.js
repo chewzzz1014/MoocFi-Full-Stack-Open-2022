@@ -99,7 +99,8 @@ let books = [
 
 const typeDefs = `
   type Query {
-    dummy: Int
+    bookCount: Int!
+    authorCount: Int!
   }
 `
 
