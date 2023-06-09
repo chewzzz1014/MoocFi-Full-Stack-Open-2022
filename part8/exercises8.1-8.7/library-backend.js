@@ -115,6 +115,14 @@ const typeDefs = `
     allBooks(author: String, genre: String): [Book!]
     allAuthors: [AuthorWork!]
   }
+  type Mutation {
+    addBook(
+        title: String!
+        author: String!
+        published: Int!
+        genres: [String!]
+    ): Book
+  }
 `
 
 const getAuthorBookCount = (a) => books.reduce((sum, b) => (b.author === a) ? sum + 1 : sum, 0)
@@ -157,6 +165,22 @@ const resolvers = {
             }
         })
        }
+    },
+    Mutation: {
+        addBook: (root, args) => {
+            if (books.find(b => b.name === args.name)) {
+                throw new GraphQLError('Name must be unique', {
+                    extensions: {
+                        code: 'BAD_USER_INPUT',
+                        invalidArgs: args.name
+                    }
+                })
+            }
+
+            const book = {...args, id: uuid()}
+            books = books.concat(book)
+            return book
+        }
     }
 }
 
