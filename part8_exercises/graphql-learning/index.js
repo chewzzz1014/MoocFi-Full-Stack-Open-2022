@@ -115,7 +115,7 @@ const resolvers = {
             }
 
             const person = {...args, id: uuid()}
-            person = persons.concat(person)
+            persons = persons.concat(person)
             return person
         },
         editNumber: (root, args) => {
