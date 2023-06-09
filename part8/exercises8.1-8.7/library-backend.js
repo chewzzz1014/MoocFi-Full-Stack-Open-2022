@@ -1,6 +1,7 @@
 const { ApolloServer } = require('@apollo/server')
 const { startStandaloneServer } = require('@apollo/server/standalone')
-
+const { v1: uuid } = require('uuid')
+const { GraphQLError } = require('graphql') // error handling
 
 let authors = [
     {
@@ -108,6 +109,7 @@ const typeDefs = `
   }
   type AuthorWork {
     name: String!
+    born: Int
     bookCount: Int!
   }
   type Query {
@@ -159,10 +161,12 @@ const resolvers = {
 
         books.forEach(b => uniqueAuthor.includes(b.author) ? '' : uniqueAuthor.push(b.author))
         
-        return uniqueAuthor.map(author => {
+        return uniqueAuthor.map(a => {
+            const foundAuthor = authors.find(x => x.name === a)
             return {
-                name: author,
-                bookCount: getAuthorBookCount(author)
+                name: foundAuthor.name,
+                born: foundAuthor.born || null,
+                bookCount: getAuthorBookCount(foundAuthor.name)
             }
         })
        }
