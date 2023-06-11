@@ -167,10 +167,15 @@ const resolvers = {
        allAuthors: () => {
         let uniqueAuthor = []
 
-        books.forEach(b => uniqueAuthor.includes(b.author) ? '' : uniqueAuthor.push(b.author))
+        books.forEach((b) => {
+            if (!uniqueAuthor.includes(b.author)) 
+                uniqueAuthor.push(b.author)
+        })
         
         return uniqueAuthor.map(a => {
             const foundAuthor = authors.find(x => x.name === a)
+            if (!foundAuthor) 
+                return
             return {
                 name: foundAuthor.name,
                 born: foundAuthor.born || null,
@@ -181,18 +186,28 @@ const resolvers = {
     },
     Mutation: {
         addBook: (root, args) => {
-            if (books.find(b => b.name === args.name)) {
-                throw new GraphQLError('Name must be unique', {
-                    extensions: {
-                        code: 'BAD_USER_INPUT',
-                        invalidArgs: args.name
-                    }
-                })
-            }
+            // if (books.find(b => b.name === args.name)) {
+            //     throw new GraphQLError('Name must be unique', {
+            //         extensions: {
+            //             code: 'BAD_USER_INPUT',
+            //             invalidArgs: args.name
+            //         }
+            //     })
+            // }
 
             const book = {...args, id: uuid()}
             books = books.concat(book)
             return book
+        },
+        editAuthor: (root, args) => {
+            // if author is found, update born and return
+            for(let i = 0; i< authors.length; i++) {
+                if (args.name === authors[i].name){
+                    authors[i].born = args.setBornTo
+                    return authors[i]
+                }
+            }
+            return null
         }
     }
 }
