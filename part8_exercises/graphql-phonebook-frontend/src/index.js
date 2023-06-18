@@ -1,6 +1,11 @@
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import {ApolloClient, InMemoryCache, gql} from '@apollo/client'
+import {
+  ApolloClient, 
+  ApolloProvider,
+  InMemoryCache,
+  gql
+} from '@apollo/client'
 
 const client = new ApolloClient({
   url: 'https://localhost:4000',
@@ -28,6 +33,8 @@ client.query({query})
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <ApolloProvider client={client}>
     <App />
+  </ApolloProvider>
 );
 
