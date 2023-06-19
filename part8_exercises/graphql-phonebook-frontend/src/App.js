@@ -1,14 +1,5 @@
-import {gql, useQuery} from '@apollo/client'
-
-const ALL_PERSONS = gql`
-query{
-  allPersons {
-    name
-    phone
-    id
-  }
-}
-`
+import {useQuery} from '@apollo/client'
+import { ALL_PERSONS } from './queries'
 
 function App() {
   // make queries
