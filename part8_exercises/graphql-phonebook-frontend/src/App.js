@@ -3,6 +3,7 @@ import { ALL_PERSONS } from './queries'
 import Persons from './components/Persons';
 import PersonForm from './components/PersonForm';
 import { useState } from 'react';
+import PhoneForm from './components/PhoneForm';
 
 function App() {
   // for handling mutation errors in PersonForm
@@ -24,9 +25,10 @@ function App() {
 
   return (
     <div>
-      
+      <Notify errorMessage={errorMessage} />
       <Persons persons={result.data.allPersons}/>
       <PersonForm setError={notify}/>
+      <PhoneForm />
     </div>
   );
 }
