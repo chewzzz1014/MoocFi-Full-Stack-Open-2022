@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import {
     ApolloClient, 
-    ApolloProvider
+    ApolloProvider,
     InMemoryCache,
 } from '@apollo/client'
 
