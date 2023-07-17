@@ -6,9 +6,21 @@ interface BmiData{
     height: number
 }
 
-const calculateBMI = (data: BmiData): number => {
+const calculateBMI = (data: BmiData): string => {
     const {weight, height} = data 
-    return weight/((height/100)^2)
+    const bmi = weight/((height/100)^2)
+    let result = ''
+
+    if (bmi < 18.5)
+        result = 'Underweight (low weight)'
+    else if (bmi >= 18.5 && bmi<=22.9)
+        result = 'Normal (healthy weight)'
+    else if (bmi >= 23 && bmi <= 29.9)
+        result = 'Overweight (slightly unhealthy weight)'
+    else if (bmi >= 30)
+        result = 'Obese (very unhealthy weight)'
+        
+    return result
 }
 
 const parseArguments = (args: string[]): BmiData => {
@@ -28,7 +40,7 @@ const parseArguments = (args: string[]): BmiData => {
 }
 
 try {
-    const bmi = calculateBMI(parseArguments(process.argv))
+    console.log(calculateBMI(parseArguments(process.argv)))
 } catch (error: unknown) {
     let errorMsg = 'Something bad happened.'
     if (error instanceof Error) {
