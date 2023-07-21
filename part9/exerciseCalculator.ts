@@ -11,6 +11,11 @@ interface Result {
     average: number // average daily hours in the given period (sum/periodLength)
 }
 
+interface ParsedResult {
+    hours: number[]
+    target: number
+}
+
 const getRating = (average: number, target: number): [rating: number, ratingDescription: string] => {
     if (average >= target) {
         return [1, 'excellent!']
@@ -48,4 +53,42 @@ const calculateExercise = (hours: number[], target: number): Result => {
     }
 }
 
-console.log(calculateExercise([3, 0, 2, 4.5, 0, 3, 1], 2))
+const parseArgumentsArr = (args: string[]): ParsedResult => {
+    let target: number, hours: number[]
+
+    if (args.length < 4)
+        throw new Error('Not enought argument. It\'s mandatory to have at least one day of exercises hour.')
+    
+    // 'npm': 0th; 'run': 1st
+    hours = args.slice(0, args.length-1)
+                    .map(x => {
+                        if (isNaN(Number(x)))
+                            throw new Error('Provided hours were not numbers!')
+                        else
+                            return Number(x)
+                    })
+
+    // validate target value
+    if (isNaN(Number(args[args.length - 1]))) {
+        throw new Error('Target value is not number!')
+    } else {
+        target = Number(args[args.length - 1])
+    }
+
+    return {
+        hours,
+        target
+    }
+}
+
+// console.log(calculateExercise([3, 0, 2, 4.5, 0, 3, 1], 2))
+
+try{
+    const {hours, target} = parseArgumentsArr(process.argv)
+    console.log(calculateExercise(hours, target))
+} catch(error: unknown) {
+    let errorMsg = 'Something bad happened.'
+    if (error instanceof Error)
+        errorMsg += ` Error: ${error.message}`
+    console.log(errorMsg)
+}
