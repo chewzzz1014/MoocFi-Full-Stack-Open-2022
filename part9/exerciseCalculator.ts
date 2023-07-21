@@ -53,6 +53,7 @@ const calculateExercise = (hours: number[], target: number): Result => {
     }
 }
 
+// arguments: 'run' 'calculateExercises' 'target' [list of hours]
 const parseArgumentsArr = (args: string[]): ParsedResult => {
     let target: number, hours: number[]
 
@@ -60,7 +61,7 @@ const parseArgumentsArr = (args: string[]): ParsedResult => {
         throw new Error('Not enought argument. It\'s mandatory to have at least one day of exercises hour.')
     
     // 'npm': 0th; 'run': 1st
-    hours = args.slice(0, args.length-1)
+    hours = args.slice(3, args.length)
                     .map(x => {
                         if (isNaN(Number(x)))
                             throw new Error('Provided hours were not numbers!')
@@ -69,10 +70,10 @@ const parseArgumentsArr = (args: string[]): ParsedResult => {
                     })
 
     // validate target value
-    if (isNaN(Number(args[args.length - 1]))) {
+    if (isNaN(Number(args[2]))) {
         throw new Error('Target value is not number!')
     } else {
-        target = Number(args[args.length - 1])
+        target = Number(args[2])
     }
 
     return {
