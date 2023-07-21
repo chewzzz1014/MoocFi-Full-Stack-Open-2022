@@ -6,7 +6,8 @@
   "scripts": {
     "ts-node": "ts-node",
     "multiply": "ts-node ./basics/multiplier.ts",
-    "calculate": "ts-node ./basics/calculator.ts"
+    "calculate": "ts-node ./basics/calculator.ts",
+    "start": "ts-node index.ts"
   },
   "keywords": [],
   "author": "",
@@ -18,5 +19,8 @@
     "@types/mongoose": "^5.11.97",
     "@types/node": "^20.4.1",
     "@types/react": "^18.2.14"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
   }
 }
