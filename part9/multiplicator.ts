@@ -4,8 +4,18 @@ interface MultiplyValues {
     value2: number;
 }
 
-const parseMultiplicator = () => {
-    
+const parseMultiplicator = (args: String[]): MultiplyValues => {
+    if (args.length < 4) throw new Error('Not enough arguments')
+    if (args.length > 4) throw new Error('Too many arguments')
+
+    if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
+        return {
+            value1: Number(args[2]),
+            value2: Number(args[3])
+        }
+    } else {
+        throw new Error('Provided values were not numbers!')
+    }
 }
 
 const multiplicator = (a: number, b: number, printText: string) => {
@@ -13,10 +23,10 @@ const multiplicator = (a: number, b: number, printText: string) => {
 }
 
 try{
-    const {value1, value2} = parseArguments(process.argv)
-    multiplicator(value1, value2, `Result of ${value1} * ${value2} is `)
+    const {value1, value2} = parseMultiplicator(process.argv)
+    multiplicator(value1, value2, `Result of ${value1} * ${value2} is`)
 } catch (error: unknown) {
-    let errorMsg = 'Something bad happened.'
+    let errorMsg = 'Something bad happened. '
     if (error instanceof Error) {
         errorMsg += 'Error: ' + error.message
     }
