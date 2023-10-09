@@ -1,5 +1,6 @@
 // input: an array of exercise hours for each day in training period, target amount of daily hours
 // output: analysis
+import { isNotNumber } from "./utils"
 
 interface Result {
     periodLength: number // number of days
@@ -60,17 +61,18 @@ const parseArgumentsArr = (args: string[]): ParsedResult => {
     if (args.length < 4)
         throw new Error('Not enought argument. It\'s mandatory to have at least one day of exercises hour.')
     
-    // 'npm': 0th; 'run': 1st
+    // command: npm run calculateExercises [target] [list of exercise hours for each day]
+    // 'run': 0th, 'calculateExercises': 1st...
     hours = args.slice(3, args.length)
                     .map(x => {
-                        if (isNaN(Number(x)))
+                        if (isNotNumber(x))
                             throw new Error('Provided hours were not numbers!')
                         else
                             return Number(x)
                     })
 
     // validate target value
-    if (isNaN(Number(args[2]))) {
+    if (isNotNumber(args[2])) {
         throw new Error('Target value is not number!')
     } else {
         target = Number(args[2])

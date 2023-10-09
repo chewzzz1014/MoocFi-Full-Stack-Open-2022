@@ -1,3 +1,5 @@
+import { isNotNumber } from "./utils";
+
 // multiplicator that takes inputs from user and return result
 interface MultiplyValues {
     value1: number;
@@ -8,7 +10,7 @@ const parseMultiplicator = (args: String[]): MultiplyValues => {
     if (args.length < 4) throw new Error('Not enough arguments')
     if (args.length > 4) throw new Error('Too many arguments')
 
-    if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
+    if (!isNotNumber(args[2]) && !isNotNumber(args[3])) {
         return {
             value1: Number(args[2]),
             value2: Number(args[3])
