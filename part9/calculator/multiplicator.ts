@@ -1,4 +1,4 @@
-import { isNotNumber } from "./utils";
+import { isNotNumber } from "../utils";
 
 // multiplicator that takes inputs from user and return result
 interface MultiplyValues {

@@ -1,6 +1,6 @@
 // input: weight in kg, height in cm
 // formula: (weight in kg) / (height in m)^2
-import {isNotNumber} from './utils'
+import {isNotNumber} from '../utils'
 
 interface BmiData{
     weight: number,

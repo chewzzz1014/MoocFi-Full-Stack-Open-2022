@@ -1,6 +1,6 @@
 // input: an array of exercise hours for each day in training period, target amount of daily hours
 // output: analysis
-import { isNotNumber } from "./utils"
+import { isNotNumber } from "../utils"
 
 interface Result {
     periodLength: number // number of days
