@@ -7,10 +7,6 @@ const getEntries = (): DiaryEntry[] => {
     return diaries
 }
 
-const addDiary = () => {
-    return null
-}
-
 // return 'censored' version of DiaryEntry
 // omit some fields from DiaryEntry
 const getNonSensitiveEntries = (): NonSensitiveEntries[] => {
@@ -20,6 +16,10 @@ const getNonSensitiveEntries = (): NonSensitiveEntries[] => {
         weather,
         visibility
     }))
+}
+
+const addDiary = () => {
+    return null
 }
 
 export default {
