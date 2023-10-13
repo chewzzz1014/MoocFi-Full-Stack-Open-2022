@@ -3,13 +3,16 @@ import {useEffect, useState} from 'react';
 import { Diagnosis, Patient } from "../types";
 import patientService from '../services/patients';
 import diagnosesService from "../services/diagnoses";
+import HealthCheck from "./Entry/HealthCheck";
+import Hospital from "./Entry/Hospital";
+import OccHealthcare from "./Entry/OccHealthcare";
 import FemaleIcon from '@mui/icons-material/Female';
 import MaleIcon from '@mui/icons-material/Male';
 
 function PatientProfile() {
     const {patientId} = useParams();
     const [patient, setPatient] = useState<Patient>();
-    const [codesWithDetails, setCodesWithDetails] = useState<Diagnosis[]>();
+    const [codesWithDetails, setCodesWithDetails] = useState<Diagnosis[]>([]);
 
     useEffect(() => {
         const fetchPatient = async () => {
@@ -41,15 +44,21 @@ function PatientProfile() {
                 occupation: {patient?.occupation}
             </div>
 
-            <h3>entires</h3>
-            {patient?.entries.map((x, idx1) => (
-                <div key={idx1}>
-                    <p>{x.date} {x.description}</p>
-                    {codesWithDetails?.map((c, idx2) => <li key={idx2}>{c.code} {c.name}</li>)}
-                </div>
-            ))}
+            <div>
+                {patient?.entries.length ? <h3>entries</h3> : ''}
+                {patient?.entries.map((x, idx) => {
+                    switch(x.type) {
+                        case 'HealthCheck':
+                            return <HealthCheck key={idx} entry={x} codesWithDetails={codesWithDetails} />;
+                        case 'Hospital':
+                            return <Hospital key={idx} entry={x} codesWithDetails={codesWithDetails} />;
+                        case 'OccupationalHealthcare':
+                            return <OccHealthcare key={idx} entry={x} codesWithDetails={codesWithDetails} />;
+                    }
+                })}
+            </div>
         </div>
     )
 }
 
-export default PatientProfile
+export default PatientProfile;
