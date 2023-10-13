@@ -1,13 +1,15 @@
 import { useState } from "react"
-import { FormProps } from "../types"
+import { FormProps, Visibility, Weather } from "../types"
 import { addDiary } from "../services/diaryService"
 import axios from "axios"
 
 
 export default function Form(props: FormProps) {
+    const visibilityOptions = Object.values(Visibility).map(v => v.toString())
+    const weatherOptions = Object.values(Weather).map(w => w.toString())
     const [date, setDate] = useState('')
-    const [visibility, setVisibility] = useState('')
-    const [weather, setWeather] = useState('')
+    const [visibility, setVisibility] = useState(visibilityOptions[0])
+    const [weather, setWeather] = useState(weatherOptions[0])
     const [comment, setComment] = useState('')
     const [warning, setWarning] = useState('')
 
@@ -20,8 +22,8 @@ export default function Form(props: FormProps) {
         })
         .then(data => {
             setDate('')
-            setVisibility('')
-            setWeather('')
+            setVisibility(visibilityOptions[0])
+            setWeather(weatherOptions[0])
             setComment('')
             props.setDiaries(props.diaries.concat(data))
         })
@@ -44,6 +46,7 @@ export default function Form(props: FormProps) {
             <div>
                 date
                 <input
+                    type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)} 
                 />
@@ -51,18 +54,36 @@ export default function Form(props: FormProps) {
 
             <div>
                 visibility
-                <input
-                    value={visibility}
-                    onChange={(e) => setVisibility(e.target.value)} 
-                />
+                <select onChange={(e) => setVisibility(e.target.value)}>
+                    {
+                        visibilityOptions.map((op, idx) => (
+                            <option 
+                                key={idx}
+                                value={op}
+                                selected={op === visibility}
+                            >
+                                {op}
+                            </option>
+                        ))
+                    }
+                </select>
             </div>
 
             <div>
                 weather
-                <input
-                    value={weather}
-                    onChange={(e) => setWeather(e.target.value)} 
-                />
+                <select onChange={(e) => setWeather(e.target.value)}>
+                    {
+                        weatherOptions.map((op, idx) => (
+                            <option 
+                                key={idx}
+                                value={op}
+                                selected={op === weather}
+                            >
+                                {op}
+                            </option>
+                        ))
+                    }
+                </select>
             </div>
 
             <div>
