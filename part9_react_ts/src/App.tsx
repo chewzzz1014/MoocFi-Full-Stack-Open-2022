@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import { Note } from './types'
+import { getAllNotes, createNote } from './services/noteService'
 
 function App() {
   // use type parameter
@@ -10,22 +10,18 @@ function App() {
   ])
 
   useEffect(() => {
-    // specify response data type
-    axios.get('http://localhost:3001/notes')
-      .then((response) => {
-        console.log(response.data)
-        setNotes(response.data as Note[])
-      })
+    getAllNotes().then(data => {
+      setNotes(data)
+    })
   }, [])
 
   const noteCreation = (e: React.SyntheticEvent) => {
     e.preventDefault()
 
-    const noteToAdd = {
-      content: newNote,
-      id: notes.length + 1
-    }
-    setNotes(notes.concat(noteToAdd))
+    createNote({content: newNote}).then(data => {
+      setNotes(notes.concat(data))
+    })
+    
     setNewNote('')
   }
 
