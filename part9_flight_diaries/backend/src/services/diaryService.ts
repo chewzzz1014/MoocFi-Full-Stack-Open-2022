@@ -1,5 +1,5 @@
 import diaryData from '../../data/diaries'
-import { DiaryEntry, NonSensitiveEntries, Weather, Visibility, NewDiaryEntry } from '../types'
+import { DiaryEntry, NonSensitiveEntries, NewDiaryEntry } from '../types'
 
 const diaries: DiaryEntry[] = diaryData
 

@@ -10,8 +10,11 @@ const isString = (text: unknown): text is string => {
 // type guard
 // to validate comment field
 const parseComment = (comment: unknown): string => {
-    if (!comment || !isString(comment)) {
-        throw new Error('Incorrct or missing comment')
+    if (!comment) {
+        throw new Error('Missing comment')
+    }
+    if (!isString(comment)) {
+        throw new Error('Incorrct comment: ' + comment)
     }
 
     return comment
@@ -23,8 +26,11 @@ const isDate = (date: string): boolean => {
 }
 
 const parseDate = (date: unknown): string => {
-    if (!date || !isString(date) || !isDate(date)) {
-        throw new Error('Incorract or missing date: ' + date)
+    if (!date) {
+        throw new Error('Missing date')
+    }
+    if (!isString(date) || !isDate(date)) {
+        throw new Error('Incorract date: ' + date)
     }
     return date
 }
@@ -36,8 +42,11 @@ const isWeather = (str: string): str is Weather => {
 }
 
 const parseWeather = (weather: unknown): Weather => {
-    if (!weather || !isString(weather) || !isWeather(weather)) {
-        throw new Error('Incorrect or missing weather ' + weather)
+    if (!weather) {
+        throw new Error('Missing weather')
+    }
+    if (!isString(weather) || !isWeather(weather)) {
+        throw new Error('Incorrect weather: ' + weather)
     }
     return weather
 }
@@ -48,8 +57,11 @@ const isVisibility = (param: string): param is Visibility => {
 }
 
 const parseVisibility = (visibility: unknown): Visibility => {
-    if (!visibility || !isString(visibility) || !isVisibility(visibility)) {
-        throw new Error('Incorrect or missing visibility: ' + visibility)
+    if (!visibility) {
+        throw new Error('Missing visibility')
+    }
+    if (!isString(visibility) || !isVisibility(visibility)) {
+        throw new Error('Incorrect visibility: ' + visibility)
     }
     return visibility
 }

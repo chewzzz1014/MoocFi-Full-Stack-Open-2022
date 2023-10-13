@@ -12,9 +12,9 @@ const toNewDiaryEntry = (object: unknown): NewDiaryEntry => {
     if ('comment' in object && 'date' in object && 'weather' in object && 'visibility' in object) {
          // validate fields' values
         const newEntry: NewDiaryEntry = {
-            date: parsers.parseComment(object.comment),
-            weather: parsers.parseWeather(object.weather),
+            date: parsers.parseDate(object.date),
             visibility: parsers.parseVisibility(object.visibility),
+            weather: parsers.parseWeather(object.weather),
             comment: parsers.parseComment(object.comment)
         }
 

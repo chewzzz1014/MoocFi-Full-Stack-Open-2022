@@ -1,6 +1,7 @@
 import express from 'express'
 import diaryService from '../services/diaryService'
 import toNewDiaryEntry from '../utils'
+import { NonSensitiveEntries } from '../types'
 
 const router = express.Router()
 
@@ -20,13 +21,13 @@ router.post('/', (req, res) => {
         const newEntry = toNewDiaryEntry(req.body)
 
         const addedEntry = diaryService.addDiary(newEntry)
-        res.json(addedEntry)
+        res.json(addedEntry as NonSensitiveEntries)
     } catch(error: unknown){
-        let errorMsg = 'Something went wrong.'
+        let errorMsg = ''
         if (error instanceof Error) {
             errorMsg += `Error: ${error.message}`
         }
-        res.sendStatus(400).send(errorMsg)
+        res.status(400).send(errorMsg)
     }
 })
 
