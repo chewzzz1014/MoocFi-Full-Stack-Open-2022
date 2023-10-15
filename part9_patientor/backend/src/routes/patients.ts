@@ -12,4 +12,7 @@ router.get('/:id', (req, res) => {
     res.send(patientService.getSelectedPatient(id))
 })
 
+// router.post('/:id/entries', (req, res) => {
+//     const {id} = req.params
+// })
 export default router

@@ -69,5 +69,5 @@ interface HealthCheckEntry extends BaseEntry {
 export type Entry = HospitalEntry | OccupationalHealthcareEntry | HealthCheckEntry
 
 // use Omit to exclude a property (for union type): resulting type would only contain the common properties
-type UnionOmit<T, K extends string| number | symbol> = T extends unknown ? Omit<T, K> : never // Define special omit for unions
-export type EntryWithoutId = UnionOmit<FileSystemEntry, 'id'>
+type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit<T, K> : never // Define special omit for unions
+export type EntryWithoutId = UnionOmit<Entry, 'id'>
