@@ -1,4 +1,4 @@
-import { Diagnosis, HealthCheckRating } from "./types"
+import { Diagnosis, HealthCheckRating, Discharge, SickLeave } from "./types"
 
 // string validation
 const isString = (text: unknown): text is string => {
@@ -48,7 +48,7 @@ const parseHealthCheckRating = (hc: unknown): HealthCheckRating => {
     return hc
 }
 
-// parse diagnosis code
+// parse diagnosis code: accept the whole data - object
 const parseDiagnosisCodes = (object: unknown): Array<Diagnosis['code']> => {
     if (!object || typeof object !== 'object' || !('diagnosisCodes' in object)) {
         return [] as Array<Diagnosis['code']>
@@ -56,9 +56,31 @@ const parseDiagnosisCodes = (object: unknown): Array<Diagnosis['code']> => {
     return object.diagnosisCodes as Array<Diagnosis['code']>
 }
 
+// parse discharge: accept object.discharge
+const parseDischarge = (object: unknown): Discharge => {
+    if (!object || typeof object !== 'object' || !('date' in object) || !('criteria' in object)) {
+        throw new Error('Empty or invalid format of discharge data')
+    } 
+    if ('date' in object && 'criteria' in object) {
+        object.date = parseDate('discharge date', object.date)
+        object.criteria = parseString('discharge criteria', object.criteria)
+    }
+    return object as Discharge
+}
+
+// parse sick leave: accept the whole data as input (since sickLeave is optional)
+const parseSickLeave = (object: unknown): SickLeave => {
+    if (!object || typeof object !== 'object' || !('sickLeave' in object)) {
+        return {} as SickLeave
+    } 
+    return object.sickLeave as SickLeave
+}
+
 export default {
     parseString,
     parseDate,
     parseHealthCheckRating,
-    parseDiagnosisCodes
+    parseDiagnosisCodes,
+    parseDischarge,
+    parseSickLeave
 }
