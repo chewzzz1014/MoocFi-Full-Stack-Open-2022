@@ -8,11 +8,23 @@ import Hospital from "./Entry/Hospital";
 import OccHealthcare from "./Entry/OccHealthcare";
 import FemaleIcon from '@mui/icons-material/Female';
 import MaleIcon from '@mui/icons-material/Male';
+import { Button } from "@mui/material";
+import EntryForm from "./Entry/EntryForm";
 
 function PatientProfile() {
     const {patientId} = useParams();
     const [patient, setPatient] = useState<Patient>();
     const [codesWithDetails, setCodesWithDetails] = useState<Diagnosis[]>([]);
+    // for entry form
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
+    const [error, setError] = useState<string>();
+
+    const openModal = (): void => setModalOpen(true);
+
+    const closeModal = (): void => {
+        setModalOpen(false);
+        setError(undefined);
+    };
 
     useEffect(() => {
         const fetchPatient = async () => {
@@ -35,14 +47,25 @@ function PatientProfile() {
 
     return (
         <div>
-            <h1>
-                {patient?.name} <span>{ patient?.gender === 'male' ? <MaleIcon /> : <FemaleIcon /> }</span>
-            </h1>
-            <div>
-                ssh: {patient?.ssn}
-                <br />
-                occupation: {patient?.occupation}
+            <div style={{ marginBottom: "20px" }}> 
+                <h1>
+                    {patient?.name} <span>{ patient?.gender === 'male' ? <MaleIcon /> : <FemaleIcon /> }</span>
+                </h1>
+                <div>
+                    ssh: {patient?.ssn}
+                    <br />
+                    occupation: {patient?.occupation}
+                </div>
             </div>
+
+            <EntryForm
+                modalOpen={modalOpen}
+                error={error}
+                onClose={closeModal}
+            />
+            <Button variant="contained" onClick={() => openModal()}>
+                Add New Entry
+            </Button>
 
             <div>
                 {patient?.entries.length ? <h3>entries</h3> : ''}
