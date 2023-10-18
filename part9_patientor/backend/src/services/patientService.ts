@@ -22,8 +22,9 @@ const addEntry = (patientId: string, entry: EntryWithoutId) => {
     if (!foundPatient) {
         throw new Error ('Patient record is unavailable')
     } else {
-        let updatedPatientEntry = {...foundPatient, entries: foundPatient.entries.push(newEntry)}
-        patients = patients.map(p => p.id === patientId ? updatedPatientEntry : p)
+        foundPatient.entries.push(newEntry)
+
+        return patients.map(p => p.id === patientId ? foundPatient : p)
     }
     
     return newEntry

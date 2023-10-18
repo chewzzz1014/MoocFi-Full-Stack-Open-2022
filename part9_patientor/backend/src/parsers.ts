@@ -33,17 +33,14 @@ const parseDate = (fieldName: string, date: unknown): string => {
 }
 
 // healthcheck rating validation
-const isHealthCheckRating = (num: number): num is HealthCheckRating => {
-    return Object.values(HealthCheckRating).map(h => Number(h)).includes(num)
+const isHealthCheckRating = (num: unknown): num is HealthCheckRating => {
+    return Object.values(HealthCheckRating).map(h => Number(h)).includes(Number(num))
 }
 
 // parse healthcheck rating
 const parseHealthCheckRating = (hc: unknown): HealthCheckRating => {
-    if (!hc) {
-        throw new Error('Missing healthcheck rating')
-    }
-    if (!isNaN(Number(hc)) || !isHealthCheckRating(hc)) {
-        throw new Error(`Incorrect healthcheck rating: ${hc}`)
+    if (!hc || !isNaN(Number(hc)) || !isHealthCheckRating(hc)) {
+        throw new Error(`Missing or incorrect healthcheck rating: ${hc}`)
     }
     return hc
 }
