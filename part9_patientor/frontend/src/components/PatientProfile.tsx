@@ -22,9 +22,14 @@ function PatientProfile() {
     const openModal = (): void => setModalOpen(true);
 
     const closeModal = (): void => {
+        console.log(1111);
         setModalOpen(false);
         setError(undefined);
     };
+
+    const submitModalData = (data: unknown): void => {
+        console.log(data);
+    }
 
     useEffect(() => {
         const fetchPatient = async () => {
@@ -58,14 +63,20 @@ function PatientProfile() {
                 </div>
             </div>
 
-            <EntryForm
-                modalOpen={modalOpen}
-                error={error}
-                onClose={closeModal}
-            />
-            <Button variant="contained" onClick={() => openModal()}>
-                Add New Entry
-            </Button>
+            {modalOpen && 
+                <EntryForm
+                    modalOpen={modalOpen}
+                    error={error}
+                    onClose={closeModal}
+                    onSubmit={submitModalData}
+                />
+            }
+
+            {!modalOpen && 
+                <Button variant="contained" onClick={() => openModal()}>
+                    Add New Entry
+                </Button>
+            }
 
             <div>
                 {patient?.entries.length ? <h3>entries</h3> : ''}

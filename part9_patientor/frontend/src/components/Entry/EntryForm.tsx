@@ -16,55 +16,55 @@ interface GenderOption{
 
 
 const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
-  const [name, setName] = useState('');
-  const [occupation, setOccupation] = useState('');
-  const [ssn, setSsn] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [description, setDescription] = useState('');
+  const [date, setDate] = useState('');
+  const [specialist, setSpecialist] = useState('');
+  const [diasnosisCode, setDiasnosisCode] = useState('');
 
   const addPatient = (event: SyntheticEvent) => {
     event.preventDefault();
     onSubmit({
-      name,
-      occupation,
-      ssn,
-      dateOfBirth,
+      description,
+      date,
+      specialist,
+      diasnosisCode
     });
   };
 
   return (
-    <div>
+    <div style={{marginBottom: "80px"}}>
       <form onSubmit={addPatient}>
         <TextField
           variant="standard"
-          label="Name"
+          label="Description"
           fullWidth 
-          value={name}
-          onChange={({ target }) => setName(target.value)}
+          value={description}
+          onChange={({ target }) => setDescription(target.value)}
         />
         <TextField
           variant="standard"
-          label="Social security number"
-          fullWidth
-          value={ssn}
-          onChange={({ target }) => setSsn(target.value)}
-        />
-        <TextField
-          variant="standard"
-          label="Date of birth"
+          label="Date"
           placeholder="YYYY-MM-DD"
           fullWidth
-          value={dateOfBirth}
-          onChange={({ target }) => setDateOfBirth(target.value)}
+          value={date}
+          onChange={({ target }) => setDate(target.value)}
         />
         <TextField
           variant="standard"
-          label="Occupation"
+          label="Specialist"
           fullWidth
-          value={occupation}
-          onChange={({ target }) => setOccupation(target.value)}
+          value={specialist}
+          onChange={({ target }) => setSpecialist(target.value)}
+        />
+        <TextField
+          variant="standard"
+          label="Diagnosis codes"
+          fullWidth
+          value={diasnosisCode}
+          onChange={({ target }) => setDiasnosisCode(target.value)}
         />
 
-        <Grid >
+        <Grid style={{marginTop: "20px"}}>
           <Grid item>
             <Button
               color="secondary"
