@@ -29,7 +29,8 @@ function PatientProfile() {
 
     const submitModalData = (data: unknown): void => {
         console.log(data);
-    }
+        patientService.addEntry(patientId!, data);
+    };
 
     useEffect(() => {
         const fetchPatient = async () => {

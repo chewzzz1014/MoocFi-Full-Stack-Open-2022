@@ -1,17 +1,12 @@
 import { useState, SyntheticEvent } from "react";
 
-import {  TextField, InputLabel, MenuItem, Select, Grid, Button, SelectChangeEvent } from '@mui/material';
+import {  TextField, Grid, Button} from '@mui/material';
 
-import { PatientFormValues, Gender } from "../../types";
+import { EntryWithoutId } from "../../types";
 
 interface Props {
   onCancel: () => void;
-  onSubmit: (values: PatientFormValues) => void;
-}
-
-interface GenderOption{
-  value: Gender;
-  label: string;
+  onSubmit: (values: unknown) => void;
 }
 
 
@@ -19,15 +14,17 @@ const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [specialist, setSpecialist] = useState('');
-  const [diasnosisCode, setDiasnosisCode] = useState('');
+  const [diagnosisCodes, setDiagnosisCodes] = useState('');
 
   const addPatient = (event: SyntheticEvent) => {
     event.preventDefault();
+    const splitedDiagnosisCoders = diagnosisCodes.trim() ? diagnosisCodes.split(/(?:,| )+/) : []
+
     onSubmit({
       description,
       date,
       specialist,
-      diasnosisCode
+      diagnosisCodes: splitedDiagnosisCoders
     });
   };
 
@@ -60,8 +57,8 @@ const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
           variant="standard"
           label="Diagnosis codes"
           fullWidth
-          value={diasnosisCode}
-          onChange={({ target }) => setDiasnosisCode(target.value)}
+          value={diagnosisCodes}
+          onChange={({ target }) => setDiagnosisCodes(target.value)}
         />
 
         <Grid style={{marginTop: "20px"}}>
