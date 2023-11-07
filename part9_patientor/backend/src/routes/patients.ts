@@ -24,7 +24,7 @@ router.post('/:id/entries', (req, res) => {
     } catch (error: unknown) {
         let errorMsg = ''
         if (error instanceof Error) {
-            errorMsg += `Error: ${error.message}`
+            errorMsg += `${error.message}`
         }
         res.status(400).send(errorMsg)
     }

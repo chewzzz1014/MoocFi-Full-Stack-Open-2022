@@ -7,6 +7,7 @@ import { EntryWithoutId } from "../../types";
 interface Props {
   onCancel: () => void;
   onSubmit: (values: unknown) => void;
+  error: undefined | string;
 }
 
 
@@ -14,22 +15,26 @@ const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [specialist, setSpecialist] = useState('');
+  const [healthcheckRating, setHealthcheckRating] = useState('');
   const [diagnosisCodes, setDiagnosisCodes] = useState('');
 
   const addPatient = (event: SyntheticEvent) => {
     event.preventDefault();
-    const splitedDiagnosisCoders = diagnosisCodes.trim() ? diagnosisCodes.split(/(?:,| )+/) : []
+    const splitedDiagnosisCoders = diagnosisCodes.trim() ? diagnosisCodes.split(/(?:,| )+/) : [];
 
     onSubmit({
+      type: 'HealthCheck',
       description,
       date,
       specialist,
-      diagnosisCodes: splitedDiagnosisCoders
+      diagnosisCodes: splitedDiagnosisCoders,
+      healthCheckRating: healthcheckRating
     });
   };
 
   return (
     <div style={{marginBottom: "80px"}}>
+      <h3>New Health Check Entry</h3>
       <form onSubmit={addPatient}>
         <TextField
           variant="standard"
@@ -41,6 +46,7 @@ const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
         <TextField
           variant="standard"
           label="Date"
+          type="date"
           placeholder="YYYY-MM-DD"
           fullWidth
           value={date}
@@ -52,6 +58,13 @@ const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
           fullWidth
           value={specialist}
           onChange={({ target }) => setSpecialist(target.value)}
+        />
+        <TextField
+          variant="standard"
+          label="Healthcheck rating"
+          fullWidth
+          value={healthcheckRating}
+          onChange={({ target }) => setHealthcheckRating(target.value)}
         />
         <TextField
           variant="standard"

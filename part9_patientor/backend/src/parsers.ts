@@ -39,8 +39,11 @@ const isHealthCheckRating = (num: unknown): num is HealthCheckRating => {
 
 // parse healthcheck rating
 const parseHealthCheckRating = (hc: unknown): HealthCheckRating => {
-    if (!hc || !isNaN(Number(hc)) || !isHealthCheckRating(hc)) {
-        throw new Error(`Missing or incorrect healthcheck rating: ${hc}`)
+    if (!hc || isNaN(Number(hc)) || !isHealthCheckRating(hc)) {
+        if (!hc)
+            throw new Error(`Missing healthcheck rating`)
+        else
+        throw new Error(`Incorrect healthcheck rating: ${hc}`)
     }
     return hc
 }

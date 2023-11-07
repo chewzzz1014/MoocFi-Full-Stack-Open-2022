@@ -24,7 +24,7 @@ const addEntry = (patientId: string, entry: EntryWithoutId) => {
     } else {
         foundPatient.entries.push(newEntry)
 
-        return patients.map(p => p.id === patientId ? foundPatient : p)
+        patients = patients.map(p => p.id === patientId ? foundPatient : p)
     }
     
     return newEntry

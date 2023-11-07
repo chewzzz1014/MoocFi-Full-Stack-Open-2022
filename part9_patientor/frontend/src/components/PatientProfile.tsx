@@ -8,8 +8,10 @@ import Hospital from "./Entry/Hospital";
 import OccHealthcare from "./Entry/OccHealthcare";
 import FemaleIcon from '@mui/icons-material/Female';
 import MaleIcon from '@mui/icons-material/Male';
+import Alert from '@mui/material/Alert';
 import { Button } from "@mui/material";
 import EntryForm from "./Entry/EntryForm";
+import { AxiosError } from "axios";
 
 function PatientProfile() {
     const {patientId} = useParams();
@@ -29,7 +31,16 @@ function PatientProfile() {
 
     const submitModalData = (data: unknown): void => {
         console.log(data);
-        patientService.addEntry(patientId!, data);
+        patientService.addEntry(patientId!, data)
+            .then((response) => {
+                setError(undefined);
+                console.log(response.data);
+            })
+            .catch((err: unknown) => {
+                if (err instanceof AxiosError) {
+                    setError(err.response?.data);
+                }
+            });
     };
 
     useEffect(() => {
@@ -63,6 +74,8 @@ function PatientProfile() {
                     occupation: {patient?.occupation}
                 </div>
             </div>
+
+            {error && <Alert severity="error">{error}</Alert>}
 
             {modalOpen && 
                 <EntryForm
