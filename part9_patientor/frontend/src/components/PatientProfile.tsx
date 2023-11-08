@@ -12,6 +12,7 @@ import Alert from '@mui/material/Alert';
 import { Button } from "@mui/material";
 import HealthCheckEntryForm from "./EntryForms/HealthCheckEntryForm";
 import HospitalEntryForm from "./EntryForms/HospitalEntryForm";
+import OccupationalHealthcareEntryForm from "./EntryForms/OccupationalHealthcareEntryForm";
 import { AxiosError } from "axios";
 
 function PatientProfile() {
@@ -25,7 +26,6 @@ function PatientProfile() {
     const openModal = (): void => setModalOpen(true);
 
     const closeModal = (): void => {
-        console.log(1111);
         setModalOpen(false);
         setError(undefined);
     };
@@ -90,6 +90,15 @@ function PatientProfile() {
 
             {modalOpen && 
                 <HospitalEntryForm
+                    modalOpen={modalOpen}
+                    error={error}
+                    onClose={closeModal}
+                    onSubmit={submitModalData}
+                />
+            }
+
+            {modalOpen && 
+                <OccupationalHealthcareEntryForm
                     modalOpen={modalOpen}
                     error={error}
                     onClose={closeModal}

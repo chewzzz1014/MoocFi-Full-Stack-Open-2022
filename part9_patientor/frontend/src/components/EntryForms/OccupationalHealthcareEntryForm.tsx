@@ -2,22 +2,23 @@ import { useState, SyntheticEvent } from "react";
 import {  TextField, Grid, Button, InputLabel } from '@mui/material';
 import { EntryFormProps } from "../../types";
 
-
-const HospitalEntryForm = ({ onClose, onSubmit }: EntryFormProps) => {
+const OccupationalHealthcareEntryForm = ({ onClose, onSubmit }: EntryFormProps) => {
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [specialist, setSpecialist] = useState('');
   const [diagnosisCodes, setDiagnosisCodes] = useState('');
-  const [dischargeDate, setDischargeDate] = useState('');
-  const [dischargeCriteria, setDischargeCriteria] = useState('');
+  const [employerName, setEmployerName] = useState('');
+  const [sickLeaveStartDate, setSickLeaveStartDate] = useState('');
+  const [sickLeaveEndDate, setSickLeaveEndDate] = useState('');
 
   const clearFields =() => {
     setDescription('');
     setDate('');
     setSpecialist('');
     setDiagnosisCodes('');
-    setDischargeDate('');
-    setDischargeCriteria('');
+    setEmployerName('');
+    setSickLeaveStartDate('');
+    setSickLeaveEndDate('');
   };
 
   const addPatient = (event: SyntheticEvent) => {
@@ -25,21 +26,22 @@ const HospitalEntryForm = ({ onClose, onSubmit }: EntryFormProps) => {
     const splitedDiagnosisCoders = diagnosisCodes.trim() ? diagnosisCodes.split(/(?:,| )+/) : [];
 
     onSubmit({
-      type: 'Hospital',
+      type: 'OccupationalHealthcare',
       description,
       date,
       specialist,
       diagnosisCodes: splitedDiagnosisCoders,
-      discharge: {
-        date: dischargeDate,
-        criteria: dischargeCriteria
+      employerName,
+      sickLeave: {
+        startDate: sickLeaveStartDate,
+        endDate: sickLeaveEndDate
       }
     }, clearFields);
   };
 
   return (
     <div style={{marginBottom: "80px"}}>
-      <h3>New Hospital Entry</h3>
+      <h3>New Occupational Healthcare Entry</h3>
       <form onSubmit={addPatient}>
         <TextField
           variant="standard"
@@ -74,25 +76,34 @@ const HospitalEntryForm = ({ onClose, onSubmit }: EntryFormProps) => {
           value={diagnosisCodes}
           onChange={({ target }) => setDiagnosisCodes(target.value)}
         />
-        <InputLabel sx={{marginTop: "10px", marginBottom: "10px"}}>Discharge</InputLabel>
+        <TextField
+          variant="standard"
+          InputLabelProps={{ shrink: true }}
+          label="Employer"
+          fullWidth
+          value={employerName}
+          onChange={({ target }) => setEmployerName(target.value)}
+        />
+        <InputLabel sx={{marginTop: "10px", marginBottom: "10px"}}>Sickleave</InputLabel>
         <TextField
           variant="standard"
           sx={{marginLeft: "10px"}}
           InputLabelProps={{ shrink: true }}
-          label="Date"
+          label="Start Date"
           type="date"
           fullWidth
-          value={dischargeDate}
-          onChange={({ target }) => setDischargeDate(target.value)}
+          value={sickLeaveStartDate}
+          onChange={({ target }) => setSickLeaveStartDate(target.value)}
         />
         <TextField
           variant="standard"
           sx={{marginLeft: "10px"}}
           InputLabelProps={{ shrink: true }}
-          label="Criteria"
+          label="End Date"
+          type="date"
           fullWidth
-          value={dischargeCriteria}
-          onChange={({ target }) => setDischargeCriteria(target.value)}
+          value={sickLeaveEndDate}
+          onChange={({ target }) => setSickLeaveEndDate(target.value)}
         />
 
         <Grid style={{marginTop: "20px"}}>
@@ -124,4 +135,4 @@ const HospitalEntryForm = ({ onClose, onSubmit }: EntryFormProps) => {
   );
 };
 
-export default HospitalEntryForm;
+export default OccupationalHealthcareEntryForm;

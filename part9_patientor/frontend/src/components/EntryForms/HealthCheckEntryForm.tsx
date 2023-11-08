@@ -1,17 +1,9 @@
 import { useState, SyntheticEvent } from "react";
-
 import {  TextField, Grid, Button} from '@mui/material';
-
-// import { EntryWithoutId } from "../../types";
-
-interface Props {
-  onClose: () => void;
-  onSubmit: (values: unknown, func: () => void) => void;
-  error: undefined | string;
-}
+import { EntryFormProps } from "../../types";
 
 
-const HealthCheckEntryForm = ({ onClose, onSubmit }: Props) => {
+const HealthCheckEntryForm = ({ onClose, onSubmit }: EntryFormProps) => {
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [specialist, setSpecialist] = useState('');

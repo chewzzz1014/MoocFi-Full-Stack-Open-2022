@@ -77,3 +77,10 @@ export interface EntryProps {
   entry: Entry;
   codesWithDetails: Diagnosis[];
 }
+
+export interface EntryFormProps {
+  onClose: () => void;
+  onSubmit: (values: unknown, func: () => void) => void;
+  error: undefined | string;
+  modalOpen: boolean;
+}
