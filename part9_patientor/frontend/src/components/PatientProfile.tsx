@@ -13,6 +13,7 @@ import { Button } from "@mui/material";
 import HealthCheckEntryForm from "./EntryForms/HealthCheckEntryForm";
 import HospitalEntryForm from "./EntryForms/HospitalEntryForm";
 import OccupationalHealthcareEntryForm from "./EntryForms/OccupationalHealthcareEntryForm";
+import EntryFormOption from "./EntryForms/EntryFormOption";
 import { AxiosError } from "axios";
 
 function PatientProfile() {
@@ -22,12 +23,14 @@ function PatientProfile() {
     // for entry form
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [error, setError] = useState<string>();
+    const [entryFormType, setEntryFormType] = useState('')
 
     const openModal = (): void => setModalOpen(true);
 
     const closeModal = (): void => {
         setModalOpen(false);
         setError(undefined);
+        setEntryFormType('');
     };
 
     const submitModalData = (data: unknown, callbackFunc: () => void): void => {
@@ -79,6 +82,8 @@ function PatientProfile() {
 
             {error && <Alert severity="error">{error}</Alert>}
 
+            {/* TODO: select field to select type of entry form */}
+            <EntryFormOption />
             {modalOpen && 
                 <HealthCheckEntryForm
                     modalOpen={modalOpen}
