@@ -2,21 +2,29 @@ import { useState, SyntheticEvent } from "react";
 
 import {  TextField, Grid, Button} from '@mui/material';
 
-import { EntryWithoutId } from "../../types";
+// import { EntryWithoutId } from "../../types";
 
 interface Props {
-  onCancel: () => void;
-  onSubmit: (values: unknown) => void;
+  onClose: () => void;
+  onSubmit: (values: unknown, func: () => void) => void;
   error: undefined | string;
 }
 
 
-const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
+const HealthCheckEntryForm = ({ onClose, onSubmit }: Props) => {
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [specialist, setSpecialist] = useState('');
   const [healthcheckRating, setHealthcheckRating] = useState('');
   const [diagnosisCodes, setDiagnosisCodes] = useState('');
+
+  const clearFields =() => {
+    setDescription('');
+    setDate('');
+    setSpecialist('');
+    setHealthcheckRating('');
+    setDiagnosisCodes('');
+  };
 
   const addPatient = (event: SyntheticEvent) => {
     event.preventDefault();
@@ -29,7 +37,7 @@ const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
       specialist,
       diagnosisCodes: splitedDiagnosisCoders,
       healthCheckRating: healthcheckRating
-    });
+    }, clearFields);
   };
 
   return (
@@ -38,6 +46,7 @@ const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
       <form onSubmit={addPatient}>
         <TextField
           variant="standard"
+          InputLabelProps={{ shrink: true }}
           label="Description"
           fullWidth 
           value={description}
@@ -45,15 +54,17 @@ const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
         />
         <TextField
           variant="standard"
+          InputLabelProps={{ shrink: true }}
           label="Date"
           type="date"
-          placeholder="YYYY-MM-DD"
           fullWidth
           value={date}
           onChange={({ target }) => setDate(target.value)}
         />
+        
         <TextField
           variant="standard"
+          InputLabelProps={{ shrink: true }}
           label="Specialist"
           fullWidth
           value={specialist}
@@ -61,6 +72,7 @@ const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
         />
         <TextField
           variant="standard"
+          InputLabelProps={{ shrink: true }}
           label="Healthcheck rating"
           fullWidth
           value={healthcheckRating}
@@ -68,6 +80,7 @@ const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
         />
         <TextField
           variant="standard"
+          InputLabelProps={{ shrink: true }}
           label="Diagnosis codes"
           fullWidth
           value={diagnosisCodes}
@@ -81,7 +94,7 @@ const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
               variant="contained"
               style={{ float: "left" }}
               type="button"
-              onClick={onCancel}
+              onClick={onClose}
             >
               Cancel
             </Button>
@@ -103,4 +116,4 @@ const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
   );
 };
 
-export default AddPatientForm;
+export default HealthCheckEntryForm;

@@ -10,7 +10,8 @@ import FemaleIcon from '@mui/icons-material/Female';
 import MaleIcon from '@mui/icons-material/Male';
 import Alert from '@mui/material/Alert';
 import { Button } from "@mui/material";
-import EntryForm from "./Entry/EntryForm";
+import HealthCheckEntryForm from "./EntryForms/HealthCheckEntryForm";
+import HospitalEntryForm from "./EntryForms/HospitalEntryForm";
 import { AxiosError } from "axios";
 
 function PatientProfile() {
@@ -29,11 +30,12 @@ function PatientProfile() {
         setError(undefined);
     };
 
-    const submitModalData = (data: unknown): void => {
+    const submitModalData = (data: unknown, callbackFunc: () => void): void => {
         console.log(data);
         patientService.addEntry(patientId!, data)
             .then((response) => {
                 setError(undefined);
+                callbackFunc();
                 console.log(response.data);
             })
             .catch((err: unknown) => {
@@ -78,7 +80,16 @@ function PatientProfile() {
             {error && <Alert severity="error">{error}</Alert>}
 
             {modalOpen && 
-                <EntryForm
+                <HealthCheckEntryForm
+                    modalOpen={modalOpen}
+                    error={error}
+                    onClose={closeModal}
+                    onSubmit={submitModalData}
+                />
+            }
+
+            {modalOpen && 
+                <HospitalEntryForm
                     modalOpen={modalOpen}
                     error={error}
                     onClose={closeModal}

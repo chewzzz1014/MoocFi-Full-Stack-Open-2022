@@ -43,7 +43,7 @@ const parseHealthCheckRating = (hc: unknown): HealthCheckRating => {
         if (!hc)
             throw new Error(`Missing healthcheck rating`)
         else
-        throw new Error(`Incorrect healthcheck rating: ${hc}`)
+            throw new Error(`Incorrect healthcheck rating: ${hc}`)
     }
     return hc
 }
