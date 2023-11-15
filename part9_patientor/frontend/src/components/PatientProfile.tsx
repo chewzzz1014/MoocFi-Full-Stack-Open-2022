@@ -81,21 +81,19 @@ function PatientProfile() {
 
             {error && <Alert severity="error">{error}</Alert>}
 
-            {/* TODO: select field to select type of entry form */}
-            <div style={{display: "flex", marginTop: '10px',}}>
-                {!modalOpen && 
+            {!modalOpen && 
+                <div style={{display: "flex", marginTop: '10px',}}>
                     <EntryFormOption 
                         entryFormType={entryFormType}
                         setEntryFormType={setEntryFormType}
                         openModal={openModal} 
                     />
-                }
-                {!modalOpen && 
                     <Button variant="contained" onClick={() => openModal()}>
                         Add New Entry
                     </Button>
-                }
-            </div>
+                </div>
+            }
+
             {modalOpen && entryFormType === 'Health Check' &&
                 <HealthCheckEntryForm
                     modalOpen={modalOpen}
@@ -137,7 +135,7 @@ function PatientProfile() {
                 })}
             </div>
         </div>
-    )
+    );
 }
 
 export default PatientProfile;

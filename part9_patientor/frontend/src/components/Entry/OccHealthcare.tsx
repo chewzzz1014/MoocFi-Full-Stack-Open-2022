@@ -4,11 +4,11 @@ import WorkIcon from '@mui/icons-material/Work';
 export default function OccHealthcare(props: EntryProps) {
     const {entry, codesWithDetails} = props;
 
-    const renderSickleave = (sickLeave) => {
-        if (sickLeave) {
+    const renderSickleave = () => {
+        if (entry.sickLeave) {
             return (
                 <p>
-                    <b>Sick leave from {entry?.sickLeave.startDate} to {entry.sickLeave?.endDate}</b>
+                    <b>Sick leave from {entry.sickLeave?.startDate} to {entry.sickLeave?.endDate}</b>
                 </p>
             );
         }
@@ -21,5 +21,5 @@ export default function OccHealthcare(props: EntryProps) {
             {renderSickleave()}
             <p>Diagnosed by {entry.specialist}</p>
         </div>
-    )
+    );
 }

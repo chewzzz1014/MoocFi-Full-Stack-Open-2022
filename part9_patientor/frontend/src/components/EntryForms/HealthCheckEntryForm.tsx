@@ -2,7 +2,6 @@ import { useState, SyntheticEvent } from "react";
 import {  TextField, Grid, Button} from '@mui/material';
 import { EntryFormProps } from "../../types";
 
-
 const HealthCheckEntryForm = ({ onClose, onSubmit }: EntryFormProps) => {
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
@@ -30,6 +29,17 @@ const HealthCheckEntryForm = ({ onClose, onSubmit }: EntryFormProps) => {
       diagnosisCodes: splitedDiagnosisCoders,
       healthCheckRating: healthcheckRating
     }, clearFields);
+  };
+
+  const invalidHealthCheckRating = (): boolean => {
+    if (healthcheckRating !== '') {
+      return isNaN(Number(healthcheckRating)) && (
+              (Number(healthcheckRating) !== 0) ||
+              (Number(healthcheckRating) !== 1) ||
+              (Number(healthcheckRating) !== 2)
+            );
+    }
+    return false;
   };
 
   return (
@@ -69,7 +79,8 @@ const HealthCheckEntryForm = ({ onClose, onSubmit }: EntryFormProps) => {
           fullWidth
           value={healthcheckRating}
           onChange={({ target }) => setHealthcheckRating(target.value)}
-        />
+          error={invalidHealthCheckRating()}
+          />
         <TextField
           variant="standard"
           InputLabelProps={{ shrink: true }}
