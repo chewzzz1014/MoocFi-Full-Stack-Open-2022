@@ -23,10 +23,9 @@ function PatientProfile() {
     // for entry form
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [error, setError] = useState<string>();
-    const [entryFormType, setEntryFormType] = useState('')
+    const [entryFormType, setEntryFormType] = useState('');
 
     const openModal = (): void => setModalOpen(true);
-
     const closeModal = (): void => {
         setModalOpen(false);
         setError(undefined);
@@ -83,8 +82,21 @@ function PatientProfile() {
             {error && <Alert severity="error">{error}</Alert>}
 
             {/* TODO: select field to select type of entry form */}
-            <EntryFormOption />
-            {modalOpen && 
+            <div style={{display: "flex", marginTop: '10px',}}>
+                {!modalOpen && 
+                    <EntryFormOption 
+                        entryFormType={entryFormType}
+                        setEntryFormType={setEntryFormType}
+                        openModal={openModal} 
+                    />
+                }
+                {!modalOpen && 
+                    <Button variant="contained" onClick={() => openModal()}>
+                        Add New Entry
+                    </Button>
+                }
+            </div>
+            {modalOpen && entryFormType === 'Health Check' &&
                 <HealthCheckEntryForm
                     modalOpen={modalOpen}
                     error={error}
@@ -93,7 +105,7 @@ function PatientProfile() {
                 />
             }
 
-            {modalOpen && 
+            {modalOpen && entryFormType === 'Hospital' && 
                 <HospitalEntryForm
                     modalOpen={modalOpen}
                     error={error}
@@ -102,19 +114,13 @@ function PatientProfile() {
                 />
             }
 
-            {modalOpen && 
+            {modalOpen && entryFormType === 'Occupational Healthcare' && 
                 <OccupationalHealthcareEntryForm
                     modalOpen={modalOpen}
                     error={error}
                     onClose={closeModal}
                     onSubmit={submitModalData}
                 />
-            }
-
-            {!modalOpen && 
-                <Button variant="contained" onClick={() => openModal()}>
-                    Add New Entry
-                </Button>
             }
 
             <div>
